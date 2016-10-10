@@ -4,11 +4,16 @@
   "description": "API",
   "main": "index.js",
   "scripts": {
-    "test": "./scripts/test.sh",
-    "start": "./scripts/start.sh",
+    "test": "node ./node_modules/jshint/bin/jshint --reporter=node_modules/jshint-stylish . && NODE_ENV=test mocha $(find ./test/ -name '*_test.js') --require test/bootstrap",
+    "start": "npm run cleanup && node ./node_modules/forever/bin/forever start -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
     "start:debug": "DEBUG=express:* ./node_modules/nodemon/bin/nodemon.js index.js",
-    "stop": "./scripts/stop.sh",
-    "postinstall": "./scripts/postinstall.sh"
+    "stop": "node ./node_modules/forever/bin/forever stop -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
+    "migrate": "cd ./app && sequelize db:migrate && cd ../",
+    "seed": "cd ./app && sequelize db:seed:all && cd ../",
+    "cleanup": "rm ~/.forever/*.log && rm *.log",
+    "elasticsearch:create": "node ./elasticsearch/create",
+    "elasticsearch:update": "node ./elasticsearch/update",
+    "elasticsearch:delete": "node ./elasticsearch/delete"
   },
   "repository": {
     "type": "git",

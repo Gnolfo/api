@@ -7,10 +7,9 @@ var config = require('./config');
 var router = require('./router');
 var bugsnag = require('bugsnag');
 var passport = require('passport');
-var auth = require('passport-localapikey').Strategy;
 var session = require('express-session');
 var uuid = require('uuid');
-var authentication = require('./models/api/api_authentication');
+var model = require('./models');
 var app = express();
 var apiUser = {};
 var apiLimit = {
@@ -45,8 +44,8 @@ function setupAPI(request, response, next) {
   }
 
   if (request.query.apikey) {
-    console.log('method', request.method);
-    return authentication.findOne({ where: { api_key: request.query.apikey }}).then(function(user){
+
+    return model.ApiAuthentication.findOne({ where: { api_key: request.query.apikey }}).then(function(user){
 
       if(user){
         var settings = user.dataValues;
@@ -151,12 +150,6 @@ function setupAPI(request, response, next) {
   next();
 }
 
-// Setup Bug Tracking
-bugsnag.register(config.get('bugsnag'), {
-  releaseStage: config.get('env'),
-  notifyReleaseStages: ['production']
-});
-
 app.enable('trust proxy');
 app.use(session({
   genid: function(){ return uuid.v4(); },
@@ -169,8 +162,6 @@ app.use('/favicon.ico', express.static(__dirname + '/static/favicon.ico'));
 app.use('/robots.txt', express.static(__dirname + '/static/robots.txt'));
 app.use('/humans.txt', express.static(__dirname + '/static/humans.txt'));
 
-app.use(bugsnag.requestHandler);
-app.use(bugsnag.errorHandler);
 app.use(json);
 app.use(setupAPI);
 app.use(compression());
@@ -182,4 +173,3 @@ app.use(limiter);
 app.use(router);
 
 module.exports = app.listen(config.get('port'));
-
