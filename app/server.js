@@ -45,25 +45,25 @@ function setupAPI(request, response, next) {
   }
 
   if (request.query.apikey) {
+    console.log('method', request.method);
     return authentication.findOne({ where: { api_key: request.query.apikey }}).then(function(user){
 
       if(user){
-        apiUser.settings = user.dataValues;
+        var settings = user.dataValues;
 
-
-        if (user.dataValues.allow_api_get) {
+        if (settings.allow_api_get) {
           acceptedMethods.push('GET');
         }
 
-        if (user.dataValues.allow_api_post) {
+        if (settings.allow_api_post) {
           acceptedMethods.push('POST');
         }
 
-        if (user.dataValues.allow_api_put) {
+        if (settings.allow_api_put) {
           acceptedMethods.push('PUT');
         }
 
-        if (user.dataValues.allow_api_delete) {
+        if (settings.allow_api_delete) {
           acceptedMethods.push('DELETE');
         }
 
@@ -81,9 +81,37 @@ function setupAPI(request, response, next) {
           response.setHeader('Access-Control-Allow-Origin', host);
         }
 
+        if (!settings.allow_api_get && request.method === 'GET') {
+          return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
+            errors: ['API Key does not support GET Requests'],
+            data: []
+          })));
+        }
+
+        if (!settings.allow_api_post && request.method === 'POST') {
+          return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
+            errors: ['API Key does not support POST Requests'],
+            data: []
+          })));
+        }
+
+        if (!settings.allow_api_put && request.method === 'PUT') {
+          return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
+            errors: ['API Key does not support PUT Requests'],
+            data: []
+          })));
+        }
+
+        if (!settings.allow_api_delete && request.method === 'DELETE') {
+          return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
+            errors: ['API Key does not support DELETE Requests'],
+            data: []
+          })));
+        }
+
         // Check for approved host
-        if(user.dataValues.approved_whitelist && user.dataValues.approved_whitelist !== '*'){
-          var whitelist = user.dataValues.approved_whitelist.split(',');
+        if(settings.approved_whitelist && settings.approved_whitelist !== '*'){
+          var whitelist = settings.approved_whitelist.split(',');
           var validHost = false;
 
           for (var i = 0; i < whitelist.length; i++) {
@@ -93,17 +121,15 @@ function setupAPI(request, response, next) {
           }
 
           if( !validHost) {
-            response.status(401).send(JSON.stringify(routerUtil.createAPIResponse({
+            return response.status(401).send(JSON.stringify(routerUtil.createAPIResponse({
               errors: ['Invalid Host for API Key'],
               data: []
             })));
-
-            next();
           }
         }
 
         // Set API Limits
-        apiLimit.max = (!isNaN(user.dataValues.daily_limit)) ? (parseInt(user.dataValues.daily_limit, 10)) : 1000;
+        apiLimit.max = (!isNaN(settings.daily_limit)) ? (parseInt(settings.daily_limit, 10)) : 1000;
         limiter = rateLimit(apiLimit);
 
         next();
@@ -113,16 +139,12 @@ function setupAPI(request, response, next) {
           errors: ['Invalid API Key'],
           data: []
         })));
-
-        next();
       }
     }).catch(function(err){
       return response.status(401).end(JSON.stringify(routerUtil.createAPIResponse({
         errors: ['Invalid API Authentication'],
         data: []
       })));
-
-      next();
     });
   }
 
@@ -142,6 +164,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
+app.use('/favicon.ico', express.static(__dirname + '/static/favicon.ico'));
+app.use('/robots.txt', express.static(__dirname + '/static/robots.txt'));
+app.use('/humans.txt', express.static(__dirname + '/static/humans.txt'));
 
 app.use(bugsnag.requestHandler);
 app.use(bugsnag.errorHandler);
