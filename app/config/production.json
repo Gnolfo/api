@@ -1,0 +1,14 @@
+{
+  "debug": false,
+  "env": "production",
+  "secret": "7e8d03d4f643457de1f6279ceacef0e1",
+  "production": {
+    "host": "localhost",
+    "database": "api_database",
+    "username": "root",
+    "password": ""
+  },
+  "mandrill": {
+    "key": "oDnVDl_LBFWqlP1Ed5qvng"
+  }
+}

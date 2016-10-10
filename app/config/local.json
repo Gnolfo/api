@@ -1,0 +1,19 @@
+{
+  "debug": true,
+  "env": "local",
+  "secret": "cd43c67c3f2023beac12592062271992",
+  "database": {
+    "api": {
+      "host": "localhost",
+      "database": "api_database",
+      "username": "root",
+      "password": ""
+    }
+  },
+  "mandrill": {
+    "key": "oDnVDl_LBFWqlP1Ed5qvng"
+  },
+  "ipinfodb": {
+    "key": "1a8e944f4f20ecb7efc662f48e96df388593ab7b9dab10290d12237b24137aa4"
+  }
+}

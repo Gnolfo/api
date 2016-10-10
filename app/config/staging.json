@@ -1,0 +1,14 @@
+{
+  "debug": false,
+  "env": "staging",
+  "secret": "b9411dd79993b08c8169789f6c8bd3aa",
+  "staging": {
+    "host": "localhost",
+    "database": "api_database",
+    "username": "root",
+    "password": ""
+  },
+  "mandrill": {
+    "key": "oDnVDl_LBFWqlP1Ed5qvng"
+  }
+}
