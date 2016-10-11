@@ -6,7 +6,6 @@ var debug = require('debug')('express:blackdove');
 var config = require('./config');
 var router = require('./router');
 var bugsnag = require('bugsnag');
-var passport = require('passport');
 var session = require('express-session');
 var uuid = require('uuid');
 var model = require('./models');
@@ -16,7 +15,7 @@ var apiLimit = {
   delayAfter: 0,
   delayMs: 0,
   windowMs: 24 * 60 * 60 * 1000,
-  max: 1000
+  max: 2500
 };
 var limiter = rateLimit(apiLimit);
 var routerUtil = require('./api/v1/routes/util.js');
@@ -145,6 +144,11 @@ function setupAPI(request, response, next) {
         data: []
       })));
     });
+  } else {
+    return response.status(401).end(JSON.stringify(routerUtil.createAPIResponse({
+      errors: ['Missing API Key'],
+      data: []
+    })));
   }
 
   next();
@@ -167,8 +171,6 @@ app.use(setupAPI);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(limiter);
 app.use(router);
 

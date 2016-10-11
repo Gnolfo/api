@@ -11,9 +11,9 @@
     "migrate": "cd ./app && sequelize db:migrate && cd ../",
     "seed": "cd ./app && sequelize db:seed:all && cd ../",
     "cleanup": "rm ~/.forever/*.log && rm *.log",
-    "elasticsearch:create": "node ./elasticsearch/create",
-    "elasticsearch:update": "node ./elasticsearch/update",
-    "elasticsearch:delete": "node ./elasticsearch/delete"
+    "elasticsearch:create": "cd ./app && node ./elasticsearch/create && cd ../",
+    "elasticsearch:update": "cd ./app && node ./elasticsearch/update && cd ../",
+    "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd ../"
   },
   "repository": {
     "type": "git",
@@ -57,10 +57,10 @@
     "raven": "^0.8.1",
     "request": "^2.69.0",
     "sanitizer": "^0.1.2",
-    "sequelize": "^3.19.0",
-    "sequelize-cli": "2.3.1",
-    "sequelize-fixtures": "^0.4.8",
-    "sequelize-slugify": "^0.1.1",
+    "sequelize": "^3.24.3",
+    "sequelize-cli": "^2.4.0",
+    "sequelize-fixtures": "^0.5.5",
+    "sequelize-slugify": "^0.4.0",
     "slug": "^0.9.1",
     "uuid": "^2.0.1",
     "validate.js": "^0.9.0",

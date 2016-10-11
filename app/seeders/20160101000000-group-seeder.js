@@ -49,7 +49,9 @@ module.exports = {
         created_date: new Date(),
         modified_date: new Date()
       }
-    ], {});
+    ], {
+      updateOnDuplicate: ['name', 'slug']
+    });
   },
   down: function (queryInterface) {
     return queryInterface.bulkDelete('groups', null, {});

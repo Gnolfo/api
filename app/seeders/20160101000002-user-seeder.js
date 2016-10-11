@@ -17,7 +17,9 @@ module.exports = {
         created_date: new Date(),
         modified_date: new Date()
       }
-    ], {});
+    ], {
+      updateOnDuplicate: ['username', 'email']
+    });
   },
   down: function (queryInterface) {
     return queryInterface.bulkDelete('users', null, {});

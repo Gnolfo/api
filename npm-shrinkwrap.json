@@ -743,7 +743,7 @@
       "dependencies": {
         "bluebird": {
           "version": "3.4.6",
-          "from": "bluebird@>=3.0.5 <4.0.0",
+          "from": "bluebird@^3.0.5",
           "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz"
         },
         "lru-cache": {
@@ -965,16 +965,9 @@
       "resolved": "https://registry.npmjs.org/find-up/-/find-up-1.1.2.tgz"
     },
     "findup-sync": {
-      "version": "0.3.0",
-      "from": "findup-sync@>=0.3.0 <0.4.0",
-      "resolved": "https://registry.npmjs.org/findup-sync/-/findup-sync-0.3.0.tgz",
-      "dependencies": {
-        "glob": {
-          "version": "5.0.15",
-          "from": "glob@>=5.0.0 <5.1.0",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-5.0.15.tgz"
-        }
-      }
+      "version": "0.4.2",
+      "from": "findup-sync@>=0.4.0 <0.5.0",
+      "resolved": "https://registry.npmjs.org/findup-sync/-/findup-sync-0.4.2.tgz"
     },
     "fined": {
       "version": "1.0.2",
@@ -1093,9 +1086,9 @@
       "resolved": "https://registry.npmjs.org/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz"
     },
     "fs-extra": {
-      "version": "0.26.7",
-      "from": "fs-extra@>=0.26.3 <0.27.0",
-      "resolved": "https://registry.npmjs.org/fs-extra/-/fs-extra-0.26.7.tgz"
+      "version": "0.28.0",
+      "from": "fs-extra@>=0.28.0 <0.29.0",
+      "resolved": "https://registry.npmjs.org/fs-extra/-/fs-extra-0.28.0.tgz"
     },
     "fs.realpath": {
       "version": "1.0.0",
@@ -1148,6 +1141,11 @@
       "version": "2.4.2",
       "from": "generic-pool@2.4.2",
       "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.4.2.tgz"
+    },
+    "get-caller-file": {
+      "version": "1.0.2",
+      "from": "get-caller-file@>=1.0.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/get-caller-file/-/get-caller-file-1.0.2.tgz"
     },
     "get-stdin": {
       "version": "4.0.1",
@@ -1299,7 +1297,7 @@
     },
     "gulp": {
       "version": "3.9.1",
-      "from": "gulp@>=3.8.10 <4.0.0",
+      "from": "gulp@>=3.9.1 <4.0.0",
       "resolved": "https://registry.npmjs.org/gulp/-/gulp-3.9.1.tgz",
       "dependencies": {
         "semver": {
@@ -1310,9 +1308,16 @@
       }
     },
     "gulp-help": {
-      "version": "1.3.4",
-      "from": "gulp-help@>=1.3.1 <1.4.0",
-      "resolved": "https://registry.npmjs.org/gulp-help/-/gulp-help-1.3.4.tgz"
+      "version": "1.6.1",
+      "from": "gulp-help@>=1.6.1 <1.7.0",
+      "resolved": "https://registry.npmjs.org/gulp-help/-/gulp-help-1.6.1.tgz",
+      "dependencies": {
+        "object-assign": {
+          "version": "3.0.0",
+          "from": "object-assign@^3.0.0",
+          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-3.0.0.tgz"
+        }
+      }
     },
     "gulp-util": {
       "version": "3.0.7",
@@ -1769,14 +1774,7 @@
     "liftoff": {
       "version": "2.3.0",
       "from": "liftoff@>=2.1.0 <3.0.0",
-      "resolved": "https://registry.npmjs.org/liftoff/-/liftoff-2.3.0.tgz",
-      "dependencies": {
-        "findup-sync": {
-          "version": "0.4.2",
-          "from": "findup-sync@>=0.4.2 <0.5.0",
-          "resolved": "https://registry.npmjs.org/findup-sync/-/findup-sync-0.4.2.tgz"
-        }
-      }
+      "resolved": "https://registry.npmjs.org/liftoff/-/liftoff-2.3.0.tgz"
     },
     "load-json-file": {
       "version": "1.1.0",
@@ -2696,6 +2694,16 @@
       "from": "request@>=2.69.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/request/-/request-2.75.0.tgz"
     },
+    "require-directory": {
+      "version": "2.1.1",
+      "from": "require-directory@>=2.1.1 <3.0.0",
+      "resolved": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz"
+    },
+    "require-main-filename": {
+      "version": "1.0.1",
+      "from": "require-main-filename@>=1.0.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/require-main-filename/-/require-main-filename-1.0.1.tgz"
+    },
     "resolve": {
       "version": "1.1.7",
       "from": "resolve@>=1.0.0 <2.0.0",
@@ -2718,7 +2726,7 @@
       "dependencies": {
         "bluebird": {
           "version": "3.4.6",
-          "from": "bluebird@>=3.1.1 <4.0.0",
+          "from": "bluebird@^3.1.1",
           "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz"
         }
       }
@@ -2765,7 +2773,7 @@
     },
     "sequelize": {
       "version": "3.24.3",
-      "from": "sequelize@>=3.19.0 <4.0.0",
+      "from": "sequelize@latest",
       "resolved": "https://registry.npmjs.org/sequelize/-/sequelize-3.24.3.tgz",
       "dependencies": {
         "bluebird": {
@@ -2786,43 +2794,70 @@
       }
     },
     "sequelize-cli": {
-      "version": "2.3.1",
-      "from": "sequelize-cli@2.3.1",
-      "resolved": "https://registry.npmjs.org/sequelize-cli/-/sequelize-cli-2.3.1.tgz",
+      "version": "2.4.0",
+      "from": "sequelize-cli@latest",
+      "resolved": "https://registry.npmjs.org/sequelize-cli/-/sequelize-cli-2.4.0.tgz",
       "dependencies": {
         "bluebird": {
           "version": "3.4.6",
-          "from": "bluebird@>=3.0.6 <4.0.0",
+          "from": "bluebird@>=3.3.4 <4.0.0",
           "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz"
         },
         "lodash": {
           "version": "4.16.4",
-          "from": "lodash@>=4.0.0 <5.0.0",
+          "from": "lodash@>=4.10.0 <5.0.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.4.tgz"
+        },
+        "lodash.assign": {
+          "version": "4.2.0",
+          "from": "lodash.assign@>=4.0.3 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash.assign/-/lodash.assign-4.2.0.tgz"
+        },
+        "window-size": {
+          "version": "0.2.0",
+          "from": "window-size@>=0.2.0 <0.3.0",
+          "resolved": "https://registry.npmjs.org/window-size/-/window-size-0.2.0.tgz"
+        },
+        "yargs": {
+          "version": "4.8.1",
+          "from": "yargs@>=4.2.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/yargs/-/yargs-4.8.1.tgz"
         }
       }
     },
     "sequelize-fixtures": {
-      "version": "0.4.10",
-      "from": "sequelize-fixtures@>=0.4.8 <0.5.0",
-      "resolved": "https://registry.npmjs.org/sequelize-fixtures/-/sequelize-fixtures-0.4.10.tgz",
+      "version": "0.5.5",
+      "from": "sequelize-fixtures@latest",
+      "resolved": "https://registry.npmjs.org/sequelize-fixtures/-/sequelize-fixtures-0.5.5.tgz",
       "dependencies": {
         "glob": {
-          "version": "3.2.11",
-          "from": "glob@>=3.2.1 <3.3.0",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-3.2.11.tgz"
+          "version": "7.0.6",
+          "from": "glob@>=7.0.5 <7.1.0",
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
         },
-        "minimatch": {
-          "version": "0.3.0",
-          "from": "minimatch@>=0.3.0 <0.4.0",
-          "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-0.3.0.tgz"
+        "object-assign": {
+          "version": "4.1.0",
+          "from": "object-assign@>=4.0.1 <5.0.0",
+          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz"
         }
       }
     },
     "sequelize-slugify": {
-      "version": "0.1.1",
-      "from": "sequelize-slugify@>=0.1.1 <0.2.0",
-      "resolved": "https://registry.npmjs.org/sequelize-slugify/-/sequelize-slugify-0.1.1.tgz"
+      "version": "0.4.0",
+      "from": "sequelize-slugify@latest",
+      "resolved": "https://registry.npmjs.org/sequelize-slugify/-/sequelize-slugify-0.4.0.tgz",
+      "dependencies": {
+        "bluebird": {
+          "version": "3.4.6",
+          "from": "bluebird@>=3.3.3 <4.0.0",
+          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz"
+        },
+        "lodash": {
+          "version": "4.16.4",
+          "from": "lodash@>=4.5.1 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.4.tgz"
+        }
+      }
     },
     "sequencify": {
       "version": "0.0.7",
@@ -3152,17 +3187,17 @@
     },
     "umzug": {
       "version": "1.11.0",
-      "from": "umzug@>=1.8.0 <2.0.0",
+      "from": "umzug@>=1.9.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/umzug/-/umzug-1.11.0.tgz",
       "dependencies": {
         "bluebird": {
           "version": "3.4.6",
-          "from": "bluebird@>=3.0.1 <4.0.0",
+          "from": "bluebird@^3.0.1",
           "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz"
         },
         "lodash": {
           "version": "4.16.4",
-          "from": "lodash@>=4.3.0 <5.0.0",
+          "from": "lodash@^4.3.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.4.tgz"
         }
       }
@@ -3331,6 +3366,11 @@
       "from": "which@>=1.2.10 <2.0.0",
       "resolved": "https://registry.npmjs.org/which/-/which-1.2.11.tgz"
     },
+    "which-module": {
+      "version": "1.0.0",
+      "from": "which-module@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/which-module/-/which-module-1.0.0.tgz"
+    },
     "wide-align": {
       "version": "1.1.0",
       "from": "wide-align@>=1.1.0 <2.0.0",
@@ -3407,6 +3447,23 @@
           "version": "2.1.1",
           "from": "camelcase@>=2.0.1 <3.0.0",
           "resolved": "https://registry.npmjs.org/camelcase/-/camelcase-2.1.1.tgz"
+        }
+      }
+    },
+    "yargs-parser": {
+      "version": "2.4.1",
+      "from": "yargs-parser@>=2.4.1 <3.0.0",
+      "resolved": "https://registry.npmjs.com/yargs-parser/-/yargs-parser-2.4.1.tgz",
+      "dependencies": {
+        "camelcase": {
+          "version": "3.0.0",
+          "from": "camelcase@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/camelcase/-/camelcase-3.0.0.tgz"
+        },
+        "lodash.assign": {
+          "version": "4.2.0",
+          "from": "lodash.assign@^4.0.6",
+          "resolved": "https://registry.npmjs.org/lodash.assign/-/lodash.assign-4.2.0.tgz"
         }
       }
     }
