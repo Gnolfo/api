@@ -1,9 +1,25 @@
+/**
+ * @module models/api/subscription_payments
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var DataTypes = require('sequelize');
 var db = require('../../config/sequelize');
 
 var Subscription = require('./subscriptions');
 var User = require('./users');
 
+/**
+ * Subscription Payment Schema
+ * @type {object}
+ * @property {number} id - Unique ID
+ * @property {number} user_id - User ID making the payment
+ * @property {number} subscription_id - Subscription ID user is Subscribed to
+ * @property {enum} payment_type=monthly - Type of Payment ['monthly','annual']
+ * @property {float} payment_amount - Amount of Payment
+ * @property {timestamp} payment_date=NOW - Date Payment was Received
+ */
 var SubscriptionPayment = db.dbApi.define('subscription_payments', {
   id: {
     type: DataTypes.INTEGER(10).UNSIGNED,

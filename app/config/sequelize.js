@@ -1,3 +1,7 @@
+/**
+ * @module config/sequelize
+ */
+
 var Sequelize = require('sequelize');
 var config = require('./index');
 var env = config.get('env');
@@ -7,6 +11,10 @@ var dbUser = config.get('database.api.username');
 var dbPass = config.get('database.api.password');
 var dbHost = config.get('database.api.host');
 
+/**
+ * Sequelize Options
+ * @type {{host: *, port: number, dialect: string, logging: null, define: {freezeTableName: boolean, underscored: boolean, charset: string, collate: string, timestamps: boolean, paranoid: boolean, createdAt: string, updatedAt: string}}}
+ */
 var dbOptions = {
   host: dbHost,
   port: 3306,
@@ -26,8 +34,7 @@ var dbOptions = {
 
 var dbApi = new Sequelize( dbName, dbUser, dbPass, dbOptions );
 
-dbApi
-  .authenticate()
+dbApi.authenticate()
   .then(function () {
     console.log('Connection has been established successfully');
   })

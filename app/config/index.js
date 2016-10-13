@@ -1,8 +1,41 @@
+/**
+ * @module config
+ */
+
 var path = require('path');
 var convict = require('convict');
 
 /**
- * Convict config schema
+ * Default API Configuration
+ * @type {object}
+ * @property {boolean} debug=false - Whether debugging is on or off
+ * @property {string} debugKey - Allow for apiDevKey param in API to check API results without token
+ * @property {enum} env=local - The current application environment ['local', 'mobile', 'staging', 'production' ]
+ * @property {number} port=5000 - The port to bind to
+ * @property {string} version=v1 - API Version Number ( in URL )
+ * @property {string} sessionKey - Express Session Key
+ * @property {boolean} inviteOnly=false - Whether Invite Only System should be Active
+ * @property {number} inviteCap=15 - Invitation Cap Per User
+ * @property {string} bugsnag - Bugsnag API Key
+ * @property {object} hashID - Settings for Hash ID
+ * @property {string} hashID.secret - Hash ID Encryption Key
+ * @property {number} hashID.length=6 - Hash ID String Length
+ * @property {string} hashID.alphabet=BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz - Hash ID Alphabet to use if creating Hashes ( remove vowels to prevent accidental words )
+ * @property {object} database - Main Database Config Object
+ * @property {object} database.api - Database Settings for API
+ * @property {string} database.api.host=localhost - API MySQL Host
+ * @property {string} database.api.database=api_database - API MySQL Database
+ * @property {string} database.api.username=root - API MySQL Username
+ * @property {string} database.api.password - API MySQL Password
+ * @property {string} secret - App Secret Key
+ * @property {object} router - Router Settings
+ * @property {boolean} router.caseSensitive=true - Whether routes are case-sensitive
+ * @property {boolean} router.mergeParams=true - Whether child routes should merge with parent route params
+ * @property {object} elasticsearch - Elasticsearch Settings
+ * @property {string} elasticsearch.host - The Elasticsearch host/connection string/URL
+ * @property {string} elasticsearch.indexName - The name of the API Elasticsearch index
+ * @property {object} mandrill - Mandrill Settings
+ * @property {string} mandrill.key - API Key for Mandrill, which is used for sending email. Can be retrieved/changed at: {@link https://mandrillapp.com/settings/}
  */
 var config = convict({
   debug: {
@@ -14,7 +47,7 @@ var config = convict({
   debugKey: {
     doc: 'Allow for apiDevKey param in API to check API results without token',
     format: String,
-    default: 'P6zKj29yauZJDjFV',
+    default: '',
     env: 'API_DEBUG_KEY'
   },
   env: {
@@ -30,7 +63,7 @@ var config = convict({
     env: 'API_PORT'
   },
   version: {
-    doc: 'API Version Number',
+    doc: 'API Version Number ( in URL )',
     format: String,
     default: 'v1',
     env: 'API_API_VERSION'
@@ -38,11 +71,11 @@ var config = convict({
   sessionKey: {
     doc: 'Express Session Key',
     format: String,
-    default: '94F862AD-5A17-A414-F199-3CE9B8AC8E1C',
+    default: '',
     env: 'API_SESSION_KEY'
   },
   inviteOnly: {
-    doc: 'Invite Only',
+    doc: 'Whether Invite Only System should be Active',
     format: Boolean,
     default: false,
     env: 'API_INVITE_ONLY'
@@ -63,7 +96,7 @@ var config = convict({
     secret: {
       doc: 'Hash ID Encryption Key',
       format: String,
-      default: '60A9392B-710C-9C34-E9B0-B80412CB0341',
+      default: '',
       env: 'API_HASH_ID_SECRET'
     },
     length: {
@@ -110,7 +143,7 @@ var config = convict({
   secret: {
     doc: 'App secret key',
     format: String,
-    default: '45c723a8a5efffa02b724a74be4be289',
+    default: '',
     env: 'API_APP_SECRET'
   },
   router: {
@@ -124,12 +157,6 @@ var config = convict({
       format: Boolean,
       default: true
     }
-  },
-  sentry_dsn: {
-    doc: 'The Sentry DSN for Sentry logging',
-    format: String,
-    env: 'API_SENTRY_DSN',
-    default: ''
   },
   elasticsearch: {
     host: {

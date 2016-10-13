@@ -1,3 +1,9 @@
+/**
+ * @module domain/util
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var slug = require('slug');
 
@@ -8,9 +14,8 @@ var slug = require('slug');
 module.exports = {
   /**
    * Slugify method stolen from Sequelize Slugify module
-   * @param  {object} data        Data object with slug source data
-   * @param  {object} slugOptions Slug options, should have `source` key as
-   *                              an array of field to use for source for slug
+   * @param {object} data - Data object with slug source data
+   * @param {object} slugOptions - Slug options, should have `source` key as an array of field to use for source for slug
    * @return {string}
    */
   slugify: function (data, slugOptions){
@@ -21,9 +26,7 @@ module.exports = {
   },
 
   /**
-   * Takes a string of comma-separated numbers, e.g. "1,5,7",
-   * splits by comma and returns an array of integers, pruning
-   * out anything that's not an integer
+   * Takes a string of comma-separated numbers, e.g. "1,5,7", splits by comma and returns an array of integers, pruning out anything that's not an integer
    * @param  {string} str Comma-separated numbers
    * @return {array}
    */

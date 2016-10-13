@@ -1,8 +1,22 @@
+/**
+ * @module models/api/user_activity
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var DataTypes = require('sequelize');
 var db = require('../../config/sequelize');
 
 var User = require('./users');
 
+/**
+ * User Activity Schema
+ * @type {object}
+ * @property {number} id - Unique ID
+ * @property {number} user_id - Unique User ID
+ * @property {number} [follow_user_id] - Unique User ID of User that is being Followed
+ * @property {enum} type=login - Type of Activity ['changed_email', 'changed_password', 'changed_username', 'closed_account', 'comment_liked', 'created_account', 'downgraded_account', 'followed_user', 'left_comment', 'liked_comment', 'login', 'logout', 'received_comment', 'reset_password', 'upgraded_account', 'user_followed']
+ */
 var UserActivity = db.dbApi.define('user_activity', {
   id: {
     type: DataTypes.INTEGER(10).UNSIGNED,
@@ -13,6 +27,10 @@ var UserActivity = db.dbApi.define('user_activity', {
   user_id: {
     type: DataTypes.INTEGER(10).UNSIGNED,
     allowNull: false
+  },
+  follow_user_id: {
+    type: DataTypes.INTEGER(10).UNSIGNED,
+    allowNull: true
   },
   type: {
     type: DataTypes.ENUM(
@@ -26,7 +44,6 @@ var UserActivity = db.dbApi.define('user_activity', {
       'followed_user',
       'left_comment',
       'liked_comment',
-      'liked_project',
       'login',
       'logout',
       'received_comment',
@@ -36,18 +53,6 @@ var UserActivity = db.dbApi.define('user_activity', {
     ),
     allowNull: false,
     defaultValue: 'login'
-  },
-  project_id: {
-    type: DataTypes.INTEGER(10).UNSIGNED,
-    allowNull: true
-  },
-  follow_user_id: {
-    type: DataTypes.INTEGER(10).UNSIGNED,
-    allowNull: true
-  },
-  collection_id: {
-    type: DataTypes.INTEGER(10).UNSIGNED,
-    allowNull: true
   }
 }, {
   indexes: [
@@ -60,6 +65,9 @@ var UserActivity = db.dbApi.define('user_activity', {
   ]
 });
 
+/**
+ * Connect Activity to User
+ */
 UserActivity.belongsTo(User, {
   foreignKey: 'user_id',
   targetKey: 'id',
@@ -68,6 +76,9 @@ UserActivity.belongsTo(User, {
   allowNull: false
 });
 
+/**
+ * Connect User to Follower
+ */
 UserActivity.belongsTo(User, {
   foreignKey: 'follow_user_id',
   targetKey: 'id',
@@ -76,6 +87,9 @@ UserActivity.belongsTo(User, {
   allowNull: true
 });
 
+/**
+ * Setup Relationships of Users and Followers
+ */
 User.hasMany(UserActivity, { foreignKey: 'user_id', allowNull: true });
 User.hasMany(UserActivity, { foreignKey: 'follow_user_id', allowNull: true });
 

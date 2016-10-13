@@ -1,3 +1,9 @@
+/**
+ * @module domain/util/registration
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var Promise = require('bluebird');
 var randomString = require('randomstring');
@@ -12,9 +18,22 @@ var Hashids = require('hashids');
 
 var hashID = new Hashids(config.get('hashID.secret'), config.get('hashID.length'), config.get('hashID.alphabet'));
 
+/**
+ * Registration
+ * @type {object}
+ */
 module.exports = {
+
+  /**
+   * Confirmation Key Length
+   * @constant {number}
+   */
   CONFIRMATION_KEY_LENGTH: 12,
 
+  /**
+   * Extensive List of Usernames that cannot be used
+   * @constant {array}
+   */
   INVALID_NAMES: [
     '400', '401', '403', '404', '500', 'about', 'abuse', 'account', 'account', 'add', 'admin', 'administration',
     'administrator', 'advertise', 'affiliate', 'affiliates', 'ajax', 'api', 'app', 'apps', 'auth', 'autoconfig',
@@ -248,7 +267,7 @@ module.exports = {
 
   /**
    * Activate account matching passed in new_email_key value
-   * @param  {string} key Activation key to find a match for
+   * @param {string} key Activation key to find a match for
    * @return {object} Returns promise that passes the user if found
    */
   confirmEmail: function(key) {
@@ -335,7 +354,7 @@ module.exports = {
 
   /**
    * User Password Recover
-   * @param  {object} data to find a match for and sets `new_password_key` & `new_password_requested`
+   * @param {object} data to find a match for and sets `new_password_key` & `new_password_requested`
    * @return {object} Returns promise that passes the user if found
    */
   forgotPassword: function(data) {
@@ -408,7 +427,7 @@ module.exports = {
 
   /**
    * Reset Password if token is valid and not older than 24 hours, and passwords match
-   * @param  {object} data to find a match for and sets `token` & `password` & `retype_password`
+   * @param  {object} id to find a match for and sets `token` & `password` & `retype_password`
    * @return {object} Returns promise that passes the user if found
    */
   resendConfirmation: function(id) {

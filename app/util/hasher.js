@@ -1,3 +1,9 @@
+/**
+ * @module util/hasher
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var bcrypt = require('bcrypt');
 var Promise = require('bluebird');
 
@@ -5,6 +11,7 @@ var SALT_LENGTH = 8;
 
 /**
  * Promise-based encryption generation and verification
+ * @type {object}
  */
 module.exports = {
 

@@ -1,8 +1,24 @@
+/**
+ * @module domain/search
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var User = require('../../../models/api/users');
 var md5 = require('md5');
 
-var SearchDomain = {
+/**
+ * Domain Search
+ * @type {object}
+ */
+module.exports = {
+  /**
+   * Search Users
+   * @param {object} params - Search Parameters
+   * @param {object} params.query - Search Query
+   * @returns {*}
+   */
   users: function(params){
     if (params) {
       return User.findAll({
@@ -61,5 +77,3 @@ var SearchDomain = {
     }
   }
 };
-
-module.exports = SearchDomain;

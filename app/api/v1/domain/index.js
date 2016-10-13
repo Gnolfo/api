@@ -1,3 +1,12 @@
+/**
+ * @module domain
+ * @version 1.0.0
+ */
+
+/**
+ * Domain
+ * @type {object}
+ */
 module.exports = {
   Category: require('./category'),
   Email: require('./email'),

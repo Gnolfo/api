@@ -1,3 +1,9 @@
+/**
+ * @module elasticsearch/create/user
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var Promise = require('bluebird');
 var config = require('../../config');
 var client = require('../client');
@@ -7,12 +13,20 @@ var env = config.get('env');
 var indexType = env + '_user';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * User Mapping
+ * @type {{index: string, type: string, body: {}}}
+ */
 var mapping = {
   index: indexName,
   type: indexType,
   body: {}
 };
 
+/**
+ * User Mapping Body
+ * @type {{properties: {activated: {type: string}, username: {type: string}, first_name: {type: string}, last_name: {type: string}, company_name: {type: string}, profile_name: {type: string}, location: {type: string}, profile_link_website: {type: string}, profile_link_twitter: {type: string}, profile_link_1: {type: string}, profile_link_2: {type: string}, profile_link_3: {type: string}, banned: {type: string}}}}
+ */
 mapping.body[indexType] = {
   properties: {
     activated: {
@@ -57,6 +71,10 @@ mapping.body[indexType] = {
   }
 };
 
+/**
+ * Create User Index
+ * @type {object}
+ */
 var User = client.indices.exists({
   index: indexName
 }).then(function(exists) {

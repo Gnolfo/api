@@ -1,3 +1,9 @@
+/**
+ * @module routes
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var express = require('express');
 var config = require('../../../config');
 var unauthorized = require('./unauthorized');
@@ -12,6 +18,7 @@ var search = require('./search');
 var API_VERSION = config.get('version');
 
 var router = express.Router(config.router);
+
 router.use('/' + API_VERSION + '/', unauthorized);
 router.use('/' + API_VERSION + '/', categories);
 router.use('/' + API_VERSION + '/', tags);

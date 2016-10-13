@@ -1,3 +1,9 @@
+/**
+ * @module elasticsearch/create/tag
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var config = require('../../config');
 var client = require('../client');
 var debug = require('../../debug');
@@ -6,12 +12,20 @@ var env = config.get('env');
 var indexType = env + '_tag';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * Tag Mapping
+ * @type {{index: string, type: string, body: {}}}
+ */
 var mapping = {
   index: indexName,
   type: indexType,
   body: {}
 };
 
+/**
+ * Tag Mapping Body
+ * @type {{properties: {id: {type: string}, parent_id: {type: string}, name: {type: string}, slug: {type: string}}}}
+ */
 mapping.body[indexType] = {
   properties: {
     name: {
@@ -23,6 +37,10 @@ mapping.body[indexType] = {
   }
 };
 
+/**
+ * Create Tag Index
+ * @type {object}
+ */
 var Tag = client.indices.create({
   index: indexName
 })

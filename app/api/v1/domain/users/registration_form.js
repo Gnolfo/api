@@ -1,7 +1,17 @@
+/**
+ * @module domain/util/registration_form
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var validate = require('validate.js');
 var BaseForm = require('../../../../forms/base');
 var User = require('../../../../models/api/users');
 
+/**
+ * Registration Form Validation
+ * @type {object}
+ */
 module.exports = BaseForm.extend({
   constraints: {
     username: {

@@ -1,3 +1,9 @@
+/**
+ * @module routes/tags
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var express = require('express');
 var validator = require('validator');
 var _ = require('lodash');
@@ -13,6 +19,14 @@ var env = config.get('env');
 var indexType = env + '_tag';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * Tags
+ * @memberof module:routes/tags
+ * @name [GET] /tags
+ * @property {number} [pageSize=30] - Set Number of Results per Page
+ * @property {number} [page=1] - Result Page to Load
+ * @property {boolean} [pretty=false] - Format JSON response to be human readable
+ */
 router.route('/tags').get(function(request, response) {
 
   // Defaults

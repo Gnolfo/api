@@ -1,10 +1,24 @@
+/**
+ * @module domain/profile
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var Activity = require('../../../models/api/user_activity');
 var User = require('../../../models/api/users');
 var md5 = require('md5');
 
-var Profile = {
-
+/**
+ * Domain Profile
+ * @type {object}
+ */
+module.exports = {
+  /**
+   * Get User Activity
+   * @param {number} userId - User ID
+   * @returns {*}
+   */
   getActivity: function(userId) {
     if (userId) {
       return Activity.findAll({
@@ -70,9 +84,11 @@ var Profile = {
     }
   },
 
+  /**
+   * Get Notifications
+   * @param {number} userId - User ID
+   */
   getNotifications: function(userId) {
 
   }
 };
-
-module.exports = Profile;

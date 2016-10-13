@@ -1,8 +1,29 @@
+/**
+ * @module models/api/user_settings_notifications
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var DataTypes = require('sequelize');
 var db = require('../../config/sequelize');
 
 var User = require('./users');
 
+/**
+ * User Setting Notification Schema
+ * @type {object}
+ * @property {number} id - Unique ID
+ * @property {number} user_id - Unique User ID
+ * @property {boolean} [email_comment_left=true] - Notification Setting for Email Comment Left
+ * @property {boolean} [email_comment_liked=true] - Notification Setting for Email Comment Liked
+ * @property {boolean} [email_someone_follows=true] - Notification Setting for Email Someone Follows
+ * @property {boolean} [email_mentioned_in_comment=true] - Notification Setting for Email Mentioned in Comment
+ * @property {boolean} [web_comment_left=true] - Notification Setting for Web Comment Left
+ * @property {boolean} [web_comment_liked=true] - Notification Setting for Web Comment Liked
+ * @property {boolean} [web_someone_follows=true] - Notification Setting for Web Someone Follows
+ * @property {boolean} [web_mentioned_in_comment=true] - Notification Setting for Web Mentioned in Comment
+ * @property {boolean} [newsletter=true] - Whether User is Subscribed to Newsletter
+ */
 var UserSettingNotification = db.dbApi.define('user_settings_notifications', {
   id: {
     type: DataTypes.INTEGER(10).UNSIGNED,
@@ -95,6 +116,9 @@ var UserSettingNotification = db.dbApi.define('user_settings_notifications', {
   ]
 });
 
+/**
+ * Connect Notification Settings to User
+ */
 UserSettingNotification.belongsTo(User, {
   foreignKey: 'user_id',
   targetKey: 'id',

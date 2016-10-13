@@ -1,3 +1,9 @@
+/**
+ * @module elasticsearch/update/user
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var config = require('../../config');
 var elasticsearchClient = require('../client');
@@ -10,6 +16,10 @@ var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 var UserModel = require('../../models/api/users');
 var UserDomain = require('../../api/v1/domain/user');
 
+/**
+ * Update User Index
+ * @type {{update: UserES.update}}
+ */
 var UserES = {
   update: function(userId){
 

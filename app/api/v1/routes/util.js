@@ -1,16 +1,25 @@
+/**
+ * @module routes/util
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var request = require('request');
 var config = require('../../../config');
-var Promise = require('bluebird');
 var Activity = require('../../../models/api/user_activity');
 var Login = require('../../../models/api/user_login');
 var jwt = require('jsonwebtoken');
 
 module.exports = {
+
+  /**
+   * Default Response Template
+   */
   defaultResponse: {
     error: false,
-    errors: [], // List of general errors
-    field_errors: {}, // Field-specific object consisting of arrays of error messages keyed by field name
+    errors: [],
+    field_errors: {},
     meta: {
       total: 0,
       showing: 0,
@@ -22,7 +31,7 @@ module.exports = {
 
   /**
    * Extend `defaultResponse` with the passed in object, pass the result into `response.json()`
-   * @param  {object} data Data object to fill response with
+   * @param  {object} data - Data object to fill response with
    * @return {object}
    */
   createAPIResponse: function(data) {
@@ -67,6 +76,11 @@ module.exports = {
     return response;
   },
 
+  /**
+   * Make Remote HTTP call to {@link http://ipinfodb.com/ip_location_api.php} API to convert IP Address to Geoocation
+   * @param {string} ip - IP Address
+   * @param {callback} callback - Requested Callback Handler
+   */
   getGeoLocation: function(ip, callback){
 
     var params = {
@@ -96,6 +110,11 @@ module.exports = {
     });
   },
 
+  /**
+   * Track User Login
+   * @param {object} user - User Object
+   * @param {object} request - Node HTTP Request
+   */
   trackLogin: function(user, request){
 
     var ipAddress = request.headers['x-forwarded-for'];
@@ -118,6 +137,14 @@ module.exports = {
     });
   },
 
+  /**
+   * Track User Activity
+   * @param {number} user_id - Logged In User ID
+   * @param {string} type - Type of User Activity
+   * @param {object} data - Data to Track
+   * @param {callback} callback - Requested Callback Handler
+   * @returns {*}
+   */
   trackActivity: function(user_id, type, data, callback){
     if(user_id && type){
 
@@ -138,6 +165,12 @@ module.exports = {
     }
   },
 
+  /**
+   * Check if User is Valid
+   * @param {object} request - HTTP Request
+   * @param {callback} callback - Requested Callback Handler
+   * @returns {*}
+   */
   isValidUser: function(request, callback){
 
     var headerToken = (request.headers.authorization) ? request.headers.authorization.replace('Bearer ', '') : null;

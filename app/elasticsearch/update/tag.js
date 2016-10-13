@@ -1,3 +1,9 @@
+/**
+ * @module elasticsearch/update/tag
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var config = require('../../config');
 var elasticsearchClient = require('../client');
@@ -9,6 +15,10 @@ var env = config.get('env');
 var indexType = env + '_tag';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * Update Tag Index
+ * @type {{update: TagES.update}}
+ */
 var TagES = {
   update: function(){
     elasticsearchClient.search({

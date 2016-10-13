@@ -2,10 +2,15 @@
   "name": "api",
   "version": "1.0.0",
   "description": "API",
+  "license": "UNLICENSED",
+  "private": true,
   "main": "index.js",
+  "engines": {
+    "node": "6.x"
+  },
   "scripts": {
     "test": "node ./node_modules/jshint/bin/jshint --reporter=node_modules/jshint-stylish . && NODE_ENV=test mocha $(find ./test/ -name '*_test.js') --require test/bootstrap",
-    "start": "npm run cleanup && node ./node_modules/forever/bin/forever start -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
+    "start": "npm run cleanup && npm run docs && node ./node_modules/forever/bin/forever start -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
     "start:debug": "DEBUG=express:* ./node_modules/nodemon/bin/nodemon.js index.js",
     "stop": "node ./node_modules/forever/bin/forever stop -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
     "migrate": "cd ./app && sequelize db:migrate && cd ../",
@@ -13,14 +18,15 @@
     "cleanup": "rm ~/.forever/*.log && rm *.log",
     "elasticsearch:create": "cd ./app && node ./elasticsearch/create && cd ../",
     "elasticsearch:update": "cd ./app && node ./elasticsearch/update && cd ../",
-    "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd ../"
+    "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd ../",
+    "docs": "jsdoc -c ./doc-conf.json -r ./app -R ./apiary.apib -d ./app/static/docs -t ./node_modules/ink-docstrap/template",
+    "docs:clean": "rm -r ./app/static/docs || true"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/api/api.git"
   },
   "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/api/api/issues"
   },
@@ -70,6 +76,8 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "chai-passport-strategy": "^0.2.0",
+    "ink-docstrap": "^1.3.0",
+    "jsdoc": "^3.4.2",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.0.1",
     "mocha": "^2.3.0",

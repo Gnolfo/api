@@ -1,6 +1,21 @@
+/**
+ * @module domain/category
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 
-var Category = {
+/**
+ * Category
+ * @type {object}
+ */
+module.exports = {
+  /**
+   * Prepare For API Output
+   * @param {object} data - Data to be processed for API Output
+   * @return {object}
+   */
   prepareForAPIOutput: function(data) {
     var fields = ['id', 'parent_id', 'name', 'slug'];
     var prepared = _.pick(data._source, fields);
@@ -13,8 +28,18 @@ var Category = {
 
     return prepared;
   },
-  prepareForElasticSearch: function(data) {
 
+  /**
+   * Prepare For Elastic Search
+   * @param {object} data - Data to be Processed for Elastic Search
+   * @param {number} data.id - Category ID
+   * @param {number} data.parent_id - Category Parent ID
+   * @param {string} data.name - Category Name
+   * @param {string} data.slug - Category Slug
+   * @param {object} data.subcategories - Category Subcategories
+   * @return {object}
+   */
+  prepareForElasticSearch: function(data) {
     var prepData = {
       id: data.id,
       parent_id: data.parent_id,
@@ -35,6 +60,3 @@ var Category = {
     return prepData;
   }
 };
-
-
-module.exports = Category;

@@ -1,3 +1,9 @@
+/**
+ * @module routes/categories
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var express = require('express');
 var validator = require('validator');
 var _ = require('lodash');
@@ -13,6 +19,15 @@ var env = config.get('env');
 var indexType = env + '_category';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * [GET] Categories
+ * @memberof module:routes/categories
+ * @name /categories/:slug?
+ * @property {string} [slug] - Specific Category Slug
+ * @property {number} [pageSize=30] - Set Number of Results per Page
+ * @property {number} [page=1] - Result Page to Load
+ * @property {boolean} [pretty=false] - Format JSON response to be human readable
+ */
 router.route('/categories/:slug?').get(function(request, response) {
 
   // Defaults

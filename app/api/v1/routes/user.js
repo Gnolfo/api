@@ -1,3 +1,9 @@
+/**
+ * @module routes/user
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var express = require('express');
 var moment = require('moment');
 var passport = require('passport');
@@ -11,10 +17,18 @@ var router = express.Router(config.router);
 var elasticsearchClient = require('../../../elasticsearch/client');
 
 /**
- * Users
+ * User Registration
+ * @memberof module:routes/user
+ * @name [POST] /user/register
+ * @property {string} username - Requested Username ( 3-30 `a-zA-Z0-9_` Characters )
+ * @property {string} password - User Password ( must be at least 6 characters in length )
+ * @property {string} retype_password - Retyped Password ( must match `password` )
+ * @property {string} [inviteCode] - Invitation Code ( might be required by API for users to register )
+ * @property {string} first_name - First Name of User
+ * @property {string} last_name - Last Name of User
+ * @property {string} email - Users Email Addresses
+ * @property {string} agree - User Indicated that they Agreed to the Terms of Service
  */
-
-// User registration
 router.route('/user/register').post(function(request, response) {
   registration.register(request.body)
   .then(function(user) {
@@ -34,7 +48,12 @@ router.route('/user/register').post(function(request, response) {
   });
 });
 
-// User email confirmation
+/**
+ * User Confirm Account
+ * @memberof module:routes/user
+ * @name [POST] /user/confirm/account
+ * @property {string} key - Account Confirmation Key, Must Match `new_email_key` in Database
+ */
 router.route('/user/confirm/account').post(function(request, response) {
   registration.confirmAccount(request.body.key)
   .then(function(user) {
@@ -56,6 +75,12 @@ router.route('/user/confirm/account').post(function(request, response) {
   });
 });
 
+/**
+ * User Confirm Email
+ * @memberof module:routes/user
+ * @name [POST] /user/confirm/email
+ * @property {string} key - Email Confirmation Key, Must Match `new_email_key` in Database
+ */
 router.route('/user/confirm/email').post(function(request, response) {
   registration.confirmEmail(request.body.key)
   .then(function(user) {
@@ -77,6 +102,12 @@ router.route('/user/confirm/email').post(function(request, response) {
   });
 });
 
+/**
+ * User Confirm Password
+ * @memberof module:routes/user
+ * @name [POST] /user/confirm/password
+ * @property {string} key - Password Confirmation Key, Must Match `new_password_key` in Database
+ */
 router.route('/user/confirm/password').post(function(request, response) {
   registration.confirmPassword(request.body.key)
   .then(function(user) {
@@ -98,7 +129,13 @@ router.route('/user/confirm/password').post(function(request, response) {
   });
 });
 
-// User login
+/**
+ * User Login
+ * @memberof module:routes/user
+ * @name [POST] /user/login
+ * @property {string} username - Username of Existing Account
+ * @property {string} password - Password of Existing Account
+ */
 router.route('/user/login').post(function(request, response) {
 
   passport.authenticate('local', function(error, user, info) {
@@ -125,7 +162,11 @@ router.route('/user/login').post(function(request, response) {
   })(request, response);
 });
 
-// User logout
+/**
+ * User Logout
+ * @memberof module:routes/user
+ * @name [POST] /user/logout
+ */
 router.route('/user/logout').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
     if(validUserId){
@@ -145,6 +186,17 @@ router.route('/user/logout').post(function(request, response) {
   });
 });
 
+/**
+ * Update User Profile
+ * @memberof module:routes/user
+ * @name [POST] /user/update
+ * @property {string} [new_username] - Allow User to Change Username
+ * @property {string} [username] - Existing Username, Required if also passing over `new_username`
+ * @property {string} [new_email] - Allow User to Change Email Address
+ * @property {string} [email] - Existing Email Address, Required if also passing over `new_email`
+ * @property {string} [new_password] -  Allow User to Change Password
+ * @property {string} password - Existing Password, Required for all changes to accounts
+ */
 router.route('/user/update').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
     if(validUserId){
@@ -302,7 +354,12 @@ router.route('/user/update').post(function(request, response) {
   });
 });
 
-// Delete User Account
+/**
+ * Delete User Account
+ * @memberof module:routes/user
+ * @name [DELETE] /user/delete
+ * @property {string} password - Existing Password, Required to Delete Account
+ */
 router.route('/user/delete').delete(function(request, response) {
 
   util.isValidUser(request, function(validUserId){
@@ -340,9 +397,12 @@ router.route('/user/delete').delete(function(request, response) {
   });
 });
 
-// User token refresh, extracts the token out of the Authorization header
-// and refreshes it, returning a new token under data: {token: '...'}
-
+/**
+ * Refresh User Token
+ * User token refresh, extracts the token out of the Authorization header and refreshes it, returning a new token under data: {token: '...'}
+ * @memberof module:routes/user
+ * @name [POST] /user/refresh
+ */
 router.route('/user/refresh').post(function(request, response) {
   var errorMessage = 'No Authorization header found';
 
@@ -378,7 +438,12 @@ router.route('/user/refresh').post(function(request, response) {
   response.status(400).json(util.createAPIResponse({ errors: [errorMessage] }));
 });
 
-// User forgot password
+/**
+ * User Forgot Password
+ * @memberof module:routes/user
+ * @name [POST] /user/forgot-password
+ * @property {string} email - Email Address user can't remember Password for
+ */
 router.route('/user/forgot-password').post(function(request, response) {
   var ipAddress = request.headers['x-forwarded-for'];
   registration.forgotPassword(request.body)
@@ -401,8 +466,14 @@ router.route('/user/forgot-password').post(function(request, response) {
   });
 });
 
-// User reset password
-
+/**
+ * User Reset Password
+ * @memberof module:routes/user
+ * @name [POST] /user/reset-password
+ * @property {string} password - User Password ( must be at least 6 characters in length )
+ * @property {string} retype_password - Retyped Password ( must match `password` )
+ * @property {string} token - Change Password Token stored in `new_password_key`
+ */
 router.route('/user/reset-password').post(function(request, response) {
   registration.resetPassword(request.body)
   .then(function(user) {
@@ -427,6 +498,12 @@ router.route('/user/reset-password').post(function(request, response) {
   });
 });
 
+/**
+ * User Resend Password
+ * @memberof module:routes/user
+ * @name [GET] /user/resend-confirmation/:id
+ * @property {string} id - This is a Hash ID of the Users ID
+ */
 router.route('/user/resend-confirmation/:id').get(function(request, response) {
   registration.resendConfirmation(request.params.id)
   .then(function(message) {
@@ -443,6 +520,12 @@ router.route('/user/resend-confirmation/:id').get(function(request, response) {
   });
 });
 
+/**
+ * Get Profile for User
+ * @memberof module:routes/user
+ * @name [GET] /user/:username/profile
+ * @property {string} username - Username to Use
+ */
 router.route('/user/:username/profile').get(function(request, response) {
 
   // Defaults
@@ -502,6 +585,12 @@ router.route('/user/:username/profile').get(function(request, response) {
   });
 });
 
+/**
+ * Add Username to Logged In Followers List
+ * @memberof module:routes/user
+ * @name [POST] /user/:username/follow
+ * @property {string} username - Username to Use
+ */
 router.route('/user/:username/follow').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
 
@@ -538,6 +627,12 @@ router.route('/user/:username/follow').post(function(request, response) {
   });
 });
 
+/**
+ * Remove Username to Logged In Followers List
+ * @memberof module:routes/user
+ * @name [POST] /user/:username/unfollow
+ * @property {string} username - Username to Use
+ */
 router.route('/user/:username/unfollow').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
 
@@ -572,6 +667,12 @@ router.route('/user/:username/unfollow').post(function(request, response) {
   });
 });
 
+/**
+ * Get Followers for Username
+ * @memberof module:routes/user
+ * @name [GET] /user/:username/followers
+ * @property {string} username - Username to Use
+ */
 router.route('/user/:username/followers').get(function(request, response) {
   if( !request.params.username){
     response.json(util.createAPIResponse({
@@ -595,6 +696,12 @@ router.route('/user/:username/followers').get(function(request, response) {
     });
 });
 
+/**
+ * Get Users that Username is Following
+ * @memberof module:routes/user
+ * @name [GET] /user/:username/following
+ * @property {string} username - Username to Use
+ */
 router.route('/user/:username/following').get(function(request, response) {
   if( !request.params.username){
     response.json(util.createAPIResponse({
@@ -618,7 +725,12 @@ router.route('/user/:username/following').get(function(request, response) {
     });
 });
 
-// User Invitations
+/**
+ * Get User Invite Keys
+ * @memberof module:routes/user
+ * @name [GET] /user/invite/:key
+ * @property {string} key - This is a Hash ID of the Users ID
+ */
 router.route('/user/invite/:key').get(function(request, response) {
   user.checkInviteCode(request.params.key)
     .then(function(invites) {

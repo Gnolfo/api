@@ -1,3 +1,9 @@
+/**
+ * @module elasticsearch/update/category
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var config = require('../../config');
 var elasticsearchClient = require('../client');
@@ -9,6 +15,10 @@ var env = config.get('env');
 var indexType = env + '_category';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * Update Category Index
+ * @type {{update: CategoryES.update}}
+ */
 var CategoryES = {
   update: function(){
     elasticsearchClient.search({

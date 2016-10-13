@@ -1,3 +1,9 @@
+/**
+ * @module domain/email
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var _ = require('lodash');
 var Promise = require('bluebird');
 var mandrill = require('mandrill-api/mandrill');

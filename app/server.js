@@ -44,7 +44,7 @@ function setupAPI(request, response, next) {
 
   if (request.query.apikey) {
 
-    return model.ApiAuthentication.findOne({ where: { api_key: request.query.apikey }}).then(function(user){
+    return model.API.ApiAuthentication.findOne({ where: { api_key: request.query.apikey }}).then(function(user){
 
       if(user){
         var settings = user.dataValues;
@@ -165,6 +165,9 @@ app.use(session({
 app.use('/favicon.ico', express.static(__dirname + '/static/favicon.ico'));
 app.use('/robots.txt', express.static(__dirname + '/static/robots.txt'));
 app.use('/humans.txt', express.static(__dirname + '/static/humans.txt'));
+app.use('/docs.js', express.static(__dirname + '/static/docs.js'));
+app.use('/docs.css', express.static(__dirname + '/static/docs.css'));
+app.use('/docs', express.static(__dirname + '/static/docs'));
 
 app.use(json);
 app.use(setupAPI);

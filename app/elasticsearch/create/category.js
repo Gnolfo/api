@@ -1,3 +1,9 @@
+/**
+ * @module elasticsearch/create/category
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var config = require('../../config');
 var client = require('../client');
 var debug = require('../../debug');
@@ -6,12 +12,20 @@ var env = config.get('env');
 var indexType = env + '_category';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
+/**
+ * Category Mapping
+ * @type {{index: string, type: string, body: {}}}
+ */
 var mapping = {
   index: indexName,
   type: indexType,
   body: {}
 };
 
+/**
+ * Category Mapping Body
+ * @type {{properties: {id: {type: string}, parent_id: {type: string}, name: {type: string}, slug: {type: string}}}}
+ */
 mapping.body[indexType] = {
   properties: {
     id: {
@@ -29,6 +43,10 @@ mapping.body[indexType] = {
   }
 };
 
+/**
+ * Create Category Index
+ * @type {object}
+ */
 var Category = client.indices.create({
   index: indexName
 })
