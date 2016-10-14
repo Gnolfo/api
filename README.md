@@ -1,6 +1,7 @@
-# Campaign Zero API
+# API
 
-NodeJS application serving the needs of the Campaign Zero Applications.
+[UPDATE INTRO]
+
 
 Table of Contents
 ---
@@ -9,11 +10,11 @@ Table of Contents
 * [Getting Setup](#getting-setup)
 * [Downloading API](#downloading-api)
 * [Server Configuration](#server-configuration)
-* [Database Configuration](#database-configuration)
 * [Elasticsearch Configuration](#database-configuration)
-* [Starting API](#starting-api)
-* [Unit Testing](#unit-testing)
-* [Remote Mobile Testing](#remote-mobile-testing)
+* [Development Scripts](#development-scripts)
+* [Unit Testing and Code Coverage Reports](#unit-testing-and-code-coverage-reports)
+* [Maintaining API](#maintaining-api)
+
 
 Requirements
 ---
@@ -21,7 +22,7 @@ Requirements
 **[⇧ back to top](#table-of-contents)**
 
 * [NodeJS 6.x](https://nodejs.org/en/)
-* [mysql](http://www.mysql.com/)
+* [MySQL](http://www.mysql.com/)
 * [Elasticsearch](https://www.elastic.co/)
 * [Bcrypt](http://bcrypt.sourceforge.net/)
 
@@ -45,6 +46,12 @@ brew install node mysql elasticsearch bcrypt
 
 Please use the requirement links above to review install instructions for each dependency.
 
+#### NPM Packages
+
+```bash
+npm install -g istanbul
+npm install -g sequelize-cli
+```
 
 Downloading API
 ---
@@ -72,11 +79,11 @@ You will need to set the API Environment via:
 set API_NODE_ENV=local
 ```
 
-__The supported environments are:__ ( FYI, you can download the config files for local & remote below )
+__The supported environments are:__ ( FYI, you can download config file samples for local, staging & production below )
 
-* [local](https://gist.githubusercontent.com/manifestinteractive/6b4346b9cf3442226c65/raw/7c1b28bd4d3ff91a8654bc038e0e9421c949895b/local.json)
-* staging
-* production
+* [local](https://gist.github.com/manifestinteractive/7f43bd37a477ca115cb0057896304bbb)
+* [staging](https://gist.github.com/manifestinteractive/78b30cec648748708a7f7d24c84607c1)
+* [production](https://gist.github.com/manifestinteractive/2b4a061bcc2a68c349b0d50b579b8a50)
 
 You can also use Environmental Variables rather than a config file, if that is easier by editing the `~/.bash_profile` file ( or whatever profile file you have ).
 
@@ -88,20 +95,27 @@ __API Environmental Variables:__
 
 ```bash
 export API_DEBUG=true;
+export API_DEBUG_KEY='CHANGE_ME7';
 export API_NODE_ENV='local';
-export API_PORT=5000;
-export API_API_VERSION='0.1';
+export API_PORT=5000
+export API_API_VERSION='v1'
 export API_SESSION_KEY='CHANGE_ME';
+export API_INVITE_ONLY=true;
+export API_INVITE_CAP=15;
 export API_BUGSNAG='CHANGE_ME';
+export API_HASH_ID_SECRET='CHANGE_ME';
+export API_HASH_ID_LENGTH=6;
+export API_HASH_ID_ALPHABET='BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz';
 export API_API_HOST='locahost';
 export API_API_DATABASE='CHANGE_ME';
 export API_API_USERNAME='CHANGE_ME';
 export API_API_PASSWORD='CHANGE_ME';
 export API_APP_SECRET='CHANGE_ME';
-export API_SENTRY_DSN='';
 export API_ELASTIC_SEARCH='http://localhost:9200';
-export API_MANDRILL_API_KEY='';
+export API_MANDRILL_API_KEY='CHANGE_ME';
 ```
+
+You can use [https://guid.it](https://guid.it) to create random strings for stuff like Session Key's and App Secret's.
 
 You will now need to apply these new Environmental Variables
 
@@ -114,65 +128,6 @@ Now you can verify that your settings are applied correctly:
 ```bash
 echo $API_NODE_ENV
 ```
-
-Database Configuration
----
-
-**[⇧ back to top](#table-of-contents)**
-
-For new installs you will need to run the following command ( assuming your env is local and you have already downloaded and updated the local.json file ):
-
-```bash
-set API_NODE_ENV=local && sequelize db:seed --config config/local.json
-```
-
-If you get a error stating `command not found: sequelize` run the following:
-
-```bash
-npm install -g sequelize-cli
-```
-
-__Advanced Options:__ ( You will likely node need the following unless you are managing the database )
-
-You can run the following DB Migrations to automatically manage API Migrations:
-
-```bash
-sequelize db:migrate        # Run pending migrations.
-sequelize db:migrate:undo   # Revert the last migration run.
-sequelize help              # Display this help text.
-sequelize init              # Initializes the project.
-sequelize migration:create  # Generates a new migration file.
-sequelize version           # Prints the version number.
-```
-
-Before you can use Migrations, you will first need to initialize the project ( you will only need to do this once per install ).
-
-```bash
-cd ./app
-sequelize init
-```
-
-To update the API to the latest and greatest, all you need to do is run:
-
-```bash
-cd ./app
-sequelize db:migrate
-```
-
-Screw something up with that migration? Just undo it:
-
-```bash
-cd ./app
-sequelize db:migrate:undo
-```
-
-Need to create a new migration?
-
-```bash
-cd ./app
-sequelize migration:create
-```
-
 
 Elasticsearch Configuration
 ---
@@ -210,46 +165,61 @@ sudo service elasticsearch start
 
 __Manage:__
 
-The API is fueled solely by the data indexed in Elasticsearch. There are a number of commands to run to get your local Elasticsearch index set up.
+There are a number of commands to run to get your local Elasticsearch index set up and maintained.
 
 To create the events index and mappings:
 
 ```bash
-node ./app/elasticsearch/create
+npm run elasticsearch:create
 ```
 
 To delete the index:
 
 ```bash
-node ./app/elasticsearch/delete
+npm run elasticsearch:delete
 ```
 
 To update the index:
 
 ```bash
-node ./app/elasticsearch/update
+npm run elasticsearch:update
 ```
 
-This script will query your database and import all events, nesting their location information, being careful only to index events past the highest event `id` present in the index.
 
-
-Starting API
+Development Scripts
 ---
 
 **[⇧ back to top](#table-of-contents)**
 
-Once you have everything configured required for this API, you can finally start it.
+API Development Scripts:
 
-Run the following to start the API:
+| command                        | description                                                                 |
+|--------------------------------|-----------------------------------------------------------------------------|
+| `npm run start`                | Runs API using `forever` service after running `npm run cleanup`            |
+| `npm run start:debug`          | Starts the API in Debug Mode so you can see Console statements in terminal  |
+| `npm run stop`                 | Stop API when run from `npm start` using `forever`                          |
+| `npm run cleanup`              | Remove files & folders generated by API that are not apart of the code base |
+| `npm run docs`                 | Generate JSDoc Documentation                                                |
+| `npm run docs:clean`           | Remove the JSDoc Documentation Folder in `./static/docs/`                   |
+| `npm run test`                 | Runs complete test suite of Linting, Unit Tests & Code Coverage Reports     |
+| `npm run lint`                 | Tests Javascript Code against Linting Rules                                 |
+| `npm run coverage`             | Generate Code Coverage Reports and Run Unit Tests                           |
+| `npm run check-coverage`       | Check Coverage Reports against Minimum Requirements                         |
+| `npm run migrate`              | Migrate to Latest Database Schema                                           |
+| `npm run migrate:rollback`     | Roll Back Migration Changes                                                 |
+| `npm run seed`                 | Run Seeders in `./seeders` folder                                           |
+| `npm run seed:rollback`        | Undo Seeders                                                                |
+| `npm run elasticsearch:create` | Create Elasticsearch Indexes                                                |
+| `npm run elasticsearch:update` | Update Elasticsearch Indexes                                                |
+| `npm run elasticsearch:delete` | Delete Elasticsearch Indexes                                                |
 
-```bash
-npm start
-```
 
-Unit Testing
+Unit Testing and Code Coverage Reports
 ---
 
 **[⇧ back to top](#table-of-contents)**
+
+#### Unit Tests
 
 Testing is run with [MochaJS](https://mochajs.org/) and uses [ChaiJS](http://chaijs.com/) [assert](http://chaijs.com/api/assert/). All unit tests should go under the `test/` directory and should be named to match up with files in `app/`.
 
@@ -259,8 +229,24 @@ To run unit tests, run:
 npm test
 ```
 
-npm Dependencies and Shrinkwrap
+#### Code Coverage
+
+This will also generate code coverage reports in `./coverage/`.  Unit Tests will automatically fail if Code Coverage reports fall below the following thresholds:
+
+* Statements: 70% 
+* Branches: 50%
+* Functions: 60% 
+* Lines: 70%
+
+#### JSDoc Documentation
+
+Documentation is automatically generates everytime you run `npm start` and can be accessed via http://127.0.0.1:5000/docs/.  
+
+
+Maintaining API
 ---
+
+**[⇧ back to top](#table-of-contents)**
 
 This project uses `npm shrinkwrap` to lock down dependencies so we're better guarded against breaking changes to public packages. If you need to add or update a dependency, in addition updating `package.json` you'll also need to run the following:
 
@@ -276,3 +262,4 @@ Verify that the updated shrinkwrap file doesn't incorporate unexpected changes, 
 
 ```bash
 npm install --save git://github.com/angulartics/angulartics-scroll.git#00167dc1bfa28213f88d8cc3578bb3dc50843309
+```
