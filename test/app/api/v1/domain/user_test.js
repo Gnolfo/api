@@ -776,7 +776,7 @@ describe('Domain User', function() {
 
   describe('usernameInUse', function() {
     beforeEach(function() {
-      this.userStub = this.sandbox.stub(User, 'findAll');
+      this.userStub = this.sandbox.stub(User, 'findOne');
     });
 
     it('should return username is in use', function(done) {
