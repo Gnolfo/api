@@ -234,10 +234,10 @@ npm test
 
 This will also generate code coverage reports in `./coverage/`.  Unit Tests will automatically fail if Code Coverage reports fall below the following thresholds:
 
-* Statements: 70% 
-* Branches: 50%
-* Functions: 60% 
-* Lines: 70%
+* Statements: 80% 
+* Branches: 80%
+* Functions: 80% 
+* Lines: 80%
 
 #### JSDoc Documentation
 
