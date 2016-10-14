@@ -2,6 +2,7 @@
  * @module routes/categories
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ * @todo Create Unit Tests for Routes
  */
 
 var express = require('express');
@@ -28,6 +29,7 @@ var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
  * @property {number} [page=1] - Result Page to Load
  * @property {boolean} [pretty=false] - Format JSON response to be human readable
  */
+/* istanbul ignore next */
 router.route('/categories/:slug?').get(function(request, response) {
 
   // Defaults

@@ -2,6 +2,7 @@
  * @module routes/user
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ * @todo Create Unit Tests for Routes
  */
 
 var express = require('express');
@@ -29,6 +30,7 @@ var elasticsearchClient = require('../../../elasticsearch/client');
  * @property {string} email - Users Email Addresses
  * @property {string} agree - User Indicated that they Agreed to the Terms of Service
  */
+/* istanbul ignore next */
 router.route('/user/register').post(function(request, response) {
   registration.register(request.body)
   .then(function(user) {
@@ -54,6 +56,7 @@ router.route('/user/register').post(function(request, response) {
  * @name [POST] /user/confirm/account
  * @property {string} key - Account Confirmation Key, Must Match `new_email_key` in Database
  */
+/* istanbul ignore next */
 router.route('/user/confirm/account').post(function(request, response) {
   registration.confirmAccount(request.body.key)
   .then(function(user) {
@@ -81,6 +84,7 @@ router.route('/user/confirm/account').post(function(request, response) {
  * @name [POST] /user/confirm/email
  * @property {string} key - Email Confirmation Key, Must Match `new_email_key` in Database
  */
+/* istanbul ignore next */
 router.route('/user/confirm/email').post(function(request, response) {
   registration.confirmEmail(request.body.key)
   .then(function(user) {
@@ -108,6 +112,7 @@ router.route('/user/confirm/email').post(function(request, response) {
  * @name [POST] /user/confirm/password
  * @property {string} key - Password Confirmation Key, Must Match `new_password_key` in Database
  */
+/* istanbul ignore next */
 router.route('/user/confirm/password').post(function(request, response) {
   registration.confirmPassword(request.body.key)
   .then(function(user) {
@@ -136,6 +141,7 @@ router.route('/user/confirm/password').post(function(request, response) {
  * @property {string} username - Username of Existing Account
  * @property {string} password - Password of Existing Account
  */
+/* istanbul ignore next */
 router.route('/user/login').post(function(request, response) {
 
   passport.authenticate('local', function(error, user, info) {
@@ -167,6 +173,7 @@ router.route('/user/login').post(function(request, response) {
  * @memberof module:routes/user
  * @name [POST] /user/logout
  */
+/* istanbul ignore next */
 router.route('/user/logout').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
     if(validUserId){
@@ -197,6 +204,7 @@ router.route('/user/logout').post(function(request, response) {
  * @property {string} [new_password] -  Allow User to Change Password
  * @property {string} password - Existing Password, Required for all changes to accounts
  */
+/* istanbul ignore next */
 router.route('/user/update').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
     if(validUserId){
@@ -360,6 +368,7 @@ router.route('/user/update').post(function(request, response) {
  * @name [DELETE] /user/delete
  * @property {string} password - Existing Password, Required to Delete Account
  */
+/* istanbul ignore next */
 router.route('/user/delete').delete(function(request, response) {
 
   util.isValidUser(request, function(validUserId){
@@ -403,6 +412,7 @@ router.route('/user/delete').delete(function(request, response) {
  * @memberof module:routes/user
  * @name [POST] /user/refresh
  */
+/* istanbul ignore next */
 router.route('/user/refresh').post(function(request, response) {
   var errorMessage = 'No Authorization header found';
 
@@ -444,6 +454,7 @@ router.route('/user/refresh').post(function(request, response) {
  * @name [POST] /user/forgot-password
  * @property {string} email - Email Address user can't remember Password for
  */
+/* istanbul ignore next */
 router.route('/user/forgot-password').post(function(request, response) {
   var ipAddress = request.headers['x-forwarded-for'];
   registration.forgotPassword(request.body)
@@ -474,6 +485,7 @@ router.route('/user/forgot-password').post(function(request, response) {
  * @property {string} retype_password - Retyped Password ( must match `password` )
  * @property {string} token - Change Password Token stored in `new_password_key`
  */
+/* istanbul ignore next */
 router.route('/user/reset-password').post(function(request, response) {
   registration.resetPassword(request.body)
   .then(function(user) {
@@ -504,6 +516,7 @@ router.route('/user/reset-password').post(function(request, response) {
  * @name [GET] /user/resend-confirmation/:id
  * @property {string} id - This is a Hash ID of the Users ID
  */
+/* istanbul ignore next */
 router.route('/user/resend-confirmation/:id').get(function(request, response) {
   registration.resendConfirmation(request.params.id)
   .then(function(message) {
@@ -526,6 +539,7 @@ router.route('/user/resend-confirmation/:id').get(function(request, response) {
  * @name [GET] /user/:username/profile
  * @property {string} username - Username to Use
  */
+/* istanbul ignore next */
 router.route('/user/:username/profile').get(function(request, response) {
 
   // Defaults
@@ -591,6 +605,7 @@ router.route('/user/:username/profile').get(function(request, response) {
  * @name [POST] /user/:username/follow
  * @property {string} username - Username to Use
  */
+/* istanbul ignore next */
 router.route('/user/:username/follow').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
 
@@ -633,6 +648,7 @@ router.route('/user/:username/follow').post(function(request, response) {
  * @name [POST] /user/:username/unfollow
  * @property {string} username - Username to Use
  */
+/* istanbul ignore next */
 router.route('/user/:username/unfollow').post(function(request, response) {
   util.isValidUser(request, function(validUserId){
 
@@ -673,6 +689,7 @@ router.route('/user/:username/unfollow').post(function(request, response) {
  * @name [GET] /user/:username/followers
  * @property {string} username - Username to Use
  */
+/* istanbul ignore next */
 router.route('/user/:username/followers').get(function(request, response) {
   if( !request.params.username){
     response.json(util.createAPIResponse({
@@ -702,6 +719,7 @@ router.route('/user/:username/followers').get(function(request, response) {
  * @name [GET] /user/:username/following
  * @property {string} username - Username to Use
  */
+/* istanbul ignore next */
 router.route('/user/:username/following').get(function(request, response) {
   if( !request.params.username){
     response.json(util.createAPIResponse({
@@ -731,6 +749,7 @@ router.route('/user/:username/following').get(function(request, response) {
  * @name [GET] /user/invite/:key
  * @property {string} key - This is a Hash ID of the Users ID
  */
+/* istanbul ignore next */
 router.route('/user/invite/:key').get(function(request, response) {
   user.checkInviteCode(request.params.key)
     .then(function(invites) {

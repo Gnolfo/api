@@ -1,9 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
-var _ = require('lodash');
-var Promise = require('bluebird');
 var util = require('../../../../../app/api/v1/routes/util');
-
 
 describe('Routes Util Tests', function() {
   describe('createAPIResponse', function() {

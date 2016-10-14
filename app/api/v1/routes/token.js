@@ -2,6 +2,7 @@
  * @module routes/token
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ * @todo Create Unit Tests for Routes
  */
 
 var express = require('express');
@@ -15,6 +16,7 @@ var auth = require('../domain/users/auth');
  * @memberof module:routes/token
  * @name [GET] /token
  */
+/* istanbul ignore next */
 router.route('/token').get(function(request, response) {
 
   var ipAddress = request.headers['x-forwarded-for'];

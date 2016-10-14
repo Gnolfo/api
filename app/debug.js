@@ -12,6 +12,8 @@ colors.setTheme({
 });
 
 var debugEnabled = config.get('debug');
+
+/* istanbul ignore next */
 var Debugger = {
   success: function(message){
     if(debugEnabled) {

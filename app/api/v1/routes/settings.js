@@ -2,6 +2,7 @@
  * @module routes/settings
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ * @todo Create Unit Tests for Routes
  */
 
 var express = require('express');
@@ -19,6 +20,7 @@ var router = express.Router(config.router);
  * @property {number} [page=1] - Result Page to Load
  * @property {boolean} [pretty=false] - Format JSON response to be human readable
  */
+/* istanbul ignore next */
 router.route('/settings').get(function(request, response) {
 
   util.isValidUser(request, function(validUserId){
@@ -53,6 +55,7 @@ router.route('/settings').get(function(request, response) {
  * @property {number} [page=1] - Result Page to Load
  * @property {boolean} [pretty=false] - Format JSON response to be human readable
  */
+/* istanbul ignore next */
 router.route('/settings/profile').post(function(request, response) {
 
   util.isValidUser(request, function(validUserId){
@@ -90,6 +93,7 @@ router.route('/settings/profile').post(function(request, response) {
  * @property {string} [profile_link_2] - Misc Profile Link #2
  * @property {string} [profile_link_3] - Misc Profile Link #3
  */
+/* istanbul ignore next */
 router.route('/settings/social-links').post(function(request, response) {
 
   util.isValidUser(request, function(validUserId){
@@ -126,6 +130,7 @@ router.route('/settings/social-links').post(function(request, response) {
  * @property {boolean} [email_someone_follows=true] - Notification Setting for Email Someone Follows
  * @property {boolean} [email_mentioned_in_comment=true] - Notification Setting for Email Mentioned in Comment
  */
+/* istanbul ignore next */
 router.route('/settings/email-notifications').post(function(request, response) {
 
   util.isValidUser(request, function(validUserId){
@@ -162,6 +167,7 @@ router.route('/settings/email-notifications').post(function(request, response) {
  * @property {boolean} [web_someone_follows=true] - Notification Setting for Web Someone Follows
  * @property {boolean} [web_mentioned_in_comment=true] - Notification Setting for Web Mentioned in Comment
  */
+/* istanbul ignore next */
 router.route('/settings/web-notifications').post(function(request, response) {
 
   util.isValidUser(request, function(validUserId){

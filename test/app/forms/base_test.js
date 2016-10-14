@@ -2,7 +2,6 @@ var assert = require('chai').assert;
 var validate = require('validate.js');
 var BaseForm = require('../../../app/forms/base');
 
-
 describe('BaseForm', function() {
   describe('validate', function() {
     it('should run validation using object "constraints" property', function(done) {
@@ -28,7 +27,7 @@ describe('BaseForm', function() {
         });
     });
 
-    it('should validate async consraints', function(done) {
+    it('should validate async constraints', function(done) {
       validate.validators.fakeAsyncValidator = function(value, attributes, attr, options, constraints) {
         return new validate.Promise(function(resolve, reject) {
           setTimeout(function() {

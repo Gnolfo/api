@@ -22,14 +22,12 @@ var routerUtil = require('./api/v1/routes/util.js');
 
 process.title = 'api';
 
-function json(request, response, next) {
+/* istanbul ignore next */
+function setupAPI(request, response, next) {
+
   if ('pretty' in request.query && request.query.pretty !== 'false') {
     app.set('json spaces', 2);
   }
-  next();
-}
-
-function setupAPI(request, response, next) {
 
   var host = request.headers.origin;
   var acceptedMethods = ['OPTIONS'];
@@ -155,6 +153,8 @@ function setupAPI(request, response, next) {
 }
 
 app.enable('trust proxy');
+
+/* istanbul ignore next */
 app.use(session({
   genid: function(){ return uuid.v4(); },
   secret: config.get('sessionKey'),
@@ -169,7 +169,6 @@ app.use('/docs.js', express.static(__dirname + '/static/docs.js'));
 app.use('/docs.css', express.static(__dirname + '/static/docs.css'));
 app.use('/docs', express.static(__dirname + '/static/docs'));
 
-app.use(json);
 app.use(setupAPI);
 app.use(compression());
 app.use(bodyParser.json());
@@ -178,3 +177,4 @@ app.use(limiter);
 app.use(router);
 
 module.exports = app.listen(config.get('port'));
+module.exports.setupAPI = setupAPI;

@@ -25,9 +25,9 @@ module.exports = {
 
     var client = new mandrill.Mandrill(config.get('mandrill.key'));
 
+    /* istanbul ignore next */
     Promise.promisifyAll(client.messages, {
-      // We need a custom promisifier since Mandrill methods seem to take
-      // two callback arguments (success, then error)
+      // We need a custom promisifier since Mandrill methods seem to take two callback arguments (success, then error)
       promisifier: function(originalMethod) {
         return function promisified() {
           var self = this;
@@ -77,6 +77,7 @@ module.exports = {
       };
     });
 
+    /* istanbul ignore next */
     switch(templateSlug){
 
       case 'change-email-confirmation':
@@ -261,6 +262,7 @@ module.exports = {
 
     }
 
+    /* istanbul ignore next */
     var message = {
       to: [{
         email: user.get('email'),
@@ -273,6 +275,7 @@ module.exports = {
     };
 
     // If changing email addresses, send to both new and old email
+    /* istanbul ignore next */
     if(templateSlug === 'change-email-confirmation' && optionalData.new_email){
       message.to.push({
         email: optionalData.new_email,

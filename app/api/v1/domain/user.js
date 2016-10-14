@@ -133,6 +133,7 @@ module.exports = {
 
             var cleanInvited = [];
 
+            /* istanbul ignore next */
             for(var i = 0; i < invites.length; i++){
               var ui = invites[i];
               var u = ui.Invited;
@@ -220,13 +221,12 @@ module.exports = {
         })
         .then(function(foundUser) {
           if(typeof callback === 'function'){
-            callback(foundUser !== null);
+            return callback(foundUser !== null);
+          } else {
+            return Promise.reject('Request Invalid');
           }
         });
     } else {
-      if(typeof callback === 'function'){
-        callback(false);
-      }
       return Promise.reject('Request Invalid');
     }
   },
@@ -250,13 +250,13 @@ module.exports = {
           }
         })
         .then(function(followUser) {
-          var followUserId = parseInt(followUser.id, 10);
-
-          if(followUserId === currentUserID){
-            return Promise.reject('You Can\'t follow yourself.');
-          }
-
           if (followUser) {
+
+            var followUserId = parseInt(followUser.id, 10);
+
+            if(followUserId === currentUserID){
+              return Promise.reject('You Can\'t follow yourself.');
+            }
 
             // Check if we previously followed this user
             return UserFollow.findOne({
@@ -280,8 +280,6 @@ module.exports = {
                   follow_user_id: followUserId
                 }).then(function(created) {
                   return created.dataValues;
-                }).catch(function(){
-                  return Promise.reject('Unable to create follow');
                 });
               }
             });
@@ -340,6 +338,7 @@ module.exports = {
             }).then(function(followers){
               var cleanFollowers = [];
 
+              /* istanbul ignore next */
               for(var i = 0; i < followers.length; i++){
                 var f = followers[i];
                 var u = f.Follower;
@@ -409,6 +408,7 @@ module.exports = {
             }).then(function(following){
               var cleanFollowing = [];
 
+              /* istanbul ignore next */
               for(var i = 0; i < following.length; i++){
                 var f = following[i];
                 var u = f.Following;
@@ -451,14 +451,13 @@ module.exports = {
           }
         })
         .then(function(unfollowUser) {
-
-          var unfollowUserId = parseInt(unfollowUser.id, 10);
-
-          if(unfollowUserId === currentUserID){
-            return Promise.reject('You Can\'t follow / unfollow yourself.');
-          }
-
           if (unfollowUser) {
+
+            var unfollowUserId = parseInt(unfollowUser.id, 10);
+
+            if(unfollowUserId === currentUserID){
+              return Promise.reject('You Can\'t follow / unfollow yourself.');
+            }
 
             return UserFollow.findOne({
               where: {
@@ -504,6 +503,7 @@ module.exports = {
             var emailChecked = false;
             var passwordChecked = false;
 
+            /* istanbul ignore next */
             var sendEmails = function(){
 
               if(usernameChecked && emailChecked && passwordChecked){
@@ -605,13 +605,12 @@ module.exports = {
         })
         .then(function(foundUser) {
           if(typeof callback === 'function'){
-            callback(foundUser !== null);
+            return callback(foundUser !== null);
+          } else {
+            return Promise.reject('Invalid Request');
           }
         });
     } else {
-      if(typeof callback === 'function'){
-        callback(false);
-      }
       return Promise.reject('Username Check Request Invalid');
     }
   }

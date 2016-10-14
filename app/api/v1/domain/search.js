@@ -51,6 +51,7 @@ module.exports = {
           if(users){
             var cleanData = [];
 
+            /* istanbul ignore next */
             for(var i = 0; i < users.length; i++){
 
               var u = users[i];

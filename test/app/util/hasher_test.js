@@ -1,8 +1,5 @@
-var Promise = require('bluebird');
 var assert = require('chai').assert;
-var sinon = require('sinon');
 var hasher = require('../../../app/util/hasher');
-
 
 describe('Hasher Tests', function() {
   describe('generate', function() {

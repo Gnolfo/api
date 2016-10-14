@@ -3,9 +3,7 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 var rewire = require('rewire');
 
-
 var email = rewire('../../../../../app/api/v1/domain/email');
-
 
 describe('Email Domain Service Tests', function() {
   beforeEach(function() {
@@ -60,6 +58,53 @@ describe('Email Domain Service Tests', function() {
       assert.isTrue(promiseStub.promisifyAll.calledOnce);
 
       restore();
+    });
+  });
+
+  describe('getBaseURL', function() {
+    it('should return base correct local URL', function() {
+
+      var configStub = {
+        get: sinon.stub().withArgs('env').returns('local')
+      };
+
+      email.__set__({
+        config: configStub
+      });
+
+      var url = email.getBaseURL();
+      assert.isDefined(url);
+      assert.isTrue(url === 'http://127.0.0.1:5050');
+    });
+
+    it('should return base correct staging URL', function() {
+
+      var configStub = {
+        get: sinon.stub().withArgs('env').returns('staging')
+      };
+
+      email.__set__({
+        config: configStub
+      });
+
+      var url = email.getBaseURL();
+      assert.isDefined(url);
+      assert.isTrue(url === 'https://staging.website.com');
+    });
+
+    it('should return base correct local URL', function() {
+
+      var configStub = {
+        get: sinon.stub().withArgs('env').returns('production')
+      };
+
+      email.__set__({
+        config: configStub
+      });
+
+      var url = email.getBaseURL();
+      assert.isDefined(url);
+      assert.isTrue(url === 'https://website.com');
     });
   });
 
@@ -146,6 +191,63 @@ describe('Email Domain Service Tests', function() {
 
       assert.isTrue(sendUserEmailStub.calledOnce);
       assert.isTrue(sendUserEmailStub.calledWith('forgot-password', fakeUser));
+    });
+  });
+
+  describe('sendUserPasswordResetEmail', function() {
+    it('should call sendUserEmail with the correct template slug and the passed in user', function() {
+      var sendUserEmailStub = this.sandbox.stub(email, 'sendUserEmail');
+      var fakeUser = {
+        username: 'some_user'
+      };
+
+      email.sendUserPasswordResetEmail(fakeUser);
+
+      assert.isTrue(sendUserEmailStub.calledOnce);
+      assert.isTrue(sendUserEmailStub.calledWith('password-reset', fakeUser));
+    });
+  });
+
+  describe('sendChangedUsernameEmail', function() {
+    it('should call sendUserEmail with the correct template slug and the passed in user', function() {
+      var sendUserEmailStub = this.sandbox.stub(email, 'sendUserEmail');
+      var fakeUser = {
+        username: 'some_user'
+      };
+
+      email.sendChangedUsernameEmail(fakeUser);
+
+      assert.isTrue(sendUserEmailStub.calledOnce);
+      assert.isTrue(sendUserEmailStub.calledWith('change-username-notice', fakeUser));
+    });
+  });
+
+  describe('sendConfirmChangedEmailAddressEmail', function() {
+    it('should call sendUserEmail with the correct template slug and the passed in user', function() {
+      var sendUserEmailStub = this.sandbox.stub(email, 'sendUserEmail');
+
+      var fakeUser = {
+        username: 'some_user'
+      };
+
+      email.sendConfirmChangedEmailAddressEmail(fakeUser);
+
+      assert.isTrue(sendUserEmailStub.calledOnce);
+      assert.isTrue(sendUserEmailStub.calledWith('change-email-confirmation', fakeUser));
+    });
+  });
+
+  describe('sendConfirmChangedPasswordEmail', function() {
+    it('should call sendUserEmail with the correct template slug and the passed in user', function() {
+      var sendUserEmailStub = this.sandbox.stub(email, 'sendUserEmail');
+      var fakeUser = {
+        username: 'some_user'
+      };
+
+      email.sendConfirmChangedPasswordEmail(fakeUser);
+
+      assert.isTrue(sendUserEmailStub.calledOnce);
+      assert.isTrue(sendUserEmailStub.calledWith('change-password-confirmation', fakeUser));
     });
   });
 });

@@ -46,6 +46,7 @@ module.exports = {
 
             var cleanData = [];
 
+            /* istanbul ignore next */
             for(var i = 0; i < activity.length; i++){
 
               var current = activity[i];
@@ -86,9 +87,9 @@ module.exports = {
 
   /**
    * Get Notifications
-   * @param {number} userId - User ID
+   * @todo: Flush This Out
    */
   getNotifications: function(userId) {
-
+    return Promise.resolve(userId);
   }
 };

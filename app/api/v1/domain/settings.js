@@ -10,8 +10,13 @@ var UserSettingNotification = require('../../../models/api/user_settings_notific
 
 var UserES = require('../../../elasticsearch/update/user');
 
+/* istanbul ignore next */
 User.hook('afterCreate', function(user){ UserES.update(user.id); });
+
+/* istanbul ignore next */
 User.hook('afterUpdate', function(user){ UserES.update(user.id); });
+
+/* istanbul ignore next */
 User.hook('afterDestroy', function(user){ UserES.update(user.id); });
 
 /**
@@ -64,6 +69,8 @@ module.exports = {
           ];
 
           settings.notifications = _.pick(notifications, notifications_fields);
+
+          return settings;
         }
       });
   },
@@ -134,7 +141,7 @@ module.exports = {
         .then(function(user) {
           if (user) {
 
-            user.set('profile_link_website', data.profile_link_twitter);
+            user.set('profile_link_website', data.profile_link_website);
             user.set('profile_link_twitter', data.profile_link_twitter);
             user.set('profile_link_1', data.profile_link_1);
             user.set('profile_link_2', data.profile_link_2);

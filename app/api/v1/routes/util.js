@@ -11,6 +11,7 @@ var Activity = require('../../../models/api/user_activity');
 var Login = require('../../../models/api/user_login');
 var jwt = require('jsonwebtoken');
 
+/* istanbul ignore next */
 module.exports = {
 
   /**
