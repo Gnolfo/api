@@ -10,7 +10,7 @@ Table of Contents
 * [Getting Setup](#getting-setup)
 * [Downloading API](#downloading-api)
 * [Server Configuration](#server-configuration)
-* [Elasticsearch Configuration](#database-configuration)
+* [Elasticsearch Configuration](#elasticsearch-configuration)
 * [Development Scripts](#development-scripts)
 * [Unit Testing and Code Coverage Reports](#unit-testing-and-code-coverage-reports)
 * [Maintaining API](#maintaining-api)
