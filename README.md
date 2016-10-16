@@ -26,7 +26,7 @@ Requirements
 
 * [NodeJS 6.x](https://nodejs.org/en/)
 * [MySQL](http://www.mysql.com/)
-* [Elasticsearch](https://www.elastic.co/)
+* [Elasticsearch 1.7.x](https://www.elastic.co/)
 * [Bcrypt](http://bcrypt.sourceforge.net/)
 
 
@@ -67,7 +67,7 @@ You can download this API using the code below ( this assumes you have [SSH inte
 ```bash
 cd path/to/api
 git clone git@github.com:api/api.git .
-npm install
+npm install --no-optional
 ```
 
 Server Configuration
