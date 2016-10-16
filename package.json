@@ -2,8 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "description": "API",
-  "license": "UNLICENSED",
-  "private": true,
+  "license": "MIT",
   "main": "index.js",
   "engines": {
     "node": "6.x"
