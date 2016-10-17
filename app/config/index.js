@@ -47,7 +47,7 @@ var config = convict({
   debugKey: {
     doc: 'Allow for apiDevKey param in API to check API results without token',
     format: String,
-    default: '',
+    default: '97C83185-3909-BDD4-F9F0-E39C81B92F30',
     env: 'API_DEBUG_KEY'
   },
   env: {
@@ -71,7 +71,7 @@ var config = convict({
   sessionKey: {
     doc: 'Express Session Key',
     format: String,
-    default: '',
+    default: '4D393E9A-5A83-37B4-6929-53C5231AA813',
     env: 'API_SESSION_KEY'
   },
   inviteOnly: {
@@ -96,7 +96,7 @@ var config = convict({
     secret: {
       doc: 'Hash ID Encryption Key',
       format: String,
-      default: '',
+      default: '02BFD94E-BA1D-F7A4-CDB7-32BA1E9A6C3D',
       env: 'API_HASH_ID_SECRET'
     },
     length: {
@@ -143,7 +143,7 @@ var config = convict({
   secret: {
     doc: 'App secret key',
     format: String,
-    default: '',
+    default: 'CB3F63A5-3C80-7444-DD2D-E9D31DB869CF',
     env: 'API_APP_SECRET'
   },
   router: {
