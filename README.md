@@ -67,7 +67,7 @@ You can download this API using the code below ( this assumes you have [SSH inte
 ```bash
 cd path/to/api
 git clone git@github.com:api/api.git .
-npm install --no-optional
+npm install
 ```
 
 Server Configuration

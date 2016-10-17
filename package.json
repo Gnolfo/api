@@ -20,8 +20,8 @@
     "check-coverage": "istanbul check-coverage --statement 80 --branch 80 --function 80 --line 80",
     "migrate": "cd ./app && sequelize db:migrate:latest && cd ../",
     "migrate:rollup": "cd ./app && sequelize db:migrate:undo && cd ../",
-    "seed": "cd ./app && sequelize db:seed:undo && cd ../",
-    "seed:rollup": "cd ./app && sequelize db:seed:all && cd ../",
+    "seed": "cd ./app && sequelize db:seed:all && cd ../",
+    "seed:rollup": "cd ./app && sequelize db:seed:undo && cd ../",
     "elasticsearch:create": "cd ./app && node ./elasticsearch/create && cd ../",
     "elasticsearch:update": "cd ./app && node ./elasticsearch/update && cd ../",
     "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd ../"
