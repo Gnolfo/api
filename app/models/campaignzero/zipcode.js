@@ -11,21 +11,21 @@ var db = require('../../config/sequelize');
  * Zip Codes
  * @type {object}
  * @property {number} id - Unique ID
- * @property {string} zipcode - LABEL
- * @property {string} type - LABEL
- * @property {string} decommissioned - LABEL
- * @property {string} primary_city - LABEL
- * @property {string} acceptable_cities - LABEL
- * @property {string} unacceptable_cities - LABEL
- * @property {string} state - LABEL
- * @property {string} county - LABEL
- * @property {string} timezone - LABEL
- * @property {string} area_codes - LABEL
- * @property {string} world_region - LABEL
- * @property {string} country - LABEL
- * @property {string} latitude - LABEL
- * @property {string} longitude - LABEL
- * @property {string} estimated_population - LABEL
+ * @property {string} zipcode - Unique Zip Code
+ * @property {enum} type=STANDARD - Type of Zip Code ['UNIQUE','PO BOX','STANDARD','MILITARY']
+ * @property {boolean} [decommissioned=false] - Whether Zip Code was Decommissioned
+ * @property {string} primary_city - The Official City Name used for Zip Code
+ * @property {string} [acceptable_cities] - Comma Separated list of other City Names Zip Code uses
+ * @property {string} unacceptable_cities - Comma Separated list of Unacceptable City Names sometimes used for Zip Code
+ * @property {string} state - State Zip Code belongs to
+ * @property {string} [county] - County Zip Code belongs to
+ * @property {string} [timezone] - Time Zone Zip Code belongs to
+ * @property {string} [area_codes] - Comma Separated list of Area Codes in Zip Code
+ * @property {string} world_region - Region Zip Code belongs to
+ * @property {string} country - Country Zip Code belongs to
+ * @property {float} latitude - GPS Latitude
+ * @property {float} longitude - GPS Longitude
+ * @property {number} estimated_population - Estimated Population
  */
 var ZipCode = db.dbApi.define('zipcode', {
   id: {
