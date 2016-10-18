@@ -23,7 +23,7 @@ router.route('/legislators').get(function(request, response) {
     path: '/api/v1/legislators/geo/?lat=27.7812652&long=-82.6321373&apikey=' + config.get('openStates.key')
   };
 
-  callback = function(data) {
+  var callback = function(data) {
     var results = '';
 
     //another chunk of data has been recieved, so append it to `str`

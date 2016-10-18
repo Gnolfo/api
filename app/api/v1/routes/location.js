@@ -19,30 +19,37 @@ var router = express.Router(config.router);
 /* istanbul ignore next */
 router.route('/location').get(function(request, response) {
   var options = {
-    host: 'openstates.org',
-    path: '/api/v1/legislators/geo/?lat=33701&long=&apikey=' + config.get('openStates.key')
+    host: '',
+    path: ''
   };
 
-  callback = function(response) {
-    var str = '';
+  var callback = function(data) {
+    var results = '';
 
     //another chunk of data has been recieved, so append it to `str`
-    response.on('data', function (chunk) {
-      str += chunk;
+    data.on('data', function (chunk) {
+      results += chunk;
     });
 
     //the whole response has been recieved, so we just print it out here
-    response.on('end', function () {
-      console.log(str);
+    data.on('end', function () {
+      var json = JSON.parse(results);
+
+      if (json && json[0] === 'Bad Request') {
+        response.json(util.createAPIResponse({
+          error: true,
+          errors: json
+        }));
+      } else {
+        response.json(util.createAPIResponse({
+          error: false,
+          data: json
+        }));
+      }
     });
   };
 
   http.request(options, callback).end();
-
-  response.json(util.createAPIResponse({
-    error: false,
-    data: []
-  }));
 });
 
 module.exports = router;
