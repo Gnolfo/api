@@ -177,6 +177,13 @@ var config = convict({
       format: String,
       env: 'API_MANDRILL_API_KEY'
     }
+  },
+  openStates: {
+    key: {
+      doc: 'API Key for Open States',
+      format: String,
+      env: 'API_OPENSTATES_API_KEY'
+    }
   }
 });
 

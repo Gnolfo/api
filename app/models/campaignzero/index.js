@@ -1,14 +1,13 @@
 /**
- * @module models
+ * @module models/campaignzero
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
  */
 
 /**
- * Models
+ * Campaign Zero
  * @type {object}
  */
 module.exports = {
-  API: require('./api'),
-  CampaignZero: require('./campaignzero')
+  ZipCode: require('./zipcode')
 };

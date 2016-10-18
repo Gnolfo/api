@@ -98,25 +98,26 @@ nano ~/.bash_profile
 __API Environmental Variables:__
 
 ```bash
+export API_API_DATABASE='CHANGE_ME';
+export API_API_HOST='locahost';
+export API_API_PASSWORD='CHANGE_ME';
+export API_API_USERNAME='CHANGE_ME';
+export API_API_VERSION='v1'
+export API_APP_SECRET='CHANGE_ME';
+export API_BUGSNAG='CHANGE_ME';
 export API_DEBUG=true;
 export API_DEBUG_KEY='CHANGE_ME7';
-export API_NODE_ENV='local';
-export API_PORT=5000
-export API_API_VERSION='v1'
-export API_SESSION_KEY='CHANGE_ME';
-export API_INVITE_ONLY=true;
-export API_INVITE_CAP=15;
-export API_BUGSNAG='CHANGE_ME';
-export API_HASH_ID_SECRET='CHANGE_ME';
-export API_HASH_ID_LENGTH=6;
-export API_HASH_ID_ALPHABET='BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz';
-export API_API_HOST='locahost';
-export API_API_DATABASE='CHANGE_ME';
-export API_API_USERNAME='CHANGE_ME';
-export API_API_PASSWORD='CHANGE_ME';
-export API_APP_SECRET='CHANGE_ME';
 export API_ELASTIC_SEARCH='http://localhost:9200';
+export API_HASH_ID_ALPHABET='BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz';
+export API_HASH_ID_LENGTH=6;
+export API_HASH_ID_SECRET='CHANGE_ME';
+export API_INVITE_CAP=15;
+export API_INVITE_ONLY=true;
 export API_MANDRILL_API_KEY='CHANGE_ME';
+export API_NODE_ENV='local';
+export API_OPENSTATES_API_KEY='CHANGE_ME';
+export API_PORT=5000
+export API_SESSION_KEY='CHANGE_ME';
 ```
 
 You can use [https://guid.it](https://guid.it) to create random strings for stuff like Session Key's and App Secret's.
