@@ -13,6 +13,7 @@ var elasticsearch = require('elasticsearch');
  */
 module.exports = new elasticsearch.Client({
   host: config.get('elasticsearch.host'),
-  apiVersion: '1.7',
-  requestTimeout: 60000
+  apiVersion: config.get('elasticsearch.apiVersion'),
+  requestTimeout: config.get('elasticsearch.requestTimeout'),
+  log: config.get('elasticsearch.log')
 });

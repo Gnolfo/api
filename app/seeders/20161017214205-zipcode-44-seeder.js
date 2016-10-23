@@ -7260,6 +7260,25 @@ module.exports = {
         modified_date: new Date()
       },
       {
+        zipcode: '44801',
+        type: 'STANDARD',
+        decommissioned: '0',
+        primary_city: 'Adrian',
+        acceptable_cities: '',
+        unacceptable_cities: '',
+        state: 'OH',
+        county: 'Seneca County',
+        timezone: 'America/New_York',
+        area_codes: '',
+        world_region: 'NA',
+        country: 'US',
+        latitude: '41.04',
+        longitude: '-83.36',
+        estimated_population: '0',
+        created_date: new Date(),
+        modified_date: new Date()
+      },
+      {
         zipcode: '44802',
         type: 'STANDARD',
         decommissioned: '0',

@@ -169,6 +169,21 @@ var config = convict({
       doc: 'The name of the API Elasticsearch index',
       format: String,
       default: 'api'
+    },
+    apiVersion: {
+      doc: 'Change the API that they client provides, specify the major version of the Elasticsearch nodes you will be connecting to.',
+      format: String,
+      default: '2.3'
+    },
+    requestTimeout: {
+      doc: 'Milliseconds before an HTTP request will be aborted and retried. This can also be set per request.',
+      format: Number,
+      default: 30000
+    },
+    log: {
+      doc: 'Elasticsearch API Logging. See: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/logging.html',
+      format: '*',
+      default: ['error', 'warning']
     }
   },
   mandrill: {

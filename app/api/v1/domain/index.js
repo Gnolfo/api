@@ -10,6 +10,7 @@
 module.exports = {
   Category: require('./category'),
   Email: require('./email'),
+  Geolocation: require('./geolocation'),
   Profile: require('./profile'),
   Search: require('./search'),
   Settings: require('./settings'),

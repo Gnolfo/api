@@ -5,10 +5,12 @@
  */
 
 var Category = require('./category');
+var Geolocation = require('./geolocation');
 var Tag = require('./tag');
 var User = require('./user');
 
 Category.update();
+Geolocation.update();
 Tag.update();
 User.update();
 
@@ -18,6 +20,7 @@ User.update();
  */
 module.exports = {
   Category: Category,
+  Geolocation: Geolocation,
   Tag: Tag,
   User: User
 };

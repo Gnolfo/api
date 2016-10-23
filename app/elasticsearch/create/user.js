@@ -80,12 +80,14 @@ var User = client.indices.exists({
 }).then(function(exists) {
   if ( !exists) {
     return client.indices.create({
-      index: indexName
+      index: indexName,
+      ignore: [404]
     });
   } else {
     return Promise.resolve();
   }
-}).then(function() {
+})
+.then(function() {
   client.indices.putMapping(mapping)
     .then(function() {
       debug.success('Index Created: ' + indexName);

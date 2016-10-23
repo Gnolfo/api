@@ -1,25 +1,25 @@
 /**
- * @module elasticsearch/update/tag
+ * @module elasticsearch/update/geolocation
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
  */
 
 var _ = require('lodash');
+var debug = require('../../debug');
 var config = require('../../config');
 var elasticsearchClient = require('../client');
-var domain = require('../../api/v1/domain');
-var debug = require('../../debug');
-var TagModel = require('../../models/api/tags');
+var ZipCodeModel = require('../../models/campaignzero/zipcode');
+var GeolocationDomain = require('../../api/v1/domain/geolocation');
 
 var env = config.get('env');
-var indexType = env + '_tag';
+var indexType = env + '_geolocation';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
 
 /**
- * Update Tag Index
- * @type {{update: TagES.update}}
+ * Update Geolocation Index
+ * @type {{update: GeolocationES.update}}
  */
-var TagES = {
+var GeolocationES = {
   update: function(){
     elasticsearchClient.search({
       index: indexName,
@@ -29,14 +29,14 @@ var TagES = {
     .then(function() {
       var params = {};
 
-      return TagModel.findAll(params);
+      return ZipCodeModel.findAll(params);
     })
-    .then(function(tags) {
+    .then(function(geo) {
 
-      if (tags.length) {
+      if (geo.length) {
         var bulkActions = [];
 
-        _.each(tags, function(evt) {
+        _.each(geo, function(evt) {
           bulkActions.push({
             index: {
               _index: indexName,
@@ -45,7 +45,7 @@ var TagES = {
             }
           });
 
-          bulkActions.push(domain.Tag.prepareForElasticSearch(evt));
+          bulkActions.push(GeolocationDomain.prepareForElasticSearch(evt));
         });
 
         elasticsearchClient
@@ -80,4 +80,4 @@ var TagES = {
   }
 };
 
-module.exports = TagES;
+module.exports = GeolocationES;

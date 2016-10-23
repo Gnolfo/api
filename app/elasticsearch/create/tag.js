@@ -4,6 +4,7 @@
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
  */
 
+var Promise = require('bluebird');
 var config = require('../../config');
 var client = require('../client');
 var debug = require('../../debug');
@@ -41,12 +42,20 @@ mapping.body[indexType] = {
  * Create Tag Index
  * @type {object}
  */
-var Tag = client.indices.create({
+var Tag = client.indices.exists({
   index: indexName
+}).then(function(exists) {
+  if ( !exists) {
+    return client.indices.create({
+      index: indexName,
+      ignore: [404]
+    });
+  } else {
+    return Promise.resolve();
+  }
 })
 .then(function() {
-  client.indices
-    .putMapping(mapping)
+  client.indices.putMapping(mapping)
     .then(function() {
       debug.success('Index Created: ' + indexName);
     })

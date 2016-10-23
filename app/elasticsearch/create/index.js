@@ -10,6 +10,7 @@
  */
 module.exports = {
   Category: require('./category'),
+  Geolocation: require('./geolocation'),
   Tag: require('./tag'),
   User: require('./user')
 };

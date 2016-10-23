@@ -7,9 +7,9 @@
 var _ = require('lodash');
 var config = require('../../config');
 var elasticsearchClient = require('../client');
-var models = require('../../models');
 var domain = require('../../api/v1/domain');
 var debug = require('../../debug');
+var CategoryModel = require('../../models/api/categories');
 
 var env = config.get('env');
 var indexType = env + '_category';
@@ -28,14 +28,14 @@ var CategoryES = {
       })
       .then(function() {
         var params = {
-          include: [{ model: models.Category, as: 'subcategories' }],
+          include: [{ model: CategoryModel, as: 'subcategories' }],
           where: {
             'parent_id': null
           },
           order: 'parent_id ASC'
         };
 
-        return models.Category.findAll(params);
+        return CategoryModel.findAll(params);
       })
       .then(function(categories) {
 
