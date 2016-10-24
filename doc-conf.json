@@ -3,6 +3,7 @@
     "allowUnknownTags": true
   },
   "source": {
+    "exclude": [ "./app/seeders" ],
     "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
