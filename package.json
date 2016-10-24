@@ -24,7 +24,9 @@
     "seed:rollup": "cd ./app && sequelize db:seed:undo && cd -",
     "elasticsearch:create": "cd ./app && node ./elasticsearch/create && cd -",
     "elasticsearch:update": "cd ./app && node ./elasticsearch/update && cd -",
-    "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd -"
+    "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd -",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -76,7 +78,8 @@
     "uuid": "^2.0.1",
     "validate.js": "^0.9.0",
     "validator": "^4.0.6",
-    "yargs": "^3.32.0"
+    "yargs": "^3.32.0",
+    "snyk": "^1.19.1"
   },
   "devDependencies": {
     "chai": "^3.2.0",
@@ -92,5 +95,6 @@
   },
   "optionalDependencies": {
     "fsevents": "*"
-  }
+  },
+  "snyk": true
 }
