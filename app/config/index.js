@@ -183,7 +183,7 @@ var config = convict({
     log: {
       doc: 'Elasticsearch API Logging. See: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/logging.html',
       format: '*',
-      default: ['error', 'warning']
+      default: 'trace'
     }
   },
   mandrill: {

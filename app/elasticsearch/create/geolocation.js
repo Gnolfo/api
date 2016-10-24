@@ -29,6 +29,9 @@ var mapping = {
  */
 mapping.body[indexType] = {
   properties: {
+    id: {
+      type: 'integer'
+    },
     zipcode: {
       type: 'string'
     },
@@ -49,6 +52,9 @@ mapping.body[indexType] = {
     unacceptable_cities: {
       type: 'string',
       index: 'no'
+    },
+    state: {
+      type: 'string'
     },
     county: {
       type: 'string'
@@ -73,20 +79,19 @@ mapping.body[indexType] = {
       type: 'float'
     },
     estimated_population: {
-      type: 'integer',
-      index: 'no'
+      type: 'integer'
     },
     created_date: {
-      type: 'date',
-      format: 'dateOptionalTime'
+      type: 'date'
     },
     modified_date: {
-      type: 'date',
-      format: 'dateOptionalTime'
+      type: 'date'
     },
     deleted_at: {
-      type: 'date',
-      format: 'dateOptionalTime'
+      type: 'date'
+    },
+    location: {
+      type: 'geo_point'
     }
   }
 };

@@ -1370,6 +1370,71 @@ This endpoint will allow the logged in user to update their own accounts web not
 
 The following endpoints are for fetching general data used throughout our application.
 
+## Geolocation [/geolocation/zipcode/{zipcode}]
+
+Fetch details for Specific Zipcode
+
++ Parameters
+    + zipcode (string) -  Unique Zip Code
+
+### Get Categories [GET]
+
++ Response 200 (application/json)
+
+        {
+          "error": false,
+          "errors": [],
+          "field_errors": {},
+          "meta": {
+            "total": 1,
+            "showing": 1,
+            "pages": 1,
+            "page": 1
+          },
+          "data": [
+            {
+              "type": "standard",
+              "city": "Saint Petersburg",
+              "state": "FL",
+              "zipcode": "33701",
+              "county": "Pinellas County",
+              "country": "US",
+              "timezone": "America/New_York",
+              "location": {
+                "lat": 27.75,
+                "lon": -82.64
+              },
+              "area_codes": [
+                "727"
+              ],
+              "alternate_city_names": [
+                "St Petersburg"
+              ],
+              "estimated_population": 12000
+            }
+          ]
+        }
+
+## Geolocation [/geolocation/?zipcode={zipcode}&city={city}&county={county}&state={state}&type={type}&areaCode={areaCode}&timezone={timezone}&minPopulation={minPopulation}&maxPopulation={maxPopulation}&latitude={latitude}&longitude={longitude}&distance={distance}]
+
+Get Location Specific Data using any combination of filters.
+
++ Parameters
+    + zipcode (optional, string) - Unique Zip Code
+    + city (optional, string) - City to use as Filter
+    + county (optional, string) - County to use as Filter
+    + state (optional, string) - State to use as Filter
+    + type (optional, string) - Type to use as Filter ['UNIQUE','PO BOX','STANDARD','MILITARY']
+    + areaCode (optional, number) - Area Code of Phone Number to use as Filter
+    + timezone (optional, string) - Time Zone of Location ( e.g. America/New_York )
+    + minPopulation (optional, number) - Minimum Population of Location
+    + maxPopulation (optional, number) - Maximum Population of Location
+    + latitude (optional, number) - Latitude to base Location on
+    + longitude (optional, number) - Longitude to base Location on
+    + distance (optional, string) - Distance from Latitude & Longitude ( e.g. 5mi, 10km )
+
+### Get Categories [GET]
+
 ## Categories [/categories/{slug}]
 
 Fetch a list of all categories.  Optionally, you can pass over a `slug` for a category to get a list of subcategories for that category.
@@ -1386,63 +1451,93 @@ Fetch a list of all categories.  Optionally, you can pass over a `slug` for a ca
           "errors": [],
           "field_errors": {},
           "meta": {
-            "total": 2,
-            "showing": 2,
+            "total": 4,
+            "showing": 4,
             "pages": 1,
             "page": 1
           },
           "data": [
             {
-              "id": 1,
-              "parent_id": null,
-              "name": "Category One",
-              "slug": "category-one",
-              "subcategories": [
-                {
-                  "id": 3,
-                  "parent_id": 1,
-                  "name": "Subcategory One",
-                  "slug": "subcategory-one"
-                },
-                {
-                  "id": 4,
-                  "parent_id": 1,
-                  "name": "Subcategory Two",
-                  "slug": "subcategory-two"
-                },
-                {
-                  "id": 5,
-                  "parent_id": 1,
-                  "name": "Subcategory Three",
-                  "slug": "subcategory-three"
-                }
-              ]
+              "type": "standard",
+              "city": "Portland",
+              "state": "OR",
+              "zipcode": "97214",
+              "county": "Multnomah County",
+              "country": "US",
+              "timezone": "America/Los_Angeles",
+              "location": {
+                "lat": 45.51,
+                "lon": -122.64
+              },
+              "area_codes": [
+                "503",
+                "971"
+              ],
+              "alternate_city_names": [
+                ""
+              ],
+              "estimated_population": 21730
             },
             {
-              "id": 2,
-              "parent_id": null,
-              "name": "Category Two",
-              "slug": "category-two",
-              "subcategories": [
-                {
-                  "id": 6,
-                  "parent_id": 2,
-                  "name": "Subcategory One",
-                  "slug": "subcategory-one"
-                },
-                {
-                  "id": 7,
-                  "parent_id": 2,
-                  "name": "Subcategory Two",
-                  "slug": "subcategory-two"
-                },
-                {
-                  "id": 8,
-                  "parent_id": 2,
-                  "name": "Subcategory Three",
-                  "slug": "subcategory-three"
-                }
-              ]
+              "type": "standard",
+              "city": "Portland",
+              "state": "OR",
+              "zipcode": "97232",
+              "county": "Multnomah County",
+              "country": "US",
+              "timezone": "America/Los_Angeles",
+              "location": {
+                "lat": 45.52,
+                "lon": -122.64
+              },
+              "area_codes": [
+                "971",
+                "503"
+              ],
+              "alternate_city_names": [
+                ""
+              ],
+              "estimated_population": 10780
+            },
+            {
+              "type": "po box",
+              "city": "Portland",
+              "state": "OR",
+              "zipcode": "97283",
+              "county": "Multnomah County",
+              "country": "US",
+              "timezone": "America/Los_Angeles",
+              "location": {
+                "lat": 45.53,
+                "lon": -122.65
+              },
+              "area_codes": [
+                "971"
+              ],
+              "alternate_city_names": [
+                ""
+              ],
+              "estimated_population": 426
+            },
+            {
+              "type": "po box",
+              "city": "Portland",
+              "state": "OR",
+              "zipcode": "97293",
+              "county": "Multnomah County",
+              "country": "US",
+              "timezone": "America/Los_Angeles",
+              "location": {
+                "lat": 45.51,
+                "lon": -122.64
+              },
+              "area_codes": [
+                "971"
+              ],
+              "alternate_city_names": [
+                ""
+              ],
+              "estimated_population": 410
             }
           ]
         }
