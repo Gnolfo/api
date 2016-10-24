@@ -1377,7 +1377,7 @@ Fetch details for Specific Zipcode
 + Parameters
     + zipcode (string) -  Unique Zip Code
 
-### Get Categories [GET]
+### Get Zipcode [GET]
 
 + Response 200 (application/json)
 
@@ -1433,18 +1433,7 @@ Get Location Specific Data using any combination of filters.
     + longitude (optional, number) - Longitude to base Location on
     + distance (optional, string) - Distance from Latitude & Longitude ( e.g. 5mi, 10km )
 
-### Get Categories [GET]
-
-## Categories [/categories/{slug}]
-
-Fetch a list of all categories.  Optionally, you can pass over a `slug` for a category to get a list of subcategories for that category.
-
-+ Parameters
-    + slug (optional, string) - Main category `slug` that will return subcategories
-
-### Get Categories [GET]
-
-+ Response 200 (application/json)
+### Get Location [GET]
 
         {
           "error": false,
@@ -1538,6 +1527,83 @@ Fetch a list of all categories.  Optionally, you can pass over a `slug` for a ca
                 ""
               ],
               "estimated_population": 410
+            }
+          ]
+        }
+
+## Categories [/categories/{slug}]
+
+Fetch a list of all categories.  Optionally, you can pass over a `slug` for a category to get a list of subcategories for that category.
+
++ Parameters
+    + slug (optional, string) - Main category `slug` that will return subcategories
+
+### Get Categories [GET]
+
++ Response 200 (application/json)
+
+        {
+          "error": false,
+          "errors": [],
+          "field_errors": {},
+          "meta": {
+            "total": 2,
+            "showing": 2,
+            "pages": 1,
+            "page": 1
+          },
+          "data": [
+            {
+              "id": 1,
+              "parent_id": null,
+              "name": "Category One",
+              "slug": "category-one",
+              "subcategories": [
+                {
+                  "id": 3,
+                  "parent_id": 1,
+                  "name": "Subcategory One",
+                  "slug": "subcategory-one"
+                },
+                {
+                  "id": 4,
+                  "parent_id": 1,
+                  "name": "Subcategory Two",
+                  "slug": "subcategory-two"
+                },
+                {
+                  "id": 5,
+                  "parent_id": 1,
+                  "name": "Subcategory Three",
+                  "slug": "subcategory-three"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "parent_id": null,
+              "name": "Category Two",
+              "slug": "category-two",
+              "subcategories": [
+                {
+                  "id": 6,
+                  "parent_id": 2,
+                  "name": "Subcategory One",
+                  "slug": "subcategory-one"
+                },
+                {
+                  "id": 7,
+                  "parent_id": 2,
+                  "name": "Subcategory Two",
+                  "slug": "subcategory-two"
+                },
+                {
+                  "id": 8,
+                  "parent_id": 2,
+                  "name": "Subcategory Three",
+                  "slug": "subcategory-three"
+                }
+              ]
             }
           ]
         }

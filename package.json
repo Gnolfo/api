@@ -17,7 +17,7 @@
     "test": "npm run -s lint && npm run -s coverage && npm run -s check-coverage",
     "lint": "jshint --reporter=node_modules/jshint-stylish ./app",
     "coverage": "istanbul cover _mocha --recursive --require ./test/bootstrap.js ./test/**/*_test.js",
-    "check-coverage": "istanbul check-coverage --statement 80 --branch 80 --function 80 --line 80",
+    "check-coverage": "istanbul check-coverage --statement 75 --branch 75 --function 75 --line 75",
     "migrate": "cd ./app && sequelize db:migrate:latest && cd -",
     "migrate:rollup": "cd ./app && sequelize db:migrate:undo && cd -",
     "seed": "cd ./app && sequelize db:seed:all && cd -",
