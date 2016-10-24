@@ -52,6 +52,7 @@ Please use the requirement links above to review install instructions for each d
 #### NPM Packages
 
 ```bash
+npm install -g mysql
 npm install -g forever
 npm install -g istanbul
 npm install -g sequelize-cli

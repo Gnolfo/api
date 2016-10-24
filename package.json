@@ -8,10 +8,10 @@
     "node": "6.x"
   },
   "scripts": {
-    "start": "npm run cleanup && npm run docs && node ./node_modules/forever/bin/forever start -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
+    "start": "npm run -s cleanup && npm run -s docs && forever start -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
     "start:debug": "DEBUG=express:* ./node_modules/nodemon/bin/nodemon.js index.js",
     "stop": "node ./node_modules/forever/bin/forever stop -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
-    "cleanup": "rm ~/.forever/*.log && rm *.log && rm -fr cleanup && npm run docs:clean",
+    "cleanup": "find ~/.forever/ -name '*.log' -delete && find ./ -name '*.log' -delete && rm -fr cleanup && npm run docs:clean",
     "docs": "jsdoc -c ./doc-conf.json -r ./app -R ./apiary.apib -d ./app/static/docs -t ./node_modules/ink-docstrap/template",
     "docs:clean": "rm -r ./app/static/docs || true",
     "test": "npm run -s lint && npm run -s coverage && npm run -s check-coverage",
