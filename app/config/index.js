@@ -199,6 +199,26 @@ var config = convict({
       format: String,
       env: 'API_OPENSTATES_API_KEY'
     }
+  },
+  logzio: {
+    token: {
+      doc: 'Logzio API logging token',
+      format: String,
+      env: 'API_LOGZIO_TOKEN',
+      default: ''
+    },
+    type: {
+      doc: 'The name of the API Elasticsearch index',
+      format: String,
+      env: 'API_LOGZIO_TYPE',
+      default: 'CampaignZeroAPI'
+    },
+    debug: {
+      doc: 'Print debug messages to the console',
+      format: Boolean,
+      env: 'API_LOGZIO_DEBUG',
+      default: false
+    }
   }
 });
 

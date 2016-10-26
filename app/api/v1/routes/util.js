@@ -44,7 +44,7 @@ module.exports = {
 
     errors.push(response.errors.length > 0);
 
-    response.error = _.any(errors, Boolean);
+    response.error = _.some(errors, Boolean);
 
     // Sort Data if a single object
     if (data && !_.isArray(data.data) && _.isObject(data.data)){

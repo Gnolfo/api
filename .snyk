@@ -1,17 +1,17 @@
-version: v1.5.0
+version: v1.5.2
 ignore: {}
 patch:
   'npm:minimatch:20160620':
-    - forever > forever-monitor > minimatch:
-        patched: '2016-10-24T21:26:07.722Z'
     - sequelize-cli > gulp > vinyl-fs > glob-stream > minimatch:
-        patched: '2016-10-24T21:26:07.722Z'
+        patched: '2016-10-26T03:03:02.334Z'
     - sequelize-cli > gulp > vinyl-fs > glob-stream > glob > minimatch:
-        patched: '2016-10-24T21:26:07.722Z'
-    - sequelize-cli > gulp > vinyl-fs > glob-watcher > gaze > globule > minimatch:
-        patched: '2016-10-24T21:26:07.722Z'
+        patched: '2016-10-26T03:03:02.334Z'
+    - forever > forever-monitor > minimatch:
+        patched: '2016-10-26T03:03:02.334Z'
     - sequelize-cli > gulp > vinyl-fs > glob-watcher > gaze > globule > glob > minimatch:
-        patched: '2016-10-24T21:26:07.722Z'
+        patched: '2016-10-26T03:03:02.334Z'
+    - sequelize-cli > gulp > vinyl-fs > glob-watcher > gaze > globule > minimatch:
+        patched: '2016-10-26T03:03:02.334Z'
   'npm:moment:20161019':
     - convict > moment:
-        patched: '2016-10-24T21:26:07.722Z'
+        patched: '2016-10-26T03:03:02.334Z'

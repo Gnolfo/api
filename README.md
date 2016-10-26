@@ -1,4 +1,8 @@
-# Campaign Zero API [![Build Status](https://circleci.com/gh/campaignzero/api/tree/master.svg?style=shield)](https://circleci.com/gh/campaignzero/api/tree/master)  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/campaignzero/api/master/LICENSE)  [![GitHub contributors](https://img.shields.io/github/contributors/campaignzero/api.svg)](https://github.com/campaignzero/api/graphs/contributors)
+![Campaign Zero Logo](https://github.com/campaignzero/artwork/raw/master/logo/campaign-zero/web/306x128/campaign-zero.png "Campaign Zero Logo")
+
+# Campaign Zero API 
+
+[![Build Status](https://circleci.com/gh/campaignzero/api/tree/master.svg?style=shield)](https://circleci.com/gh/campaignzero/api/tree/master)  [![Known Vulnerabilities] (https://snyk.io/test/github/campaignzero/api/badge.svg)](https://snyk.io/test/github/campaignzero/api)  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/campaignzero/api/master/LICENSE)  [![GitHub contributors](https://img.shields.io/github/contributors/campaignzero/api.svg)](https://github.com/campaignzero/api/graphs/contributors)
 
 Campaign Zero was developed with contributions from activists, protesters and researchers across the nation. This [data-informed](http://www.joincampaignzero.org/problem) platform presents comprehensive solutions to end police violence in America. It integrates [community demands](http://thedemands.org) and policy recommendations from [research organizations](http://justiceinpolicing.com/) and the [President's Task Force on 21st Century Policing](http://www.cops.usdoj.gov/pdf/taskforce/TaskForce_FinalReport.pdf). Together, we will win.
 
