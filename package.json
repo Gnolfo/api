@@ -31,8 +31,9 @@
     "flatdb:download-all": "npm run -s flatdb:geo-city && npm run -s flatdb:geo-country",
     "flatdb:geo-city": "rm -f ./app/flat-db/city.mmdb && curl -o ./app/flat-db/city.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz && gunzip ./app/flat-db/city.mmdb.gz",
     "flatdb:geo-country": "rm -f ./app/flat-db/country.mmdb && curl -o ./app/flat-db/country.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz && gunzip ./app/flat-db/country.mmdb.gz",
+    "make-config": "if ( ! test -e ./app/config/local.json ); then curl -o ./app/config/local.json https://gist.githubusercontent.com/manifestinteractive/a5e9ef7ef6730cb5e0d1783c89a94a5a/raw/5443e7d7b4fc144c6a3560581f9ae8bef9153b6c/campaign-zero-local.json; fi",
     "prepublish": "npm run snyk-protect",
-    "postinstall": "npm run -s flatdb:download-all"
+    "postinstall": "npm run make-config && npm run -s flatdb:download-all"
   },
   "repository": {
     "type": "git",

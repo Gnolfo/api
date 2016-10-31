@@ -118,6 +118,9 @@ export API_HASH_ID_LENGTH=6;
 export API_HASH_ID_SECRET='CHANGE_ME';
 export API_INVITE_CAP=15;
 export API_INVITE_ONLY=true;
+export API_LOGZIO_DEBUG=true;
+export API_LOGZIO_TOKEN='CHANGE_ME';
+export API_LOGZIO_TYPE='CampaignZeroAPI';
 export API_MANDRILL_API_KEY='CHANGE_ME';
 export API_NODE_ENV='local';
 export API_OPENSTATES_API_KEY='CHANGE_ME';
@@ -215,6 +218,7 @@ API Development Scripts:
 | `npm run flatdb:download-all`  | Downloads All Flat Database Files used for API                                                      |
 | `npm run flatdb:geo-city`      | Downloads and Unzips [GeoLite2 City](http://dev.maxmind.com/geoip/geoip2/geolite2/) from MaxMind    |
 | `npm run flatdb:geo-country`   | Downloads and Unzips [GeoLite2 Country](http://dev.maxmind.com/geoip/geoip2/geolite2/) from MaxMind |
+| `npm run make-config`          | Runs during `npm install` and downloads sample local.json file if one was not already created       |
 | `npm run prepublish`           | Runs any commands necessary before publishing API                                                   |
 | `npm run postinstall`          | This runs automatically after running `npm install`                                                 |
 
