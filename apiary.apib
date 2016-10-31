@@ -1484,7 +1484,7 @@ Fetch a list of all tags being used.
 
 # Group Geolocation Endpoints
 
-The following endpoints are for specific data related to Zip Codes and Geolocation data associated with Zip Codes.
+The following endpoints are for specific data related to Zip Codes and Geolocation data.
 
 ## Zipcode [/geolocation/zipcode/{zipcode}]
 
@@ -1529,6 +1529,98 @@ Fetch details for Specific Zipcode
               "estimated_population": 12000
             }
           ]
+        }
+
+## IP Address [/geolocation/ip/{ipaddress}]
+
+Fetch details for Specific IP Address
+
++ Parameters
+    + ipaddress (optional, string) -  IP Address to Lookup.
+        + Default: Requester's IP Address
+
+### Get IP Address [GET]
+
++ Response 200 (application/json)
+
+        
+        {
+            "city": {
+                "geoname_id": 5037649,
+                "names": {
+                    "de": "Minneapolis",
+                    "en": "Minneapolis",
+                    "es": "Mineápolis",
+                    "fr": "Minneapolis",
+                    "ja": "ミネアポリス",
+                    "pt-BR": "Minneapolis",
+                    "ru": "Миннеаполис",
+                    "zh-CN": "明尼阿波利斯"
+                }
+            },
+            "continent": {
+                "code": "NA",
+                "geoname_id": 6255149,
+                "names": {
+                    "de": "Nordamerika",
+                    "en": "North America",
+                    "es": "Norteamérica",
+                    "fr": "Amérique du Nord",
+                    "ja": "北アメリカ",
+                    "pt-BR": "América do Norte",
+                    "ru": "Северная Америка",
+                    "zh-CN": "北美洲"
+                }
+            },
+            "country": {
+                "geoname_id": 6252001,
+                "iso_code": "US",
+                "names": {
+                    "de": "USA",
+                    "en": "United States",
+                    "es": "Estados Unidos",
+                    "fr": "États-Unis",
+                    "ja": "アメリカ合衆国",
+                    "pt-BR": "Estados Unidos",
+                    "ru": "США",
+                    "zh-CN": "美国"
+                }
+            },
+            "location": {
+                "latitude": 44.9759,
+                "longitude": -93.2166,
+                "metro_code": "613",
+                "time_zone": "America/Chicago"
+            },
+            "postal": {
+                "code": "55414"
+            },
+            "registered_country": {
+                "geoname_id": 6252001,
+                "iso_code": "US",
+                "names": {
+                    "de": "USA",
+                    "en": "United States",
+                    "es": "Estados Unidos",
+                    "fr": "États-Unis",
+                    "ja": "アメリカ合衆国",
+                    "pt-BR": "Estados Unidos",
+                    "ru": "США",
+                    "zh-CN": "美国"
+                }
+            },
+            "subdivisions": [
+                {
+                    "geoname_id": 5037779,
+                    "iso_code": "MN",
+                    "names": {
+                        "en": "Minnesota",
+                        "es": "Minnesota",
+                        "ja": "ミネソタ州",
+                        "ru": "Миннесота"
+                    }
+                }
+            ]
         }
 
 ## Geolocation [/geolocation/?zipcode={zipcode}&city={city}&county={county}&state={state}&type={type}&areaCode={areaCode}&timezone={timezone}&minPopulation={minPopulation}&maxPopulation={maxPopulation}&latitude={latitude}&longitude={longitude}&distance={distance}]

@@ -9,6 +9,9 @@ var validator = require('validator');
 var util = require('./util');
 var config = require('../../../config');
 var elasticsearchClient = require('../../../elasticsearch/client');
+var mmdbreader = require('maxmind-db-reader');
+var Promise = require('bluebird');
+
 var env = config.get('env');
 var indexType = env + '_geolocation';
 var indexName = config.get('elasticsearch.indexName') + '_' + indexType;
@@ -308,5 +311,31 @@ module.exports = {
           errors: error
         });
       });
+  },
+
+  /**
+   * Get IP Address
+   * @param {string} ip - IP Address to Lookup
+   * @param {string} source - Data Source [ 'cities', 'countries' ]
+   * @returns {*}
+   */
+  getIpAddress: function (ip, source) {
+    var possibleSources = ['cities', 'countries'];
+
+    return new Promise(function (resolve, reject) {
+      if (possibleSources.indexOf(source) !== -1) {
+        mmdbreader.open('./app/flat-db/' + source + '.mmdb',function(err, cities) {
+          cities.getGeoData(ip, function(err, geodata) {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(geodata);
+            }
+          });
+        });
+      } else {
+        reject('Invalid Source');
+      }
+    });
   }
 };

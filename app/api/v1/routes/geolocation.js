@@ -8,6 +8,8 @@
 var express = require('express');
 var config = require('../../../config');
 var util = require('./util');
+var ipaddr = require('ipaddr.js');
+
 var router = express.Router(config.router);
 var GeolocationDomain = require('../domain/geolocation');
 
@@ -37,6 +39,52 @@ router.route('/geolocation/zipcode/:zipcode').get(function(request, response) {
     response.json(util.createAPIResponse({
       error: true,
       errors: ['Invalid Zip Code'],
+      data: []
+    }));
+  }
+});
+
+/**
+ * Lookup Location Data from IP Address
+ * @memberof module:routes/geolocation
+ * @name [GET] /geolocation/ip/:ipaddress
+ * @property {string} [ipaddress=Requester's IP Address] - IP Address to Search For
+ */
+/* istanbul ignore next */
+router.route('/geolocation/ip/:ipaddress?').get(function(request, response) {
+
+  var valid = true;
+  var ip = request.params.ipaddress;
+
+  if (ip) {
+    valid = (ip && /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip));
+  } else {
+    ip = request.headers['x-forwarded-for'] ||
+      request.connection.remoteAddress ||
+      request.socket.remoteAddress ||
+      request.connection.socket.remoteAddress;
+  }
+
+  var addr = ipaddr.process(ip).toString();
+
+  if (addr && valid) {
+    GeolocationDomain.getIpAddress(addr, 'cities')
+      .then(function (results) {
+        response.json(util.createAPIResponse({
+          data: results
+        }));
+      })
+      .catch(function (error) {
+        response.json(util.createAPIResponse({
+          error: true,
+          errors: [error],
+          data: []
+        }));
+      });
+  } else {
+    response.json(util.createAPIResponse({
+      error: true,
+      errors: ['Invalid IP Address'],
       data: []
     }));
   }
