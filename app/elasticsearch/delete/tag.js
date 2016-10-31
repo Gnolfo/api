@@ -7,6 +7,7 @@
 var config = require('../../config');
 var client = require('./../client');
 var debug = require('../../debug');
+var logger = require('../../logger');
 
 var env = config.get('env');
 var indexType = env + '_tag';
@@ -21,6 +22,7 @@ var Tag = client.indices.delete({
 })
 .then(function() {
   debug.success('Index Deleted: ' + indexName);
+  logger.log('Index Deleted: ' + indexName);
 })
 .catch(function(error) {
   debug.error(error.status + ' ' + error.message);

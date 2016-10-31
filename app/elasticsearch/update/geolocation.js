@@ -7,6 +7,7 @@
 var _ = require('lodash');
 var debug = require('../../debug');
 var config = require('../../config');
+var logger = require('../../logger');
 var elasticsearchClient = require('../client');
 var ZipCodeModel = require('../../models/campaignzero/zipcode');
 var GeolocationDomain = require('../../api/v1/domain/geolocation');
@@ -64,6 +65,7 @@ var GeolocationES = {
             }
 
             debug.success(indexName + ' indexed ' + result.items.length + ' items');
+            logger.log(indexName + ' indexed ' + result.items.length + ' items');
           })
           .catch(function(error) {
             debug.error('Error indexing ' + indexType);

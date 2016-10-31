@@ -8,6 +8,7 @@ var _ = require('lodash');
 var config = require('../../config');
 var elasticsearchClient = require('../client');
 var debug = require('../../debug');
+var logger = require('../../logger');
 
 var env = config.get('env');
 var indexType = env + '_user';
@@ -78,6 +79,7 @@ var UserES = {
             }
 
             debug.success(indexName + ' indexed ' + result.items.length + ' items');
+            logger.log(indexName + ' indexed ' + result.items.length + ' items');
           })
           .catch(function(error) {
             debug.error('Error indexing ' + indexName);

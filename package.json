@@ -1,11 +1,12 @@
 {
-  "name": "api",
+  "name": "campaign-zero-api",
   "version": "1.0.0",
-  "description": "API",
+  "description": "Campaign Zero API",
   "license": "MIT",
   "main": "index.js",
   "engines": {
-    "node": "6.x"
+    "node": "6.x",
+    "npm": "3.10.7"
   },
   "scripts": {
     "start": "npm run -s cleanup && npm run -s docs && forever start -w --minUptime 1000 --spinSleepTime 1000 -m 1 -l web-server.log -o ./web-server-stdout.log -e ./web-server-stderr.log index.js",
@@ -17,27 +18,31 @@
     "test": "npm run -s lint && npm run -s coverage && npm run -s check-coverage",
     "lint": "jshint --reporter=node_modules/jshint-stylish ./app",
     "coverage": "istanbul cover _mocha --recursive --require ./test/bootstrap.js ./test/**/*_test.js",
-    "check-coverage": "istanbul check-coverage --statement 75 --branch 75 --function 75 --line 75",
+    "check-coverage": "istanbul check-coverage --statement 70 --branch 70 --function 70 --line 70",
     "migrate": "cd ./app && sequelize db:migrate:latest && cd -",
-    "migrate:rollup": "cd ./app && sequelize db:migrate:undo && cd -",
+    "migrate:rollback": "cd ./app && sequelize db:migrate:undo && cd -",
     "seed": "cd ./app && sequelize db:seed:all && cd -",
-    "seed:rollup": "cd ./app && sequelize db:seed:undo && cd -",
+    "seed:rollback": "cd ./app && sequelize db:seed:undo && cd -",
     "elasticsearch:create": "cd ./app && node ./elasticsearch/create && cd -",
     "elasticsearch:update": "cd ./app && node ./elasticsearch/update && cd -",
     "elasticsearch:delete": "cd ./app && node ./elasticsearch/delete && cd -",
     "snyk-protect": "snyk protect",
     "snyk-test": "snyk test",
-    "prepublish": "npm run snyk-protect"
+    "flatdb:download-all": "npm run -s flatdb:geo-city && npm run -s flatdb:geo-country",
+    "flatdb:geo-city": "rm -f ./app/flat-db/city.mmdb && curl -o ./app/flat-db/city.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz && gunzip ./app/flat-db/city.mmdb.gz",
+    "flatdb:geo-country": "rm -f ./app/flat-db/country.mmdb && curl -o ./app/flat-db/country.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz && gunzip ./app/flat-db/country.mmdb.gz",
+    "prepublish": "npm run snyk-protect",
+    "postinstall": "npm run -s flatdb:download-all"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/api/api.git"
+    "url": "git+https://github.com/campaignzero/api.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/api/api/issues"
+    "url": "https://github.com/campaignzero/api/issues"
   },
-  "homepage": "https://github.com/api/api#readme",
+  "homepage": "https://github.com/campaignzero/api#readme",
   "dependencies": {
     "async": "^2.1.2",
     "bcrypt": "^0.8.7",
