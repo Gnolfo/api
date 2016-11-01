@@ -8,6 +8,7 @@
  * @type {object}
  */
 module.exports = {
+  Bills: require('./bills'),
   Category: require('./category'),
   Email: require('./email'),
   Geolocation: require('./geolocation'),

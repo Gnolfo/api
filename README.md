@@ -196,6 +196,7 @@ API Development Scripts:
 
 | command                        | description                                                                                         |
 |--------------------------------|-----------------------------------------------------------------------------------------------------|
+| `npm run help`                 | Generates List of NPM Scripts you can run                                                           |
 | `npm run start`                | Runs API using `forever` service after running `npm run cleanup`                                    |
 | `npm run start:debug`          | Starts the API in Debug Mode so you can see Console statements in terminal                          |
 | `npm run stop`                 | Stop API when run from `npm start` using `forever`                                                  |
@@ -207,8 +208,10 @@ API Development Scripts:
 | `npm run coverage`             | Generate Code Coverage Reports and Run Unit Tests                                                   |
 | `npm run check-coverage`       | Check Coverage Reports against Minimum Requirements                                                 |
 | `npm run migrate`              | Migrate to Latest Database Schema                                                                   |
+| `npm run migrate:create  `     | Create new Migration Template file in `./app/seeders` folder                                        |
 | `npm run migrate:rollback`     | Roll Back Migration Changes                                                                         |
-| `npm run seed`                 | Run Seeders in `./seeders` folder                                                                   |
+| `npm run seed`                 | Run Seeders in `./app/seeders` folder                                                               |
+| `npm run seed:create`          | Create new Seeder Template file in `./app/seeders` folder                                           |
 | `npm run seed:rollback`        | Undo Seeders                                                                                        |
 | `npm run elasticsearch:create` | Create Elasticsearch Indexes                                                                        |
 | `npm run elasticsearch:update` | Update Elasticsearch Indexes                                                                        |
@@ -221,6 +224,17 @@ API Development Scripts:
 | `npm run make-config`          | Runs during `npm install` and downloads sample local.json file if one was not already created       |
 | `npm run prepublish`           | Runs any commands necessary before publishing API                                                   |
 | `npm run postinstall`          | This runs automatically after running `npm install`                                                 |
+
+#### To see all scripts:
+
+```
+npm run help
+```
+#### to filter scripts:
+
+```
+npm run help [regex]
+```
 
 
 Unit Testing and Code Coverage Reports

@@ -9,5 +9,7 @@
  * @type {object}
  */
 module.exports = {
+  Bills: require('./bills'),
+  PoliceKillings: require('./police_killings'),
   ZipCode: require('./zipcode')
 };

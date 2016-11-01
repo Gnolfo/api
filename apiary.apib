@@ -3,7 +3,7 @@ HOST: https://api.joincampaignzero.org/v1
 
 # API
 
-Campaign ZERO was developed with contributions from activists, protesters and researchers across the nation. This [data-informed](http://www.joincampaignzero.org/problem) platform presents comprehensive solutions to end police violence in America. It integrates [community demands](http://thedemands.org) and policy recommendations from [research organizations](http://justiceinpolicing.com/) and the [President's Task Force on 21st Century Policing](http://www.cops.usdoj.gov/pdf/taskforce/TaskForce_FinalReport.pdf). Together, we will win.
+Campaign Zero was developed with contributions from activists, protesters and researchers across the nation. This [data-informed](http://www.joincampaignzero.org/problem) platform presents comprehensive solutions to end police violence in America. It integrates [community demands](http://thedemands.org) and policy recommendations from [research organizations](http://justiceinpolicing.com/) and the [President's Task Force on 21st Century Policing](http://www.cops.usdoj.gov/pdf/taskforce/TaskForce_FinalReport.pdf). Together, we will win.
 
 * _Maintained By:_ __[Peter Schmalfeldt](mailto:me@peterschmalfeldt.com)__
 * _Last Modified:_ __October 16th, 2016__
@@ -1737,6 +1737,115 @@ Get Location Specific Data using any combination of filters.
                 ""
               ],
               "estimated_population": 410
+            }
+          ]
+        }
+        
+# Group Bills Endpoints
+
+The following endpoints are for specific Campaign Zero Bills.
+
+## Bills [/bills/?status={status}&progress={progress}&chamber={chamber}&state={state}&city={city}&billId={billId}&sessionId={sessionId}&beforeDate={beforeDate}&afterDate={afterDate}]
+
+Search Campaign Zero Bills
+
++ Parameters
+    + status (optional, enum[string]) - Status of Bill ['considering','passed','failed']
+        + Members
+            + `considering`
+            + `passed`
+            + `failed`
+    + progress (optional, enum[string]) - Whether this bill passing is Good or Bad ['good','bad']
+        + Members
+            + `good`
+            + `bad`
+    + chamber (optional, enum[string]) - Which Chamber of Congress this bill is for ['upper','lower']
+        + Members
+            + `upper`
+            + `lower`
+    + state (optional, string) - Two Letter US State Code Abbreviation ( ISO 3166 )
+    + city (optional, string) - Specific City this Bill Belongs to
+    + billId (optional, string) - Unique Bill ID from Open States
+    + sessionId (optional, string) - Unique Session ID from Open States
+    + beforeDate (optional, string) - Filter by Bills Created Before or On this Date
+    + afterDate (optional, string) - Filter by Bills Created After or On this Date
+
+
+### Get Bills [GET]
+
++ Response 200 (application/json)
+
+        
+        {
+          "error": false,
+          "errors": [],
+          "field_errors": {},
+          "meta": {
+            "total": 5,
+            "showing": 5,
+            "pages": 1,
+            "page": 1
+          },
+          "data": [
+            {
+              "status": "passed",
+              "progress": "good",
+              "chamber": "lower",
+              "state": "NY",
+              "city": null,
+              "bill_id": "A 3949",
+              "session_id": "2015-2016",
+              "short_description": "ends racial profiling",
+              "long_description": null,
+              "details_url": "http://openstates.org/ny/bills/2015-2016/A3949/"
+            },
+            {
+              "status": "passed",
+              "progress": "good",
+              "chamber": "lower",
+              "state": "NY",
+              "city": null,
+              "bill_id": "A 6509A",
+              "session_id": "2015-2016",
+              "short_description": "special prosecutor for police killings",
+              "long_description": null,
+              "details_url": "http://openstates.org/ny/bills/2015-2016/A6509A/"
+            },
+            {
+              "status": "passed",
+              "progress": "good",
+              "chamber": "lower",
+              "state": "NY",
+              "city": null,
+              "bill_id": "A 7698A",
+              "session_id": "2015-2016",
+              "short_description": "reports data on police actions",
+              "long_description": null,
+              "details_url": "http://openstates.org/ny/bills/2015-2016/A7698A/"
+            },
+            {
+              "status": "passed",
+              "progress": "bad",
+              "chamber": "upper",
+              "state": "NY",
+              "city": null,
+              "bill_id": "S 5598",
+              "session_id": "2015-2016",
+              "short_description": "further criminalizes resisting police",
+              "long_description": null,
+              "details_url": "http://openstates.org/ny/bills/2015-2016/S5598/"
+            },
+            {
+              "status": "passed",
+              "progress": "good",
+              "chamber": "upper",
+              "state": "CA",
+              "city": null,
+              "bill_id": "SB 443",
+              "session_id": "20152016",
+              "short_description": "ends civil asset forfeiture",
+              "long_description": null,
+              "details_url": "http://openstates.org/ca/bills/20152016/SB443/"
             }
           ]
         }
