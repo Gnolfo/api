@@ -111,7 +111,7 @@
   },
   "snyk": true,
   "scriptshelp" : {
-    "help-message" : "Campaing Zero API NPM Commands:",
+    "help-message" : "Campaign Zero API NPM Commands:",
     "help" : {
       "Desciption": "Generates List of NPM Scripts you can run"
     },
