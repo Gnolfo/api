@@ -1,17 +1,27 @@
 version: v1.5.2
-ignore: {}
+ignore:
+  'npm:cli:20160615':
+    - maxmind-db-reader > ip-address > cli:
+        reason: None given
+        expires: '2016-12-06T09:50:43.880Z'
 patch:
   'npm:minimatch:20160620':
     - sequelize-cli > gulp > vinyl-fs > glob-stream > minimatch:
         patched: '2016-10-26T03:03:02.334Z'
+      sequelize-cli > gulp > vinyl-fs > glob-stream > glob > minimatch:
+        patched: '2016-11-06T09:50:00.155Z'
     - sequelize-cli > gulp > vinyl-fs > glob-stream > glob > minimatch:
         patched: '2016-10-26T03:03:02.334Z'
+      sequelize-cli > gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2016-11-06T09:50:00.155Z'
     - forever > forever-monitor > minimatch:
-        patched: '2016-10-26T03:03:02.334Z'
+        patched: '2016-11-06T09:50:00.155Z'
     - sequelize-cli > gulp > vinyl-fs > glob-watcher > gaze > globule > glob > minimatch:
-        patched: '2016-10-26T03:03:02.334Z'
+        patched: '2016-11-06T09:50:00.155Z'
     - sequelize-cli > gulp > vinyl-fs > glob-watcher > gaze > globule > minimatch:
-        patched: '2016-10-26T03:03:02.334Z'
+        patched: '2016-11-06T09:50:00.155Z'
+    - maxmind-db-reader > ip-address > cli > glob > minimatch:
+        patched: '2016-11-06T09:50:00.155Z'
   'npm:moment:20161019':
     - convict > moment:
-        patched: '2016-10-26T03:03:02.334Z'
+        patched: '2016-11-06T09:50:00.155Z'
