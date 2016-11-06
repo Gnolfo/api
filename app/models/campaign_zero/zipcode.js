@@ -1,5 +1,5 @@
 /**
- * @module models/campaignzero/zipcode
+ * @module models/campaign_zero/zipcode
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
  */

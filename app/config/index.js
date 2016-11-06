@@ -52,7 +52,7 @@ var config = convict({
   },
   env: {
     doc: 'The current application environment',
-    format: ['local', 'mobile', 'staging', 'production' ],
+    format: ['local', 'mobile', 'staging', 'production', 'test' ],
     default: 'local',
     env: 'API_NODE_ENV'
   },

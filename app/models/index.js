@@ -10,5 +10,5 @@
  */
 module.exports = {
   API: require('./api'),
-  CampaignZero: require('./campaignzero')
+  CampaignZero: require('./campaign_zero')
 };

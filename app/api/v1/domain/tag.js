@@ -17,7 +17,10 @@ module.exports = {
    * @return {object}
    */
   prepareForAPIOutput: function(data) {
-    var fields = ['id', 'name', 'slug'];
+    var fields = [
+      'name',
+      'slug'
+    ];
     return _.pick(data._source, fields);
   },
 

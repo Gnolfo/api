@@ -44,18 +44,17 @@ describe('Domain Category', function() {
       }
     });
 
-    assert.isDefined(output.id);
     assert.isDefined(output.parent_id);
     assert.isDefined(output.name);
     assert.isDefined(output.slug);
     assert.isDefined(output.subcategories);
 
-    assert.isTrue(output.id === 1);
     assert.isTrue(output.parent_id === null);
     assert.isTrue(output.name === 'Test');
     assert.isTrue(output.slug === 'test');
     assert.isTrue(output.subcategories.length === 2);
 
+    assert.isUndefined(output.id);
     assert.isUndefined(output.created_at);
     assert.isUndefined(output.modified_at);
   });
@@ -72,16 +71,15 @@ describe('Domain Category', function() {
       }
     });
 
-    assert.isDefined(output.id);
     assert.isDefined(output.parent_id);
     assert.isDefined(output.name);
     assert.isDefined(output.slug);
 
-    assert.isTrue(output.id === 1);
     assert.isTrue(output.parent_id === null);
     assert.isTrue(output.name === 'Test');
     assert.isTrue(output.slug === 'test');
 
+    assert.isUndefined(output.id);
     assert.isUndefined(output.created_at);
     assert.isUndefined(output.modified_at);
     assert.isUndefined(output.subcategories);

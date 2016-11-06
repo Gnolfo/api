@@ -9,7 +9,8 @@ var validator = require('validator');
 var Promise = require('bluebird');
 
 var util = require('./util');
-var Bills = require('../../../models/campaignzero/bills');
+var config = require('../../../config');
+var Bills = require('../../../models/campaign_zero/bills');
 
 var DEFAULT_PAGE_SIZE = 30;
 
@@ -25,7 +26,19 @@ module.exports = {
    */
   prepareForAPIOutput: function(data) {
     var results = [];
-    var fields = ['status', 'progress', 'chamber', 'state', 'city', 'bill_id', 'session_id', 'short_description', 'long_description', 'details_url'];
+    var fields = [
+      'bill_id',
+      'chamber',
+      'city',
+      'details_url',
+      'long_description',
+      'progress',
+      'session_id',
+      'short_description',
+      'state',
+      'status',
+      'vote'
+    ];
 
     for (var i = 0; i < data.length; i++) {
       results.push(_.pick(data[i].dataValues, fields));
@@ -35,7 +48,7 @@ module.exports = {
   },
 
   /**
-   * Sarch Bills
+   * Search Bills
    * @param request
    * @property {enum} [status] - Status of Bill ['considering','passed','failed']
    * @property {enum} [progress] - Whether this bill passing is Good or Bad ['good','bad']
@@ -43,6 +56,7 @@ module.exports = {
    * @property {string} [state] - Two Letter US State Code Abbreviation ( ISO 3166 )
    * @property {string} [city] - Specific City this Bill Belongs to
    * @property {string} [billId] - Unique Bill ID from Open States
+   * @property {string} [repId] - Unique Representative ID from Open States
    * @property {string} [sessionId] - Unique Session ID from Open States
    * @property {string} [beforeDate] - Filter by Bills Created Before or On this Date
    * @property {string} [afterDate] - Filter by Bills Created After or On this Date
@@ -52,8 +66,9 @@ module.exports = {
 
     var pageSize = DEFAULT_PAGE_SIZE;
     var page = 1;
-    var offset = 0;
+    var offset;
     var i = 0;
+    var j = 0;
 
     // Page size
     if (request.pageSize && validator.isInt(request.pageSize) && validator.toInt(request.pageSize, 10) >= 1) {
@@ -171,19 +186,76 @@ module.exports = {
     }
 
     return Bills.findAndCountAll({
-        limit: pageSize,
-        offset: offset,
-        where: searchParams
-      })
-      .then(function(data) {
-        data.meta = {
-          total: data.count,
-          showing: data.rows.length,
-          pages: Math.ceil(data.count / pageSize),
-          page: page
-        };
+      limit: pageSize,
+      offset: offset,
+      where: searchParams
+    })
+    .then(function(data) {
+      data.meta = {
+        total: data.count,
+        showing: data.rows.length,
+        pages: Math.ceil(data.count / pageSize),
+        page: page
+      };
 
+      // Check if we should fetch Open States Data
+      var fetchOpenStates = false;
+
+      // Setup Bill Vote Response
+      var vote = 'unknown';
+
+      // Set Default Vote for each response
+      for (i = 0; i < data.rows.length; i++) {
+        data.rows[i].dataValues.vote = vote;
+      }
+
+      var firstRow = data.rows[0].dataValues;
+
+      // Check if we have a result that we can actually fetch Open States with if searching for a specific Bill
+      if(request.billId && request.repId && data.rows && (data.rows.length === 1 || data.rows.length === 2) && firstRow.state && firstRow.session_id && firstRow.bill_id) {
+        /* istanbul ignore else */
+        if (data.rows.length === 1) {
+          fetchOpenStates = true;
+        } else if (data.rows.length === 2 && firstRow.state === data.rows[1].dataValues.state && firstRow.session_id === data.rows[1].dataValues.session_id && firstRow.bill_id === data.rows[1].dataValues.bill_id) {
+          fetchOpenStates = true;
+        }
+      }
+
+      // Use the Data in our API rather than the search query as ours is mapped Open States and query might not be
+      if (fetchOpenStates) {
+        return util.getContent('http://openstates.org/api/v1/bills/'+ firstRow.state +'/' + firstRow.session_id + '/' + firstRow.bill_id + '/?apikey=' + config.get('openStates.key'))
+          .then(function (response) {
+            var openStates = JSON.parse(response);
+
+            for (i = 0; i < openStates.votes.length; i++) {
+              for (j = 0; j < openStates.votes[i].yes_votes.length; j++) {
+                /* istanbul ignore else */
+                if(openStates.votes[i].yes_votes[j].leg_id === request.repId) {
+                  vote = 'supported';
+                  break;
+                }
+              }
+              for (j = 0; j < openStates.votes[i].no_votes.length; j++) {
+                /* istanbul ignore else */
+                if (openStates.votes[i].no_votes[j].leg_id === request.repId) {
+                  vote = 'opposed';
+                  break;
+                }
+              }
+            }
+
+            for (i = 0; i < data.rows.length; i++) {
+              data.rows[i].dataValues.vote = vote;
+            }
+
+            return Promise.resolve(data);
+          });
+      } else {
         return Promise.resolve(data);
-      });
+      }
+    })
+    .catch(function (err) {
+      return Promise.reject(err);
+    });
   }
 };

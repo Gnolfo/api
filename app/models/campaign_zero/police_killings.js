@@ -1,5 +1,5 @@
 /**
- * @module models/campaignzero/police_killings
+ * @module models/campaign_zero/police_killings
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
  */

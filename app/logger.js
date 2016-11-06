@@ -2,6 +2,7 @@ var config = require('./config');
 var logger = require('logzio-nodejs');
 var log;
 
+/* istanbul ignore if */
 if (config.get('env') !== 'test') {
   log = logger.createLogger({
     token: config.get('logzio.token'),
@@ -10,11 +11,11 @@ if (config.get('env') !== 'test') {
   });
 } else {
   log = {
-    debug: function(){},
-    error: function(){},
-    info: function(){},
-    log: function(){},
-    warn: function(){}
+    debug: function (){ return true; },
+    error: function (){ return true; },
+    info: function (){ return true; },
+    log: function (){ return true; },
+    warn: function (){ return true; }
   };
 }
 

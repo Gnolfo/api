@@ -1745,7 +1745,7 @@ Get Location Specific Data using any combination of filters.
 
 The following endpoints are for specific Campaign Zero Bills.
 
-## Bills [/bills/?status={status}&progress={progress}&chamber={chamber}&state={state}&city={city}&billId={billId}&sessionId={sessionId}&beforeDate={beforeDate}&afterDate={afterDate}]
+## Bills [/bills/?status={status}&progress={progress}&chamber={chamber}&state={state}&city={city}&billId={billId}&repId={repId}&sessionId={sessionId}&beforeDate={beforeDate}&afterDate={afterDate}]
 
 Search Campaign Zero Bills
 
@@ -1765,7 +1765,8 @@ Search Campaign Zero Bills
             + `lower`
     + state (optional, string) - Two Letter US State Code Abbreviation ( ISO 3166 )
     + city (optional, string) - Specific City this Bill Belongs to
-    + billId (optional, string) - Unique Bill ID from Open States
+    + billId (optional, string) - Unique Bill ID from Open States ( required to get vote status )
+    + repId (optional, string) - Unique Representative ID from Open States ( required to get vote status )
     + sessionId (optional, string) - Unique Session ID from Open States
     + beforeDate (optional, string) - Filter by Bills Created Before or On this Date
     + afterDate (optional, string) - Filter by Bills Created After or On this Date
@@ -1773,79 +1774,48 @@ Search Campaign Zero Bills
 
 ### Get Bills [GET]
 
+If your search contains a `billId` & `repId` we will check OpenStates.org for how the `repId` voted for the `billId`.  Possible `vote` values are `unknown` ( default ), `supported` & `opposed`.
+
+Voting Status for reps can only be checked if your search result is specific enough to return a single result for Upper and/or Lower chambers for the same State & Session ID for the provided `billId`.
+
 + Response 200 (application/json)
 
-        
         {
           "error": false,
           "errors": [],
           "field_errors": {},
           "meta": {
-            "total": 5,
-            "showing": 5,
+            "total": 2,
+            "showing": 2,
             "pages": 1,
             "page": 1
           },
           "data": [
             {
-              "status": "passed",
-              "progress": "good",
-              "chamber": "lower",
-              "state": "NY",
-              "city": null,
-              "bill_id": "A 3949",
-              "session_id": "2015-2016",
-              "short_description": "ends racial profiling",
-              "long_description": null,
-              "details_url": "http://openstates.org/ny/bills/2015-2016/A3949/"
-            },
-            {
-              "status": "passed",
-              "progress": "good",
-              "chamber": "lower",
-              "state": "NY",
-              "city": null,
-              "bill_id": "A 6509A",
-              "session_id": "2015-2016",
-              "short_description": "special prosecutor for police killings",
-              "long_description": null,
-              "details_url": "http://openstates.org/ny/bills/2015-2016/A6509A/"
-            },
-            {
-              "status": "passed",
-              "progress": "good",
-              "chamber": "lower",
-              "state": "NY",
-              "city": null,
-              "bill_id": "A 7698A",
-              "session_id": "2015-2016",
-              "short_description": "reports data on police actions",
-              "long_description": null,
-              "details_url": "http://openstates.org/ny/bills/2015-2016/A7698A/"
-            },
-            {
-              "status": "passed",
-              "progress": "bad",
-              "chamber": "upper",
-              "state": "NY",
-              "city": null,
-              "bill_id": "S 5598",
-              "session_id": "2015-2016",
-              "short_description": "further criminalizes resisting police",
-              "long_description": null,
-              "details_url": "http://openstates.org/ny/bills/2015-2016/S5598/"
-            },
-            {
+              "vote": "supported",
               "status": "passed",
               "progress": "good",
               "chamber": "upper",
-              "state": "CA",
+              "state": "FL",
               "city": null,
-              "bill_id": "SB 443",
-              "session_id": "20152016",
+              "bill_id": "SB 1044",
+              "session_id": "2016",
               "short_description": "ends civil asset forfeiture",
               "long_description": null,
-              "details_url": "http://openstates.org/ca/bills/20152016/SB443/"
+              "details_url": "http://openstates.org/fl/bills/2016/SB1044/"
+            },
+            {
+              "vote": "supported",
+              "status": "passed",
+              "progress": "good",
+              "chamber": "lower",
+              "state": "FL",
+              "city": null,
+              "bill_id": "SB 1044",
+              "session_id": "2016",
+              "short_description": "ends civil asset forfeiture",
+              "long_description": null,
+              "details_url": "http://openstates.org/fl/bills/2016/SB1044/"
             }
           ]
         }

@@ -25,14 +25,13 @@ describe('Domain Tag', function() {
       }
     });
 
-    assert.isDefined(output.id);
     assert.isDefined(output.name);
     assert.isDefined(output.slug);
 
-    assert.isTrue(output.id === 1);
     assert.isTrue(output.name === 'Test');
     assert.isTrue(output.slug === 'test');
 
+    assert.isUndefined(output.id);
     assert.isUndefined(output.created_at);
     assert.isUndefined(output.modified_at);
   });

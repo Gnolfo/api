@@ -30,17 +30,17 @@ module.exports = {
    */
   prepareForAPIOutput: function(data) {
     var fields = [
-      'type',
-      'city',
-      'state',
-      'zipcode',
-      'county',
-      'country',
-      'timezone',
-      'location',
-      'area_codes',
       'alternate_city_names',
-      'estimated_population'
+      'area_codes',
+      'city',
+      'country',
+      'county',
+      'estimated_population',
+      'location',
+      'state',
+      'timezone',
+      'type',
+      'zipcode'
     ];
 
     return _.pick(data._source, fields);
@@ -56,35 +56,34 @@ module.exports = {
    */
   prepareForElasticSearch: function(data) {
     return {
-      id: data.id,
-      type: data.type.toLowerCase(),
-      city: data.primary_city,
-      state: data.state,
-      zipcode: data.zipcode,
-      country: data.country,
       alternate_city_names: data.acceptable_cities.split(', '),
       area_codes: data.area_codes.split(','),
-      latitude: data.latitude,
-      longitude: data.longitude,
-      timezone: data.timezone,
-      decommissioned: data.decommissioned,
+      city: data.primary_city,
+      country: data.country,
       county: data.county,
-      world_region: data.world_region,
+      decommissioned: data.decommissioned,
       estimated_population: data.estimated_population,
+      id: data.id,
+      latitude: data.latitude,
       location: {
         lat: data.latitude,
         lon: data.longitude
-      }
+      },
+      longitude: data.longitude,
+      state: data.state,
+      timezone: data.timezone,
+      type: data.type.toLowerCase(),
+      world_region: data.world_region,
+      zipcode: data.zipcode
     };
   },
 
   /**
    *
    * @param {string} zipcode
-   * @param {object} query
    * @returns {*}
    */
-  getZipcode: function (zipcode, query) {
+  getZipcode: function (zipcode) {
 
     var self = this;
     var searchParams = {

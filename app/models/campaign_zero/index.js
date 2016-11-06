@@ -1,5 +1,5 @@
 /**
- * @module models/campaignzero
+ * @module models/campaign_zero
  * @version 1.0.0
  * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
  */

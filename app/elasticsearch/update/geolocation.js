@@ -9,7 +9,7 @@ var debug = require('../../debug');
 var config = require('../../config');
 var logger = require('../../logger');
 var elasticsearchClient = require('../client');
-var ZipCodeModel = require('../../models/campaignzero/zipcode');
+var ZipCodeModel = require('../../models/campaign_zero/zipcode');
 var GeolocationDomain = require('../../api/v1/domain/geolocation');
 
 var env = config.get('env');

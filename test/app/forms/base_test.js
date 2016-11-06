@@ -32,7 +32,7 @@ describe('BaseForm', function() {
         return new validate.Promise(function(resolve, reject) {
           setTimeout(function() {
             resolve('Error!');
-          }, 100);
+          }, 10);
         });
       };
 
@@ -61,8 +61,8 @@ describe('BaseForm', function() {
         .catch(function(errors) {
           assert.isTrue('anotherField' in errors);
           assert.equal(errors.anotherField.length, 1);
-          done();
           delete validate.validators.fakeAsyncValidator;
+          done();
         });
     });
   });

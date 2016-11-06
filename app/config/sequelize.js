@@ -42,11 +42,13 @@ dbApi.authenticate()
     return dbApi.sync();
   })
   .then(function () {
-    console.log('Database Synchronized');
+    console.log('Database Synchronized ' + env);
   })
   .catch(function (error) {
-    console.log('Unable to Connect to ' + dbHost);
-    console.log(error);
+    if (env !== 'test') {
+      console.log('Unable to Connect to ' + dbHost);
+      console.log(error);
+    }
   });
 
 module.exports = {

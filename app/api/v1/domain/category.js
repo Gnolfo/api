@@ -17,7 +17,11 @@ module.exports = {
    * @return {object}
    */
   prepareForAPIOutput: function(data) {
-    var fields = ['id', 'parent_id', 'name', 'slug'];
+    var fields = [
+      'name',
+      'parent_id',
+      'slug'
+    ];
     var prepared = _.pick(data._source, fields);
 
     if (data._source.subcategories) {

@@ -13,6 +13,7 @@ module.exports = {
   Email: require('./email'),
   Geolocation: require('./geolocation'),
   Profile: require('./profile'),
+  PoliceKillings: require('./police_killings'),
   Search: require('./search'),
   Settings: require('./settings'),
   Tag: require('./tag'),

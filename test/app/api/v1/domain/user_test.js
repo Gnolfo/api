@@ -8,6 +8,9 @@ var UserFollow = require('../../../../../app/models/api/user_follows');
 var UserInvite = require('../../../../../app/models/api/user_invite');
 var userDomain = require('../../../../../app/api/v1/domain/user');
 
+var config = require('../../../../../app/config');
+var hashid = new Hashids(config.get('hashID.secret'), config.get('hashID.length'), config.get('hashID.alphabet'));
+
 var userAccount = {
   id: 1,
   activated: true,
@@ -38,8 +41,6 @@ var userAccount = {
   profile_photo: 'http://www.mywebsite.com/img/avatar.jpg',
   username: 'JaneDoe'
 };
-var config = require('../../../../../app/config');
-var hashid = new Hashids(config.get('hashID.secret'), config.get('hashID.length'), config.get('hashID.alphabet'));
 
 describe('Domain User', function() {
   beforeEach(function() {
