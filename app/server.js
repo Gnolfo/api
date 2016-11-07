@@ -195,5 +195,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(limiter);
 app.use(router);
 
+// Fallback for Possible Routes used that do not exist
+app.get('*', function (req, res) {
+  res.status(404).end(JSON.stringify(routerUtil.createAPIResponse({
+    errors: ['The endpoint you are trying to access does not exist. Please view our documentation for a complete list of supported endpoints with our API: http://docs.campaignzero.apiary.io'],
+    data: []
+  })));
+});
+
 module.exports = app.listen(config.get('port'));
 module.exports.setupAPI = setupAPI;
