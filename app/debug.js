@@ -1,3 +1,9 @@
+/**
+ * @module debug
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var colors = require('colors');
 var config = require('./config');
 

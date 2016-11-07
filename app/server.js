@@ -1,3 +1,9 @@
+/**
+ * @module server
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var rateLimit = require('express-rate-limit');
 var express = require('express');
 var compression = require('compression');
@@ -24,7 +30,6 @@ process.title = 'api';
 
 /* istanbul ignore next */
 function setupAPI(request, response, next) {
-
   if ('pretty' in request.query && request.query.pretty !== 'false') {
     app.set('json spaces', 2);
   }
@@ -153,6 +158,20 @@ function setupAPI(request, response, next) {
 }
 
 app.enable('trust proxy');
+
+/**
+ * Allow for Timeout JSON Response
+ */
+app.use(function(req, res, next){
+  res.setTimeout(3000, function(){
+    res.status(408).end(JSON.stringify(routerUtil.createAPIResponse({
+      errors: ['Request Timed Out'],
+      data: []
+    })));
+  });
+
+  next();
+});
 
 /* istanbul ignore next */
 app.use(session({

@@ -9,6 +9,7 @@ var validator = require('validator');
 var Promise = require('bluebird');
 
 var util = require('./util');
+var external = require('../../../external');
 var config = require('../../../config');
 var Bills = require('../../../models/campaign_zero/bills');
 
@@ -223,7 +224,9 @@ module.exports = {
 
       // Use the Data in our API rather than the search query as ours is mapped Open States and query might not be
       if (fetchOpenStates) {
-        return util.getContent('http://openstates.org/api/v1/bills/'+ firstRow.state +'/' + firstRow.session_id + '/' + firstRow.bill_id + '/?apikey=' + config.get('openStates.key'))
+        external.cleanCache();
+
+        return external.getContent('https://openstates.org/api/v1/bills/'+ encodeURIComponent(firstRow.state) +'/' + encodeURIComponent(firstRow.session_id) + '/' + encodeURIComponent(firstRow.bill_id) + '/?apikey=' + config.get('openStates.key'))
           .then(function (response) {
             var openStates = JSON.parse(response);
 
@@ -249,13 +252,16 @@ module.exports = {
             }
 
             return Promise.resolve(data);
+          })
+          .catch(function (err) {
+            return Promise.reject('Unable to Get Content. ' + err);
           });
       } else {
         return Promise.resolve(data);
       }
     })
     .catch(function (err) {
-      return Promise.reject(err);
+      return Promise.reject('Unable to Find Matching Bills. ' + err);
     });
   }
 };

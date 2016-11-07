@@ -1,3 +1,9 @@
+/**
+ * @module router
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var express = require('express');
 var debug = require('debug')('express:api');
 var config = require('./config');

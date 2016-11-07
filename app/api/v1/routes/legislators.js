@@ -6,34 +6,40 @@
  */
 
 var express = require('express');
+var path = require('path');
+var validator = require('validator');
+
+var external = require('../../../external');
 var config = require('../../../config');
 var util = require('./util');
-var http = require('http');
 var router = express.Router(config.router);
+
+var request = require('request');
+var cachedRequest = require('cached-request')(request);
+var cacheDirectory = path.join(__dirname, '../../../cache/');
+var GeolocationDomain = require('../domain/geolocation');
+
+cachedRequest.setCacheDirectory(cacheDirectory);
 
 /**
  * Legislators
  * @memberof module:routes/legislators
  * @name [GET] /legislators
+ * @property {string} [zipcode] - zipcode
+ * @property {string} [latitude] - Latitude ( required if also passing over `longitude` )
+ * @property {string} [longitude] - Longitude ( required if also passing over `latitude` )
  */
 /* istanbul ignore next */
 router.route('/legislators').get(function(request, response) {
-  var options = {
-    host: 'openstates.org',
-    path: '/api/v1/legislators/geo/?lat=27.7812652&long=-82.6321373&apikey=' + config.get('openStates.key')
-  };
 
-  var callback = function(data) {
-    var results = '';
+  external.cleanCache();
 
-    //another chunk of data has been recieved, so append it to `str`
-    data.on('data', function (chunk) {
-      results += chunk;
-    });
+  if (request.query.latitude && request.query.longitude && validator.isDecimal(request.query.latitude) && validator.isDecimal(request.query.longitude)) {
 
-    //the whole response has been recieved, so we just print it out here
-    data.on('end', function () {
-      var json = JSON.parse(results);
+    var url = 'https://openstates.org/api/v1/legislators/geo/?lat=' + request.query.latitude + '&long=' + request.query.longitude + '&apikey=' + config.get('openStates.key');
+
+    external.getContent(url).then(function (content){
+      var json = JSON.parse(content);
 
       if (json && json[0] === 'Bad Request') {
         response.json(util.createAPIResponse({
@@ -46,10 +52,50 @@ router.route('/legislators').get(function(request, response) {
           data: json
         }));
       }
+    }).catch(function (error){
+      response.json(util.createAPIResponse({
+        error: true,
+        errors: error
+      }));
     });
-  };
+  } else if (request.query.zipcode && validator.isNumeric(request.query.zipcode) && validator.isLength(request.query.zipcode, { min: 5, max: 5})) {
+    GeolocationDomain.getLocation({ zipcode: request.query.zipcode })
+      .then(function(results){
+        var url = 'https://openstates.org/api/v1/legislators/geo/?lat=' + results.data[0].location.lat + '&long=' + results.data[0].location.lon + '&apikey=' + config.get('openStates.key');
 
-  http.request(options, callback).end();
+        external.getContent(url).then(function (content){
+          var json = JSON.parse(content);
+
+          if (json && json[0] === 'Bad Request') {
+            response.json(util.createAPIResponse({
+              error: true,
+              errors: json
+            }));
+          } else {
+            response.json(util.createAPIResponse({
+              error: false,
+              data: json
+            }));
+          }
+        }).catch(function (error){
+          response.json(util.createAPIResponse({
+            error: true,
+            errors: error
+          }));
+        });
+      })
+      .catch(function (error) {
+        response.json(util.createAPIResponse({
+          error: true,
+          errors: error
+        }));
+      });
+  } else {
+    response.json(util.createAPIResponse({
+      error: true,
+      errors: ['Invalid Request. Requires `latitude` & `longitude` or `zipcode`.']
+    }));
+  }
 });
 
 module.exports = router;

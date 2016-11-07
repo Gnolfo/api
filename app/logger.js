@@ -1,3 +1,9 @@
+/**
+ * @module logger
+ * @version 1.0.0
+ * @author Peter Schmalfeldt <me@peterschmalfeldt.com>
+ */
+
 var config = require('./config');
 var logger = require('logzio-nodejs');
 var log;
