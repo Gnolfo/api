@@ -25,9 +25,9 @@ cachedRequest.setCacheDirectory(cacheDirectory);
  * Legislators
  * @memberof module:routes/legislators
  * @name [GET] /legislators
- * @property {string} [zipcode] - zipcode
- * @property {string} [latitude] - Latitude ( required if also passing over `longitude` )
- * @property {string} [longitude] - Longitude ( required if also passing over `latitude` )
+ * @property {string} [zipcode] - Zip Code ( must be a valid US Zip Code )
+ * @property {string} [latitude] - GPS Latitude ( required if also passing over `longitude` )
+ * @property {string} [longitude] - GPS Longitude ( required if also passing over `latitude` )
  */
 /* istanbul ignore next */
 router.route('/legislators').get(function(request, response) {

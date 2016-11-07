@@ -1819,3 +1819,204 @@ Voting Status for reps can only be checked if your search result is specific eno
             }
           ]
         }
+        
+# Group Legislator Endpoints
+
+The following endpoints are for specific Campaign Zero Bills.
+
+## Legislators [/legislators/?zipcode={zipcode}&latitude={latitude}&longitude={longitude}]
+
+Search for Legislators for a Given Location
+
++ Parameters
+    + zipcode (optional, string) - Zip Code ( must be a valid US Zip Code )
+    + latitude (optional, string) - GPS Latitude ( required if also passing over `longitude` )
+    + longitude (optional, string) - GPS Longitude ( required if also passing over `latitude` )
+
+### Get Legislators [GET]
+
++ Response 200 (application/json)
+        
+        {
+          "error": false,
+          "errors": [],
+          "field_errors": {},
+          "meta": {
+            "total": 2,
+            "showing": 2,
+            "pages": 1,
+            "page": 1
+          },
+          "data": [
+            {
+              "last_name": "Peters",
+              "updated_at": "2016-05-12 06:18:43",
+              "sources": [
+                {
+                  "url": "http://www.flhouse.gov/Sections/Representatives/representatives.aspx"
+                },
+                {
+                  "url": "http://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4571&LegislativeTermId=86"
+                }
+              ],
+              "full_name": "Kathleen M. Peters",
+              "old_roles": {
+                "2013-2014": [
+                  {
+                    "term": "2013-2014",
+                    "end_date": null,
+                    "district": "69",
+                    "chamber": "lower",
+                    "state": "fl",
+                    "party": "Republican",
+                    "type": "member",
+                    "start_date": null
+                  }
+                ]
+              },
+              "id": "FLL000276",
+              "first_name": "Kathleen",
+              "middle_name": "M.",
+              "district": "69",
+              "state": "fl",
+              "boundary_id": "ocd-division/country:us/state:fl/sldl:69",
+              "email": "Kathleen.Peters@myfloridahouse.gov",
+              "all_ids": [
+                "FLL000276"
+              ],
+              "leg_id": "FLL000276",
+              "party": "Republican",
+              "active": true,
+              "transparencydata_id": "",
+              "nickname": "",
+              "photo_url": "http://www.flhouse.gov/FileStores/Web/Imaging/Member/4571.jpg",
+              "roles": [
+                {
+                  "term": "2015-2016",
+                  "end_date": null,
+                  "district": "69",
+                  "chamber": "lower",
+                  "state": "fl",
+                  "party": "Republican",
+                  "type": "member",
+                  "start_date": null
+                }
+              ],
+              "url": "http://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4571&LegislativeTermId=86",
+              "created_at": "2013-01-03 00:11:43",
+              "chamber": "lower",
+              "offices": [
+                {
+                  "fax": null,
+                  "name": "Capitol Office",
+                  "phone": "850-717-5069",
+                  "address": "400 House Office Building\n402 South Monroe Street\nTallahassee, FL 32399-1300",
+                  "type": "capitol",
+                  "email": null
+                },
+                {
+                  "fax": null,
+                  "name": "District Office",
+                  "phone": "727-341-7385",
+                  "address": "Suite 203\n1700 66th Street North\nSt. Petersburg, FL 33710-5510",
+                  "type": "district",
+                  "email": null
+                }
+              ],
+              "suffixes": ""
+            },
+            {
+              "last_name": "Brandes",
+              "updated_at": "2016-05-12 06:18:45",
+              "sources": [
+                {
+                  "url": "http://www.flsenate.gov/Senators/"
+                },
+                {
+                  "url": "http://www.flsenate.gov/Senators/s22"
+                }
+              ],
+              "full_name": "Jeffrey Brandes",
+              "old_roles": {
+                "2013-2014": [
+                  {
+                    "term": "2013-2014",
+                    "end_date": null,
+                    "district": "22",
+                    "chamber": "upper",
+                    "state": "fl",
+                    "party": "Republican",
+                    "type": "member",
+                    "start_date": null
+                  }
+                ],
+                "2011-2012": [
+                  {
+                    "term": "2011-2012",
+                    "end_date": null,
+                    "district": "52",
+                    "chamber": "lower",
+                    "state": "fl",
+                    "party": "Republican",
+                    "type": "member",
+                    "start_date": null
+                  }
+                ]
+              },
+              "id": "FLL000054",
+              "first_name": "Jeffrey",
+              "middle_name": "",
+              "district": "22",
+              "state": "fl",
+              "votesmart_id": "124249",
+              "boundary_id": "ocd-division/country:us/state:fl/sldu:22",
+              "email": "brandes.jeff.web@flsenate.gov",
+              "all_ids": [
+                "FLL000054",
+                "FLL000171"
+              ],
+              "leg_id": "FLL000054",
+              "party": "Republican",
+              "active": true,
+              "transparencydata_id": "78178e896e8d4098949d721e673bf0c8",
+              "nickname": "Jeff",
+              "photo_url": "http://www.flsenate.gov/PublishedContent/Senators/2014-2016/Photos/s22_5095.jpg",
+              "roles": [
+                {
+                  "term": "2015-2016",
+                  "end_date": null,
+                  "district": "22",
+                  "chamber": "upper",
+                  "state": "fl",
+                  "party": "Republican",
+                  "type": "member",
+                  "start_date": null
+                }
+              ],
+              "url": "http://www.flsenate.gov/Senators/s22",
+              "country": "us",
+              "created_at": "2011-03-02 21:41:52",
+              "level": "state",
+              "chamber": "upper",
+              "offices": [
+                {
+                  "fax": null,
+                  "name": "District Office",
+                  "phone": "727-563-2100",
+                  "address": "9800 4th Street North\nSuite 200\nSt. Petersburg, FL 33702",
+                  "type": "district",
+                  "email": null
+                },
+                {
+                  "fax": null,
+                  "name": "Tallahassee Office",
+                  "phone": "850-487-5022",
+                  "address": "318 Senate Office Building\n404 South Monroe Street\nTallahassee, FL 32399-1100",
+                  "type": "capitol",
+                  "email": "brandes.jeff.web@flsenate.gov"
+                }
+              ],
+              "suffixes": ""
+            }
+          ]
+        }
