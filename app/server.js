@@ -84,29 +84,25 @@ function setupAPI(request, response, next) {
 
         if (!settings.allow_api_get && request.method === 'GET') {
           return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
-            errors: ['API Key does not support GET Requests'],
-            data: []
+            errors: ['API Key does not support GET Requests']
           })));
         }
 
         if (!settings.allow_api_post && request.method === 'POST') {
           return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
-            errors: ['API Key does not support POST Requests'],
-            data: []
+            errors: ['API Key does not support POST Requests']
           })));
         }
 
         if (!settings.allow_api_put && request.method === 'PUT') {
           return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
-            errors: ['API Key does not support PUT Requests'],
-            data: []
+            errors: ['API Key does not support PUT Requests']
           })));
         }
 
         if (!settings.allow_api_delete && request.method === 'DELETE') {
           return response.status(403).end(JSON.stringify(routerUtil.createAPIResponse({
-            errors: ['API Key does not support DELETE Requests'],
-            data: []
+            errors: ['API Key does not support DELETE Requests']
           })));
         }
 
@@ -123,8 +119,7 @@ function setupAPI(request, response, next) {
 
           if( !validHost) {
             return response.status(401).send(JSON.stringify(routerUtil.createAPIResponse({
-              errors: ['Invalid Host for API Key'],
-              data: []
+              errors: ['Invalid Host for API Key']
             })));
           }
         }
@@ -137,20 +132,17 @@ function setupAPI(request, response, next) {
 
       } else {
         return response.status(401).end(JSON.stringify(routerUtil.createAPIResponse({
-          errors: ['Invalid API Key'],
-          data: []
+          errors: ['Invalid API Key']
         })));
       }
     }).catch(function(err){
       return response.status(401).end(JSON.stringify(routerUtil.createAPIResponse({
-        errors: ['Invalid API Authentication'],
-        data: []
+        errors: ['Invalid API Authentication']
       })));
     });
   } else {
     return response.status(401).end(JSON.stringify(routerUtil.createAPIResponse({
-      errors: ['Missing API Key'],
-      data: []
+      errors: ['Missing API Key']
     })));
   }
 
@@ -165,8 +157,7 @@ app.enable('trust proxy');
 app.use(function(req, res, next){
   res.setTimeout(3000, function(){
     res.status(408).end(JSON.stringify(routerUtil.createAPIResponse({
-      errors: ['Request Timed Out'],
-      data: []
+      errors: ['Request Timed Out']
     })));
   });
 
@@ -198,8 +189,11 @@ app.use(router);
 // Fallback for Possible Routes used that do not exist
 app.get('*', function (req, res) {
   res.status(404).end(JSON.stringify(routerUtil.createAPIResponse({
-    errors: ['The endpoint you are trying to access does not exist. Please view our documentation for a complete list of supported endpoints with our API: http://docs.campaignzero.apiary.io'],
-    data: []
+    errors: [
+      'The API Endpoint you are trying to access does not exist.',
+      'Please view our Documentation for API Usage Instructions.',
+      'http://docs.campaignzero.apiary.io'
+    ]
   })));
 });
 
