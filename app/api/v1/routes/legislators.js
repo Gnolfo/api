@@ -43,18 +43,22 @@ router.route('/legislators').get(function(request, response) {
 
       if (json && json[0] === 'Bad Request') {
         response.json(util.createAPIResponse({
-          error: true,
           errors: json
         }));
       } else {
         response.json(util.createAPIResponse({
-          error: false,
-          data: json
+          data: {
+            results: json,
+            request: {
+              latitude: request.query.latitude,
+              longitude: request.query.longitude,
+              zipcode: null
+            }
+          }
         }));
       }
     }).catch(function (error){
       response.json(util.createAPIResponse({
-        error: true,
         errors: error
       }));
     });
@@ -68,25 +72,28 @@ router.route('/legislators').get(function(request, response) {
 
           if (json && json[0] === 'Bad Request') {
             response.json(util.createAPIResponse({
-              error: true,
               errors: json
             }));
           } else {
             response.json(util.createAPIResponse({
-              error: false,
-              data: json
+              data: {
+                results: json,
+                request: {
+                  latitude: results.data[0].location.lat,
+                  longitude: results.data[0].location.lon,
+                  zipcode: request.query.zipcode
+                }
+              }
             }));
           }
         }).catch(function (error){
           response.json(util.createAPIResponse({
-            error: true,
             errors: error
           }));
         });
       })
       .catch(function (error) {
         response.json(util.createAPIResponse({
-          error: true,
           errors: error
         }));
       });
