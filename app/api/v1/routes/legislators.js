@@ -6,20 +6,12 @@
  */
 
 var express = require('express');
-var path = require('path');
 var validator = require('validator');
 
 var external = require('../../../external');
 var config = require('../../../config');
 var util = require('./util');
 var router = express.Router(config.router);
-
-var request = require('request');
-var cachedRequest = require('cached-request')(request);
-var cacheDirectory = path.join(__dirname, '../../../cache/');
-var GeolocationDomain = require('../domain/geolocation');
-
-cachedRequest.setCacheDirectory(cacheDirectory);
 
 /**
  * Legislators
@@ -36,9 +28,9 @@ router.route('/legislators').get(function(request, response) {
 
   if (request.query.latitude && request.query.longitude && validator.isDecimal(request.query.latitude) && validator.isDecimal(request.query.longitude)) {
 
-    var url = 'https://openstates.org/api/v1/legislators/geo/?lat=' + request.query.latitude + '&long=' + request.query.longitude + '&apikey=' + config.get('openStates.key');
+    var url = 'http://openstates.org/api/v1/legislators/geo/?lat=' + request.query.latitude + '&long=' + request.query.longitude + '&apikey=' + config.get('openStates.key');
 
-    external.getContent(url).then(function (content){
+    external.getContent(url, true).then(function (content){
       var json = JSON.parse(content);
 
       if (json && json[0] === 'Bad Request') {
@@ -65,9 +57,9 @@ router.route('/legislators').get(function(request, response) {
   } else if (request.query.zipcode && validator.isNumeric(request.query.zipcode) && validator.isLength(request.query.zipcode, { min: 5, max: 5})) {
     GeolocationDomain.getLocation({ zipcode: request.query.zipcode })
       .then(function(results){
-        var url = 'https://openstates.org/api/v1/legislators/geo/?lat=' + results.data[0].location.lat + '&long=' + results.data[0].location.lon + '&apikey=' + config.get('openStates.key');
+        var url = 'http://openstates.org/api/v1/legislators/geo/?lat=' + results.data[0].location.lat + '&long=' + results.data[0].location.lon + '&apikey=' + config.get('openStates.key');
 
-        external.getContent(url).then(function (content){
+        external.getContent(url, true).then(function (content){
           var json = JSON.parse(content);
 
           if (json && json[0] === 'Bad Request') {

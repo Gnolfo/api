@@ -45,7 +45,16 @@ module.exports = {
       results.push(_.pick(data[i].dataValues, fields));
     }
 
-    return results;
+    // Sort bills by chamber
+    var preparedData = {
+      upper: [],
+      lower: []
+    };
+    for (var i = 0; i < results.length; i++) {
+      preparedData[results[i].chamber].push(results[i]);
+    }
+
+    return preparedData;
   },
 
   /**
@@ -226,7 +235,9 @@ module.exports = {
       if (fetchOpenStates) {
         external.cleanCache();
 
-        return external.getContent('https://openstates.org/api/v1/bills/'+ encodeURIComponent(firstRow.state) +'/' + encodeURIComponent(firstRow.session_id) + '/' + encodeURIComponent(firstRow.bill_id) + '/?apikey=' + config.get('openStates.key'))
+        var openStatesURL = 'http://openstates.org/api/v1/bills/'+ encodeURIComponent(firstRow.state) +'/' + encodeURIComponent(firstRow.session_id) + '/' + encodeURIComponent(firstRow.bill_id) + '/?apikey=' + config.get('openStates.key');
+
+        return external.getContent(openStatesURL, true)
           .then(function (response) {
             var openStates = JSON.parse(response);
 

@@ -155,7 +155,7 @@ app.enable('trust proxy');
  * Allow for Timeout JSON Response
  */
 app.use(function(req, res, next){
-  res.setTimeout(3000, function(){
+  res.setTimeout(5000, function(){
     res.status(408).end(JSON.stringify(routerUtil.createAPIResponse({
       errors: ['Request Timed Out']
     })));

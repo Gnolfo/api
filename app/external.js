@@ -6,14 +6,11 @@
 
 var path = require('path');
 var fs = require('fs');
-var rimraf = require('rimraf');
+var md5 = require('md5');
 var request = require('request');
 var Promise = require('bluebird');
 
-var cachedRequest = require('cached-request')(request);
 var cacheDirectory = path.join(__dirname, 'cache/');
-
-cachedRequest.setCacheDirectory(cacheDirectory);
 
 module.exports = {
   /**
@@ -36,7 +33,7 @@ module.exports = {
           endTime = new Date(stat.ctime).getTime() + 360000;
 
           if (now > endTime) {
-            return rimraf(path.join(cacheDirectory, file), function () {
+            return fs.unlink(path.join(cacheDirectory, file), function(){
               return true;
             });
           }
@@ -47,24 +44,81 @@ module.exports = {
 
   /**
    * Get External Content
-   * @param url
+   * @param {string} url - URL of Content to Fetch
+   * @param {boolean} cache - Whether or not to cache results
    * @returns {bluebird|exports|module.exports}
    */
-  getContent: function(url) {
+  getContent: function(url, cache) {
+    var fileName = md5(url) + '.json';
 
-    var requestOptions = {
-      ttl: 360000, // 1 hour
-      url: url
+    console.log('url', url);
+    console.log('cache', cache);
+    console.log('fileName', fileName);
+
+    // Figure out why caching is not working T_T
+    cache = false;
+
+    var fetch = function() {
+      return new Promise(function (resolve, reject) {
+        var lib = url.startsWith('https') ? require('https') : require('http');
+        var request = lib.get(url, function (response) {
+          if (response.statusCode < 200 || response.statusCode > 299) {
+            reject(new Error('Failed to load page, status code: ' + response.statusCode));
+          }
+
+          var body = [];
+
+          response.on('data', function (chunk) { body.push(chunk); });
+          response.on('end', function () {
+            var content = body.join('');
+
+            if (cache) {
+              return fs.writeFile(path.join(cacheDirectory, fileName), content, function(err) {
+                if (err) {
+                  console.log('fetch error', err);
+                  reject(err);
+                } else {
+                  console.log('fetch success');
+                  resolve(content);
+                }
+              });
+            } else {
+              resolve(content);
+            }
+          });
+        });
+
+        request.on('error', function (err) { reject(err); });
+      });
     };
 
-    return new Promise(function (resolve, reject) {
-      cachedRequest(requestOptions, function(error, resp, body) {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(body);
-        }
+    // check for cached URL
+    if (cache) {
+      return new Promise(function (resolve, reject) {
+        fs.stat(path.join(cacheDirectory, fileName), function(err, stat) {
+          var endTime, now;
+          if (err) {
+            return fetch();
+          }
+
+          now = new Date().getTime();
+          endTime = new Date(stat.ctime).getTime() + 360000;
+
+          if (now > endTime) {
+            return fs.readFile(path.join(cacheDirectory, file), function(err, content){
+              if (err) {
+                reject(err);
+              } else {
+                resolve(content);
+              }
+            });
+          } else {
+            return fetch();
+          }
+        });
       });
-    });
+    } else {
+      return fetch();
+    }
   }
 };
