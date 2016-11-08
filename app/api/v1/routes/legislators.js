@@ -13,6 +13,8 @@ var config = require('../../../config');
 var util = require('./util');
 var router = express.Router(config.router);
 
+var GeolocationDomain = require('../domain/geolocation');
+
 /**
  * Legislators
  * @memberof module:routes/legislators

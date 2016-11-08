@@ -51,11 +51,7 @@ module.exports = {
   getContent: function(url, cache) {
     var fileName = md5(url) + '.json';
 
-    console.log('url', url);
-    console.log('cache', cache);
-    console.log('fileName', fileName);
-
-    // Figure out why caching is not working T_T
+    // @TODO: Figure out why caching is not working yet
     cache = false;
 
     var fetch = function() {
@@ -105,7 +101,7 @@ module.exports = {
           endTime = new Date(stat.ctime).getTime() + 360000;
 
           if (now > endTime) {
-            return fs.readFile(path.join(cacheDirectory, file), function(err, content){
+            return fs.readFile(path.join(cacheDirectory, fileName), function(err, content){
               if (err) {
                 reject(err);
               } else {

@@ -96,33 +96,34 @@ describe('Domain Bills', function() {
 
     var output = Domain.prepareForAPIOutput(sampleData);
 
-    assert.isDefined(output[0].bill_id);
-    assert.isDefined(output[0].chamber);
-    assert.isDefined(output[0].city);
-    assert.isDefined(output[0].details_url);
-    assert.isDefined(output[0].long_description);
-    assert.isDefined(output[0].progress);
-    assert.isDefined(output[0].session_id);
-    assert.isDefined(output[0].short_description);
-    assert.isDefined(output[0].state);
-    assert.isDefined(output[0].status);
-    assert.isDefined(output[0].vote);
+    assert.isDefined(output.upper);
+    assert.isDefined(output.upper[0].bill_id);
+    assert.isDefined(output.upper[0].chamber);
+    assert.isDefined(output.upper[0].city);
+    assert.isDefined(output.upper[0].details_url);
+    assert.isDefined(output.upper[0].long_description);
+    assert.isDefined(output.upper[0].progress);
+    assert.isDefined(output.upper[0].session_id);
+    assert.isDefined(output.upper[0].short_description);
+    assert.isDefined(output.upper[0].state);
+    assert.isDefined(output.upper[0].status);
+    assert.isDefined(output.upper[0].vote);
 
-    assert.isTrue(output[0].bill_id === 'SB 443');
-    assert.isTrue(output[0].chamber === 'upper');
-    assert.isTrue(output[0].city === 'Hollywood');
-    assert.isTrue(output[0].details_url === 'http://openstates.org/ca/bills/20152016/SB443/');
-    assert.isTrue(output[0].long_description === '');
-    assert.isTrue(output[0].progress === 'good');
-    assert.isTrue(output[0].session_id === '20152016');
-    assert.isTrue(output[0].short_description === 'ends civil asset forfeiture');
-    assert.isTrue(output[0].state === 'CA');
-    assert.isTrue(output[0].status === 'considering');
-    assert.isTrue(output[0].vote === 'unknown');
+    assert.isTrue(output.upper[0].bill_id === 'SB 443');
+    assert.isTrue(output.upper[0].chamber === 'upper');
+    assert.isTrue(output.upper[0].city === 'Hollywood');
+    assert.isTrue(output.upper[0].details_url === 'http://openstates.org/ca/bills/20152016/SB443/');
+    assert.isTrue(output.upper[0].long_description === '');
+    assert.isTrue(output.upper[0].progress === 'good');
+    assert.isTrue(output.upper[0].session_id === '20152016');
+    assert.isTrue(output.upper[0].short_description === 'ends civil asset forfeiture');
+    assert.isTrue(output.upper[0].state === 'CA');
+    assert.isTrue(output.upper[0].status === 'considering');
+    assert.isTrue(output.upper[0].vote === 'unknown');
 
-    assert.isUndefined(output[0].created_at);
-    assert.isUndefined(output[0].id);
-    assert.isUndefined(output[0].modified_at);
+    assert.isUndefined(output.upper[0].created_at);
+    assert.isUndefined(output.upper[0].id);
+    assert.isUndefined(output.upper[0].modified_at);
   });
 
   describe('searchBills', function() {

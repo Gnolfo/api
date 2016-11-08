@@ -26,6 +26,7 @@ module.exports = {
    * @return {object}
    */
   prepareForAPIOutput: function(data) {
+    var i;
     var results = [];
     var fields = [
       'bill_id',
@@ -41,7 +42,7 @@ module.exports = {
       'vote'
     ];
 
-    for (var i = 0; i < data.length; i++) {
+    for (i = 0; i < data.length; i++) {
       results.push(_.pick(data[i].dataValues, fields));
     }
 
@@ -50,7 +51,8 @@ module.exports = {
       upper: [],
       lower: []
     };
-    for (var i = 0; i < results.length; i++) {
+    
+    for (i = 0; i < results.length; i++) {
       preparedData[results[i].chamber].push(results[i]);
     }
 
