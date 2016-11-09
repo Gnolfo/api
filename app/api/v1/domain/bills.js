@@ -242,7 +242,7 @@ module.exports = {
         if (fetchOpenStates) {
           var openStatesURL = 'http://openstates.org/api/v1/bills/'+ encodeURIComponent(firstRow.state) +'/' + encodeURIComponent(firstRow.session_id) + '/' + encodeURIComponent(firstRow.bill_id) + '/?apikey=' + config.get('openStates.key');
 
-          return external.getContent(openStatesURL, true)
+          return external.getContent(openStatesURL)
             .then(function (response) {
               var openStates = JSON.parse(response);
 

@@ -158,7 +158,7 @@ You need Elasticsearch running, which you can do if you've Brew-installed it lik
 
 ```bash
 brew services start redis
-brebrew services stop redis
+brew services stop redis
 ```
 
 On Linux you can run in like this ( assuming you installed the service ):

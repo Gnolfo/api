@@ -29,7 +29,7 @@ router.route('/legislators').get(function(request, response) {
 
     var url = 'http://openstates.org/api/v1/legislators/geo/?lat=' + request.query.latitude + '&long=' + request.query.longitude + '&apikey=' + config.get('openStates.key');
 
-    external.getContent(url, true).then(function (content){
+    external.getContent(url).then(function (content){
       var json = JSON.parse(content);
 
       if (json && json[0] === 'Bad Request') {
@@ -58,7 +58,7 @@ router.route('/legislators').get(function(request, response) {
       .then(function(results){
         var url = 'http://openstates.org/api/v1/legislators/geo/?lat=' + results.data[0].location.lat + '&long=' + results.data[0].location.lon + '&apikey=' + config.get('openStates.key');
 
-        external.getContent(url, true).then(function (content){
+        external.getContent(url).then(function (content){
           var json = JSON.parse(content);
 
           if (json && json[0] === 'Bad Request') {
