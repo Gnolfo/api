@@ -15,6 +15,7 @@ var bugsnag = require('bugsnag');
 var session = require('express-session');
 var uuid = require('uuid');
 var model = require('./models');
+var logger = require('./logger');
 var app = express();
 var apiUser = {};
 var apiLimit = {
@@ -27,6 +28,14 @@ var limiter = rateLimit(apiLimit);
 var routerUtil = require('./api/v1/routes/util.js');
 
 process.title = 'api';
+
+// Setup Bugsnag
+bugsnag.register(config.get('bugsnag'), {
+  packageJSON: '../package.json',
+  onUncaughtError: function(err) {
+    logger.log(err.stack || err);
+  }
+});
 
 /* istanbul ignore next */
 function setupAPI(request, response, next) {
