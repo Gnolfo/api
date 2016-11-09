@@ -183,7 +183,7 @@ var config = convict({
     log: {
       doc: 'Elasticsearch API Logging. See: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/logging.html',
       format: '*',
-      default: 'trace'
+      default: 'error'
     }
   },
   mandrill: {
@@ -218,6 +218,32 @@ var config = convict({
       format: Boolean,
       env: 'API_LOGZIO_DEBUG',
       default: false
+    }
+  },
+  redis: {
+    host: {
+      doc: 'Redis Host',
+      format: String,
+      env: 'API_REDIS_HOST',
+      default: '127.0.0.1'
+    },
+    port: {
+      doc: 'Redis Port',
+      format: 'port',
+      env: 'API_REDIS_PORT',
+      default: 6379
+    },
+    password: {
+      doc: 'Redis Password',
+      format: String,
+      env: 'API_REDIS_PASSWORD',
+      default: null
+    },
+    cacheExpire: {
+      doc: 'How long to cache results in redis',
+      format: Number,
+      env: 'API_REDIS_CACHE_EXPIRE',
+      default: 21600
     }
   }
 });

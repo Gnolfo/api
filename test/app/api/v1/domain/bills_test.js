@@ -162,10 +162,10 @@ describe('Domain Bills', function() {
       this.billsStub.returns(Promise.resolve(fakeResponse));
 
       Domain.searchBills(fakeQuery)
-        .then(function(results) {
-          assert.isDefined(results);
-          done();
-        });
+      .then(function(results) {
+        assert.isDefined(results);
+        done();
+      });
     });
 
     it('should throw error for no Open States call', function(done) {

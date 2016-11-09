@@ -25,9 +25,6 @@ var GeolocationDomain = require('../domain/geolocation');
  */
 /* istanbul ignore next */
 router.route('/legislators').get(function(request, response) {
-
-  external.cleanCache();
-
   if (request.query.latitude && request.query.longitude && validator.isDecimal(request.query.latitude) && validator.isDecimal(request.query.longitude)) {
 
     var url = 'http://openstates.org/api/v1/legislators/geo/?lat=' + request.query.latitude + '&long=' + request.query.longitude + '&apikey=' + config.get('openStates.key');

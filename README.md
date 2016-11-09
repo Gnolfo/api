@@ -31,6 +31,7 @@ Requirements
 * [NodeJS 6.x](https://nodejs.org/en/)
 * [MySQL](http://www.mysql.com/)
 * [Elasticsearch 2.4.x](https://www.elastic.co/)
+* [Redis](http://redis.io/)
 * [Bcrypt](http://bcrypt.sourceforge.net/)
 
 
@@ -46,7 +47,7 @@ Getting Setup
 It's recommended that you install and use [Homebrew](http://brew.sh/) for the system-level requirements for the project. Once you have it installed, you can run the following:
 
 ```bash
-brew install node mysql elasticsearch bcrypt
+brew install node mysql elasticsearch bcrypt redis
 ```
 
 #### Linux
@@ -124,7 +125,10 @@ export API_LOGZIO_TYPE='CampaignZeroAPI';
 export API_MANDRILL_API_KEY='CHANGE_ME';
 export API_NODE_ENV='local';
 export API_OPENSTATES_API_KEY='CHANGE_ME';
-export API_PORT=5000
+export API_PORT=5000;
+export API_REDIS_HOST='127.0.0.1';
+export API_REDIS_PORT=6379;
+export API_REDIS_PASSWORD='CHANGE_ME';
 export API_SESSION_KEY='CHANGE_ME';
 ```
 
@@ -140,6 +144,28 @@ Now you can verify that your settings are applied correctly:
 
 ```bash
 echo $API_NODE_ENV
+```
+
+Redis Configuration
+---
+
+**[⇧ back to top](#table-of-contents)**
+
+
+__Start/Stop:__
+
+You need Elasticsearch running, which you can do if you've Brew-installed it like this:
+
+```bash
+brew services start redis
+brebrew services stop redis
+```
+
+On Linux you can run in like this ( assuming you installed the service ):
+
+```bash
+sudo systemctl start redis
+sudo systemctl stop redis
 ```
 
 Elasticsearch Configuration

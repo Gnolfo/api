@@ -42,21 +42,25 @@ module.exports = {
       'vote'
     ];
 
-    for (i = 0; i < data.length; i++) {
-      results.push(_.pick(data[i].dataValues, fields));
-    }
+    if (typeof data === 'object') {
+      for (i = 0; i < data.length; i++) {
+        results.push(_.pick(data[i].dataValues, fields));
+      }
 
-    // Sort bills by chamber
-    var preparedData = {
-      upper: [],
-      lower: []
-    };
-    
-    for (i = 0; i < results.length; i++) {
-      preparedData[results[i].chamber].push(results[i]);
-    }
+      // Sort bills by chamber
+      var preparedData = {
+        upper: [],
+        lower: []
+      };
 
-    return preparedData;
+      for (i = 0; i < results.length; i++) {
+        preparedData[results[i].chamber].push(results[i]);
+      }
+
+      return preparedData;
+    } else {
+      return results;
+    }
   },
 
   /**
@@ -210,67 +214,69 @@ module.exports = {
         page: page
       };
 
-      // Check if we should fetch Open States Data
-      var fetchOpenStates = false;
+      if (data.rows.length > 0) {
+        // Check if we should fetch Open States Data
+        var fetchOpenStates = false;
 
-      // Setup Bill Vote Response
-      var vote = 'unknown';
+        // Setup Bill Vote Response
+        var vote = 'unknown';
 
-      // Set Default Vote for each response
-      for (i = 0; i < data.rows.length; i++) {
-        data.rows[i].dataValues.vote = vote;
-      }
-
-      var firstRow = data.rows[0].dataValues;
-
-      // Check if we have a result that we can actually fetch Open States with if searching for a specific Bill
-      if(request.billId && request.repId && data.rows && (data.rows.length === 1 || data.rows.length === 2) && firstRow.state && firstRow.session_id && firstRow.bill_id) {
-        /* istanbul ignore else */
-        if (data.rows.length === 1) {
-          fetchOpenStates = true;
-        } else if (data.rows.length === 2 && firstRow.state === data.rows[1].dataValues.state && firstRow.session_id === data.rows[1].dataValues.session_id && firstRow.bill_id === data.rows[1].dataValues.bill_id) {
-          fetchOpenStates = true;
+        // Set Default Vote for each response
+        for (i = 0; i < data.rows.length; i++) {
+          data.rows[i].dataValues.vote = vote;
         }
-      }
 
-      // Use the Data in our API rather than the search query as ours is mapped Open States and query might not be
-      if (fetchOpenStates) {
-        external.cleanCache();
+        var firstRow = data.rows[0].dataValues;
 
-        var openStatesURL = 'http://openstates.org/api/v1/bills/'+ encodeURIComponent(firstRow.state) +'/' + encodeURIComponent(firstRow.session_id) + '/' + encodeURIComponent(firstRow.bill_id) + '/?apikey=' + config.get('openStates.key');
+        // Check if we have a result that we can actually fetch Open States with if searching for a specific Bill
+        if(request.billId && request.repId && data.rows && (data.rows.length === 1 || data.rows.length === 2) && firstRow.state && firstRow.session_id && firstRow.bill_id) {
+          /* istanbul ignore else */
+          if (data.rows.length === 1) {
+            fetchOpenStates = true;
+          } else if (data.rows.length === 2 && firstRow.state === data.rows[1].dataValues.state && firstRow.session_id === data.rows[1].dataValues.session_id && firstRow.bill_id === data.rows[1].dataValues.bill_id) {
+            fetchOpenStates = true;
+          }
+        }
 
-        return external.getContent(openStatesURL, true)
-          .then(function (response) {
-            var openStates = JSON.parse(response);
+        // Use the Data in our API rather than the search query as ours is mapped Open States and query might not be
+        if (fetchOpenStates) {
+          var openStatesURL = 'http://openstates.org/api/v1/bills/'+ encodeURIComponent(firstRow.state) +'/' + encodeURIComponent(firstRow.session_id) + '/' + encodeURIComponent(firstRow.bill_id) + '/?apikey=' + config.get('openStates.key');
 
-            for (i = 0; i < openStates.votes.length; i++) {
-              for (j = 0; j < openStates.votes[i].yes_votes.length; j++) {
-                /* istanbul ignore else */
-                if(openStates.votes[i].yes_votes[j].leg_id === request.repId) {
-                  vote = 'supported';
-                  break;
+          return external.getContent(openStatesURL, true)
+            .then(function (response) {
+              var openStates = JSON.parse(response);
+
+              for (i = 0; i < openStates.votes.length; i++) {
+                for (j = 0; j < openStates.votes[i].yes_votes.length; j++) {
+                  /* istanbul ignore else */
+                  if(openStates.votes[i].yes_votes[j].leg_id === request.repId) {
+                    vote = 'supported';
+                    break;
+                  }
+                }
+                for (j = 0; j < openStates.votes[i].no_votes.length; j++) {
+                  /* istanbul ignore else */
+                  if (openStates.votes[i].no_votes[j].leg_id === request.repId) {
+                    vote = 'opposed';
+                    break;
+                  }
                 }
               }
-              for (j = 0; j < openStates.votes[i].no_votes.length; j++) {
-                /* istanbul ignore else */
-                if (openStates.votes[i].no_votes[j].leg_id === request.repId) {
-                  vote = 'opposed';
-                  break;
-                }
+
+              for (i = 0; i < data.rows.length; i++) {
+                data.rows[i].dataValues.vote = vote;
               }
-            }
 
-            for (i = 0; i < data.rows.length; i++) {
-              data.rows[i].dataValues.vote = vote;
-            }
-
-            return Promise.resolve(data);
-          })
-          .catch(function (err) {
-            return Promise.reject('Unable to Get Content. ' + err);
-          });
+              return Promise.resolve(data);
+            })
+            .catch(function (err) {
+              return Promise.reject('Unable to Get Content. ' + err);
+            });
+        } else {
+          return Promise.resolve(data);
+        }
       } else {
-        return Promise.resolve(data);
+        return Promise.reject('Make Sure `state`, `sessionId` & `billId` are valid.');
       }
     })
     .catch(function (err) {
